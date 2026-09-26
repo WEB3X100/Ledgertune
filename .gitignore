@@ -1,0 +1,4 @@
+.netlify/
+data/leads.jsonl
+.DS_Store
+node_modules/

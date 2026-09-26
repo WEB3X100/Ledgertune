@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100" width="900" height="1100" role="img" aria-label="North Studio placeholder mark">
+  <defs>
+    <linearGradient id="ns-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0c1630"/>
+      <stop offset="1" stop-color="#1b1548"/>
+    </linearGradient>
+    <linearGradient id="ns-mark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6ee7ff"/>
+      <stop offset="1" stop-color="#8b63ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1100" fill="url(#ns-bg)"/>
+  <g stroke="rgba(110,231,255,0.07)" stroke-width="1">
+    <line x1="80" y1="0" x2="80" y2="1100"/>
+    <line x1="820" y1="0" x2="820" y2="1100"/>
+    <line x1="0" y1="90" x2="900" y2="90"/>
+    <line x1="0" y1="1010" x2="900" y2="1010"/>
+  </g>
+  <circle cx="450" cy="470" r="168" fill="none" stroke="url(#ns-mark)" stroke-width="10"/>
+  <path d="M372 575 V365 H418 L528 520 V365 H578 V575 H532 L422 420 V575 Z" fill="url(#ns-mark)"/>
+  <text x="450" y="760" text-anchor="middle" fill="#f6f3ee" font-family="Sora, ui-sans-serif, system-ui, sans-serif" font-size="54" font-weight="700" letter-spacing="12">NORTH</text>
+  <text x="450" y="812" text-anchor="middle" fill="#6ee7ff" font-family="Sora, ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="600" letter-spacing="14">STUDIO</text>
+</svg>

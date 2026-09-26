@@ -1,0 +1,13 @@
+{
+  "name": "neuralsync-bpo-landing",
+  "version": "0.1.0",
+  "private": true,
+  "description": "NeuralSync remote accounting landing page. Team-review draft. Replit-ready.",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 880" width="900" height="880" role="img" aria-label="Vista Coast placeholder mark">
+  <defs>
+    <linearGradient id="vc-bg" x1="0.2" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#0b1020"/>
+      <stop offset="1" stop-color="#3a1536"/>
+    </linearGradient>
+    <linearGradient id="vc-v" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff6f61"/>
+      <stop offset="1" stop-color="#8b63ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="880" fill="url(#vc-bg)"/>
+  <circle cx="720" cy="180" r="90" fill="rgba(255,111,97,0.16)"/>
+  <path d="M450 210 L610 560 H290 Z" fill="none" stroke="url(#vc-v)" stroke-width="14" stroke-linejoin="round"/>
+  <path d="M450 270 L560 530 H340 Z" fill="url(#vc-v)"/>
+  <text x="450" y="680" text-anchor="middle" fill="#f6f3ee" font-family="Sora, ui-sans-serif, system-ui, sans-serif" font-size="48" font-weight="700" letter-spacing="10">VISTA</text>
+  <text x="450" y="732" text-anchor="middle" fill="#ff6f61" font-family="Sora, ui-sans-serif, system-ui, sans-serif" font-size="20" font-weight="600" letter-spacing="16">COAST</text>
+</svg>
