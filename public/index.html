@@ -3,29 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>QuickBooks Online Advanced implementation for startups | NeuralSync</title>
-  <meta name="description" content="Stop paying for QuickBooks Online Advanced features you never turn on. NeuralSync sets up the file, runs the close, and keeps a reviewer in the loop for startups and growing businesses in Canada and the US.">
+  <title>Financial clarity, built from the books up | Ledger Tune</title>
+  <meta name="description" content="Ledger Tune turns messy records into reconciled books and management-ready reports. QuickBooks Online is the system of record. Book a finance diagnostic.">
   <meta name="robots" content="noindex, nofollow">
-  <link rel="icon" href="./assets/neuralsync-mark.svg" type="image/svg+xml">
+  <link rel="icon" href="./assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./tune.css">
 </head>
-<body>
-  <!--
-    THESIS: This page sells QBO Advanced implementation, not a software license and not a generic BPO brochure.
-    OWN-WORLD: Midnight navy field, NeuralSync particle-cluster mark, coral consultation pills, cyan operating marks, finance-orbit atmosphere.
-    STORY: A startup or mid-size operator recognizes unused Advanced features, sees a three-column implementation board, understands setup then close, and books a free 30-minute consultation.
-    FIRST VIEWPORT: Compact review toggle, outcome headline, coral consultation CTA, and a framed finance-dashboard mock on the right.
-    FORM: Established NeuralSync BPO visual-kit world, dark finance-orbit register.
-    FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
-  -->
-  <a class="skip-link" href="#inquiry">Skip to consultation form</a>
+<body class="tune">
+  <a id="top" class="page-top" tabindex="-1">Top of page</a>
+  <a class="skip-link" href="#inquiry">Skip to the diagnostic form</a>
   <div class="review-strip" id="review-strip" hidden>
     <button class="review-toggle" type="button" id="toggle-review" aria-expanded="false" aria-controls="review-panel">Team draft</button>
     <div class="review-panel" id="review-panel" hidden>
-      <p class="review-copy"><strong>Team review draft.</strong> Testimonial names are layout copy until you paste approved quotes. Packages have no dollar prices. The public CTA is a contact form for a free 30-minute consultation.</p>
+      <p class="review-copy"><strong>Launch-candidate review.</strong> No public prices. Illustrative visuals are labeled. Primary action is a free 30-minute QBO fit check.</p>
       <div class="review-controls">
         <button class="ghost" type="button" id="hide-review">Hide strip</button>
       </div>
@@ -33,543 +28,556 @@
   </div>
 
   <header class="site-header" id="site-header">
-    <a class="brand" href="#top">
-      <img src="./assets/neuralsync-mark.svg" alt="NeuralSync">
-      <span>NeuralSync</span>
+    <a class="brand" id="brand-home" href="#top">
+      <img src="./assets/ledger-tune-logo.jpg" alt="Ledger Tune" width="1231" height="706">
     </a>
     <button class="menu-toggle" type="button" id="menu-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">
       <span class="bars"></span>
     </button>
     <nav class="site-nav" id="site-nav">
-      <a href="#packages">Packages</a>
-      <a href="#advanced">Advanced</a>
-      <a href="#how">How we work</a>
-      <a href="#voices">Voices</a>
-      <a href="#proof">Fit check</a>
-      <a href="#faq">FAQ</a>
-      <a class="nav-cta" href="#inquiry">Contact us</a>
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#reports">Reports</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#inquiry">Contact</a>
     </nav>
+    <button class="nav-cta header-cta" type="button" id="open-header-form" aria-expanded="false" aria-controls="header-form">Book a finance diagnostic</button>
+    <div class="header-form" id="header-form" hidden>
+      <form id="header-inquiry-form" method="post" action="#inquiry" novalidate>
+        <p class="header-form-title">Book a finance diagnostic</p>
+        <label>Name
+          <input name="name" autocomplete="name" required>
+        </label>
+        <label>Work email
+          <input name="email" type="email" autocomplete="email" required placeholder="you@company.com">
+        </label>
+        <label>What do you need?
+          <select name="need">
+            <option>Not sure yet</option>
+            <option>Bookkeeping</option>
+            <option>Tax coordination</option>
+            <option>Tech services</option>
+            <option>Setup</option>
+            <option>Operate</option>
+            <option>Capacity</option>
+          </select>
+        </label>
+        <button class="form-submit" type="submit">Send the request</button>
+        <p class="header-form-status" id="header-form-status" role="status"></p>
+        <p class="form-note">Saved on this preview only. No email is sent yet. <a href="#inquiry">Open the full form</a></p>
+      </form>
+    </div>
   </header>
 
-  <main id="top">
-    <section class="hero">
-      <div class="hero-copy">
-        <h1>See the month. <em>Stop fighting the Advanced file.</em></h1>
-        <hr class="coral-rule">
-        <p class="hero-lead">You paid for Advanced. You should not still be closing in a Sunday panic.</p>
-        <p class="hero-support">NeuralSync turns QuickBooks Online Advanced into a file you can run: classes, reports, workflows, and a reviewer on the close. Intuit sells the software. We make it usable.</p>
-        <div class="hero-actions">
-          <a class="hero-cta" href="#inquiry">Book a free 30-min consultation</a>
-          <a class="hero-cta hero-secondary" href="#packages">See packages</a>
-        </div>
-        <ul class="trust-row">
-          <li>Startups and mid-size</li>
-          <li>QuickBooks Online Advanced</li>
-          <li>Canada and the United States</li>
-        </ul>
-      </div>
-      <div class="hero-visual">
-        <figure class="device-frame">
-          <div class="device-crop">
-            <img src="./assets/qbo-command-dashboard.jpg" alt="Illustrative finance operating dashboard. Original NeuralSync mock, not a QuickBooks screenshot." width="1600" height="900" fetchpriority="high">
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="lt-wrap hero-grid">
+        <div class="hero-copy">
+          <h1 id="hero-title">Financial clarity, <br>built from the books up.</h1>
+          <p class="hero-lead">We turn messy records into reconciled books, reliable reporting, and better business decisions.</p>
+          <div class="hero-actions">
+            <a class="hero-cta" href="#inquiry" data-cta="hero">Book a finance diagnostic</a>
+            <a class="hero-cta hero-secondary" href="#process" data-cta="hero-secondary">See how it works</a>
           </div>
-          <aside class="close-widget" aria-labelledby="close-widget-title">
-            <div class="close-widget-head">
-              <div class="close-widget-label">
-                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M8 7h8M8 11h8M8 15h5"/>
-                </svg>
-                <span id="close-widget-title">Close health</span>
+          <ul class="lt-marks">
+            <li>Clean records</li>
+            <li>Reconciled books</li>
+            <li>Reports you can read</li>
+            <li>A named reviewer</li>
+          </ul>
+        </div>
+        <div class="hero-visual">
+          <figure class="lt-dash">
+            <figcaption>Sample layout. These figures are not a client result.</figcaption>
+            <p class="lt-callout">One view of the month, once the books agree.</p>
+            <div class="lt-dash-frame">
+              <div class="lt-dash-side" aria-hidden="true">
+                <span class="lt-dash-mark">LT</span>
+                <b>Overview</b>
+                <span>Reports</span>
+                <span>Reconciliation</span>
+                <span>Cash</span>
+                <span>Settings</span>
               </div>
-              <label class="close-widget-select">
-                <span class="sr-only">Dashboard view</span>
-                <select id="close-view">
-                  <option value="close">Month-end</option>
-                  <option value="cash">Cash view</option>
-                </select>
-                <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m4 6 4 4 4-4"/></svg>
-              </label>
+              <div class="lt-dash-main">
+                <div class="lt-dash-head">
+                  <strong>Financial overview</strong>
+                  <span>Sample</span>
+                </div>
+                <div class="lt-metrics">
+                  <div><em>Revenue</em><b class="lt-num">$480,000</b><span>Sample</span></div>
+                  <div><em>Gross profit</em><b class="lt-num">$210,000</b><span>Sample</span></div>
+                  <div><em>Net profit</em><b class="lt-num">$64,000</b><span>Sample</span></div>
+                  <div><em>Cash balance</em><b class="lt-num">$120,000</b><span>Sample</span></div>
+                </div>
+                <div class="lt-dash-charts">
+                  <div class="lt-bars-card">
+                    <div class="lt-chart-label"><span>Profit and loss</span><span>Sample year</span></div>
+                    <div class="lt-bars" aria-hidden="true">
+                      <i style="--h:46%"><b style="--h:28%"></b></i>
+                      <i style="--h:52%"><b style="--h:34%"></b></i>
+                      <i style="--h:40%"><b style="--h:30%"></b></i>
+                      <i style="--h:61%"><b style="--h:36%"></b></i>
+                      <i style="--h:48%"><b style="--h:32%"></b></i>
+                      <i style="--h:70%"><b style="--h:40%"></b></i>
+                      <i style="--h:58%"><b style="--h:38%"></b></i>
+                      <i style="--h:74%"><b style="--h:42%"></b></i>
+                      <i style="--h:63%"><b style="--h:36%"></b></i>
+                      <i style="--h:80%"><b style="--h:44%"></b></i>
+                      <i style="--h:68%"><b style="--h:40%"></b></i>
+                      <i style="--h:86%"><b style="--h:48%"></b></i>
+                    </div>
+                    <div class="lt-months" aria-hidden="true"><span>J</span><span>F</span><span>M</span><span>A</span><span>M</span><span>J</span><span>J</span><span>A</span><span>S</span><span>O</span><span>N</span><span>D</span></div>
+                  </div>
+                  <div class="lt-mix">
+                    <div class="lt-chart-label"><span>Spending</span><span>Sample</span></div>
+                    <div class="lt-donut" aria-hidden="true"></div>
+                    <ul>
+                      <li><i class="c1"></i>Payroll 34%</li>
+                      <li><i class="c2"></i>People 18%</li>
+                      <li><i class="c3"></i>Software 16%</li>
+                      <li><i class="c4"></i>Occupancy 20%</li>
+                      <li><i class="c5"></i>Other 12%</li>
+                    </ul>
+                  </div>
+                </div>
+                <p class="lt-recon"><span>Sample bank match</span> Reconciled in this layout</p>
+              </div>
             </div>
+            <p class="lt-sr">Sample dashboard with a financial overview, a twelve-month profit and loss chart, an expense mix, cash, and a reconciled bank status. Amounts are layout samples, not a client result.</p>
+          </figure>
+        </div>
+      </div>
+    </section>
 
-            <div class="close-widget-summary" aria-live="polite">
-              <div>
-                <strong id="close-score">4 of 6</strong>
-                <span id="close-trend">checkpoints ready</span>
-              </div>
-              <div class="close-widget-progress">
-                <div class="close-progress-track" aria-hidden="true"><span id="close-progress-bar"></span></div>
-                <p><span id="close-progress-copy">67% complete</span> · demo data</p>
-              </div>
+    <section class="lt-tools" aria-labelledby="tools-title">
+      <div class="lt-wrap">
+        <div class="lt-tools-panel">
+          <h2 id="tools-title">Built around the tools <span class="lt-keep">your business uses.</span></h2>
+          <ul class="lt-chips">
+            <li class="is-primary"><strong>QuickBooks Online</strong><span>Accounting system</span></li>
+            <li>Bank exports<span>Data source</span></li>
+            <li>Payroll files<span>Data source</span></li>
+            <li>Sales reports<span>Data source</span></li>
+            <li>Spreadsheets<span>Data source</span></li>
+          </ul>
+          <p>QuickBooks Online is where the books are kept. The other names are files a business can hand over. They are not partnerships, certifications, or a promise that every app connects.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lt-band" aria-labelledby="shift-title">
+      <div class="lt-wrap">
+        <h2 id="shift-title">Your numbers shouldn't require detective work.</h2>
+        <p class="lt-lede">We clean up, reconcile, and organize the records so you can see where the business stands.</p>
+        <div class="lt-shift">
+          <div class="lt-before">
+            <div class="lt-papers" aria-hidden="true">
+              <div class="sheet s1"><b>Spreadsheet</b><span></span><span></span><span></span><span></span></div>
+              <div class="sheet s2"><b>Invoice</b><span></span><span></span><span></span></div>
+              <div class="sheet s3"><b>Bank</b><span></span><span></span><em>!</em></div>
+              <div class="sticky">Missing reconciliations?</div>
             </div>
-
-            <p class="close-widget-subtitle" id="close-items-title">What needs attention</p>
-            <ul class="close-widget-list" aria-labelledby="close-items-title">
-              <li>
-                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M6 10h12M8 14h8M10 18h4"/></svg>
-                <span id="close-item-1">Bank reconciliation</span>
-                <strong class="status-ready" id="close-status-1">Ready</strong>
-              </li>
-              <li>
-                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4H7zM5 7h14v14H5zM8 11h8M8 15h5"/></svg>
-                <span id="close-item-2">Vendor bills</span>
-                <strong class="status-review" id="close-status-2">Review</strong>
-              </li>
-              <li>
-                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M10 19V5M16 19v-8M22 19V3"/></svg>
-                <span id="close-item-3">Management pack</span>
-                <strong class="status-next" id="close-status-3">Next</strong>
-              </li>
+            <ul>
+              <li>Disconnected spreadsheets</li>
+              <li>Unreconciled bank transactions</li>
+              <li>Missing financial documentation</li>
+              <li>Unclear receivables and payables</li>
+              <li>Delayed reporting</li>
             </ul>
-
-            <div class="close-widget-scale" aria-label="Readiness scale from not started to ready">
-              <span class="scale-risk"></span><span class="scale-review"></span><span class="scale-check"></span><span class="scale-ready"></span>
+          </div>
+          <div class="lt-arrow" aria-hidden="true">
+            <svg viewBox="0 0 64 24" width="64" height="24"><path d="M2 12h52M44 4l12 8-12 8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="lt-after">
+            <div class="lt-reports-float" aria-hidden="true">
+              <article>
+                <b>Profit and loss</b>
+                <span class="mini-bars"><i></i><i></i><i></i><i></i><i></i></span>
+              </article>
+              <article>
+                <b>Balance sheet</b>
+                <span class="mini-rows"><i></i><i></i><i></i></span>
+              </article>
+              <article>
+                <b>Cash flow</b>
+                <span class="mini-line"></span>
+              </article>
+              <p>Reconciled. Organized. Ready to read.</p>
             </div>
-            <div class="close-widget-scale-labels" aria-hidden="true"><span>Not started</span><span>Review</span><span>Ready</span></div>
-          </aside>
-          <figcaption>Illustrative operating view. Not a QuickBooks screenshot.</figcaption>
+            <ul>
+              <li>Organized accounting records</li>
+              <li>Completed reconciliations</li>
+              <li>Verified balances</li>
+              <li>Clear financial statements</li>
+              <li>Management reports you can use</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lt-services" id="services" aria-labelledby="services-title">
+      <div class="lt-wrap">
+        <div class="lt-services-panel">
+          <h2 id="services-title">Complete financial support <span class="lt-keep">for growing businesses.</span></h2>
+          <p>Bookkeeping, tax-ready records, and a file a growing company can close. Setup builds the system. Operate runs the month. Capacity adds people when one seat is not enough.</p>
+          <div class="lt-cards">
+            <article class="lt-card">
+              <div class="lt-icon i-book" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><path d="M7 6.5h7.2A2.8 2.8 0 0 1 17 9.3V26H9.4A2.4 2.4 0 0 0 7 28.4V6.5zM25 6.5h-7.2A2.8 2.8 0 0 0 15 9.3V26h7.6A2.4 2.4 0 0 1 25 28.4V6.5z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/></svg>
+              </div>
+              <h3>Bookkeeping and&nbsp;reconciliation</h3>
+              <p>Accurate books, a monthly close, and reporting you can follow.</p>
+              <ul>
+                <li>Transaction cleanup</li>
+                <li>Bank and credit card reconciliation</li>
+                <li>Accounts receivable and payable</li>
+                <li>Monthly financial reporting</li>
+              </ul>
+              <a href="/bookkeeping/">See bookkeeping</a>
+            </article>
+            <article class="lt-card">
+              <div class="lt-icon i-file" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><path d="M10 5.5h8.4L23.5 11v15.5H10z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/><path d="M18 5.8V11.2h5.2M13.5 16.5h7M13.5 20.5h5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+              </div>
+              <h3>Tax and compliance&nbsp;support</h3>
+              <p>Records organized for the accountant who files. Ledger Tune does not take the return as CPA of record.</p>
+              <ul>
+                <li>Tax-ready bookkeeping</li>
+                <li>Organized supporting schedules</li>
+                <li>Sales tax reconciliation support</li>
+                <li>Year-end preparation with your accountant</li>
+              </ul>
+              <a href="/tax/">See tax support</a>
+            </article>
+            <article class="lt-card">
+              <div class="lt-icon i-chart" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><path d="M7 25.5V7M7 25.5h18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M11 20.5l4.2-5.2 3.4 2.6 6-7.4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <h3>Technology and financial&nbsp;operations</h3>
+              <p>The accounting file, set up so the month can close. This is not an IT shop or custom software.</p>
+              <ul>
+                <li>QuickBooks setup and cleanup</li>
+                <li>A chart of accounts the close can run on</li>
+                <li>Reporting views an owner can read</li>
+                <li>Written steps for the people on the file</li>
+              </ul>
+              <a href="/tech-services/">See the file setup</a>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lt-band lt-process" id="process" aria-labelledby="process-title">
+      <div class="lt-wrap">
+        <div class="lt-process-head">
+          <h2 id="process-title">From raw records to <span class="lt-keep">a confident close.</span></h2>
+          <p class="lt-lede">A clear path: collect the records, reconcile them, report, review what they say, and keep the file current.</p>
+        </div>
+        <ol class="lt-steps">
+          <li>
+            <span>1</span>
+            <h3>Data intake</h3>
+            <p>Collect and organize the financial records from the sources you already use.</p>
+          </li>
+          <li>
+            <span>2</span>
+            <h3>Clean and reconcile</h3>
+            <p>Fix errors, match transactions, and reconcile the accounts.</p>
+          </li>
+          <li>
+            <span>3</span>
+            <h3>Close and report</h3>
+            <p>Deliver the financial statements and the reports the month needs.</p>
+          </li>
+          <li>
+            <span>4</span>
+            <h3>Review the numbers</h3>
+            <p>Walk through the results and the items that need a decision.</p>
+          </li>
+          <li>
+            <span>5</span>
+            <h3>Ongoing support</h3>
+            <p>Keep the books current and stay with the file after the first close.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="lt-band lt-reports" id="reports" aria-labelledby="reports-title">
+      <div class="lt-wrap lt-reports-grid">
+        <div>
+          <h2 id="reports-title">Reports that help you run your business.</h2>
+          <p class="lt-lede">Clear views of profit, cash, and what is owed. Updated with the close. The picture on the right is a sample, not a client’s books.</p>
+          <a class="hero-cta" href="#inquiry" data-cta="reports">Book a finance diagnostic</a>
+        </div>
+        <figure class="lt-report">
+          <figcaption>Sample report. Not a client result.</figcaption>
+          <div class="lt-report-frame">
+            <div class="lt-report-side" aria-hidden="true">
+              <b>P&amp;L</b>
+              <span>Balance sheet</span>
+              <span>Cash flow</span>
+              <span>AR and AP</span>
+            </div>
+            <div class="lt-report-main">
+              <div class="lt-report-top">
+                <strong>Profit and loss</strong>
+                <span>Sample year</span>
+              </div>
+              <div class="lt-bars tall" aria-hidden="true">
+                <i style="--h:42%"><b style="--h:24%"></b></i>
+                <i style="--h:55%"><b style="--h:30%"></b></i>
+                <i style="--h:38%"><b style="--h:26%"></b></i>
+                <i style="--h:64%"><b style="--h:34%"></b></i>
+                <i style="--h:50%"><b style="--h:28%"></b></i>
+                <i style="--h:72%"><b style="--h:36%"></b></i>
+                <i style="--h:60%"><b style="--h:33%"></b></i>
+                <i style="--h:78%"><b style="--h:40%"></b></i>
+                <i style="--h:58%"><b style="--h:32%"></b></i>
+                <i style="--h:84%"><b style="--h:44%"></b></i>
+                <i style="--h:66%"><b style="--h:36%"></b></i>
+                <i style="--h:88%"><b style="--h:46%"></b></i>
+              </div>
+              <dl class="lt-totals">
+                <div><dt>Revenue</dt><dd class="lt-num">$480,000 <small>sample</small></dd></div>
+                <div><dt>Expenses</dt><dd class="lt-num">$416,000 <small>sample</small></dd></div>
+                <div><dt>Net profit</dt><dd class="lt-num">$64,000 <small>sample</small></dd></div>
+              </dl>
+            </div>
+            <aside class="lt-kpis">
+              <b>Sample balances</b>
+              <div><span>Cash</span><strong class="lt-num">$120,000</strong></div>
+              <div><span>Receivable</span><strong class="lt-num">$86,000</strong></div>
+              <div><span>Payable</span><strong class="lt-num">$41,000</strong></div>
+            </aside>
+          </div>
         </figure>
       </div>
     </section>
 
-    <section class="integrations" id="stack" aria-label="Tools we implement in the file">
-      <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" focusable="false" class="icon-sprite">
-        <symbol id="i-ledger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M8 7h8M8 11h8M8 15h5"/></symbol>
-        <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 16v-5"/><path d="M12 16V8"/><path d="M17 16v-9"/></symbol>
-        <symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></symbol>
-        <symbol id="i-workflow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 9v6a3 3 0 0 0 3 3h6"/></symbol>
-        <symbol id="i-message" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
-        <symbol id="i-table" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></symbol>
-        <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
-        <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
-        <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
-        <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
-        <symbol id="i-wallet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V6a2 2 0 0 0-2-2H5a2 2 0 0 0 0 4h12a2 2 0 0 1 0 4H5"/><path d="M3 6v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3"/><circle cx="17" cy="13" r="1.2" fill="currentColor" stroke="none"/></symbol>
-        <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol>
-        <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></symbol>
-        <symbol id="i-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18"/><path d="M6 12h12M6 16h12M10 6h.01M14 6h.01M10 10h.01M14 10h.01M2 22h20"/></symbol>
-      </svg>
-      <div class="section-narrow">
-        <h2>The Advanced file, next to the tools you already run</h2>
-        <p class="lede">We turn on reports, classes, workflows, and review inside QuickBooks Online Advanced. These marks are the work, not a partnership claim.</p>
-        <a class="hero-cta" href="#inquiry">Book a free 30-min consultation</a>
-      </div>
-      <div class="icon-marquee">
-        <div class="icon-row animate-scroll-left">
-          <div class="icon-set">
-            <span class="tool-chip chip-violet" title="QuickBooks Online Advanced file"><svg><use href="#i-ledger"/></svg></span>
-            <span class="tool-chip chip-cyan" title="Custom reports"><svg><use href="#i-chart"/></svg></span>
-            <span class="tool-chip chip-coral" title="Classes"><svg><use href="#i-layers"/></svg></span>
-            <span class="tool-chip chip-violet" title="Workflows"><svg><use href="#i-workflow"/></svg></span>
-            <span class="tool-chip chip-cyan" title="Consultation request"><svg><use href="#i-message"/></svg></span>
-            <span class="tool-chip chip-coral" title="Spreadsheets"><svg><use href="#i-table"/></svg></span>
-            <span class="tool-chip chip-violet" title="Permissions"><svg><use href="#i-shield"/></svg></span>
-          </div>
-          <div class="icon-set" aria-hidden="true">
-            <span class="tool-chip chip-violet"><svg><use href="#i-ledger"/></svg></span>
-            <span class="tool-chip chip-cyan"><svg><use href="#i-chart"/></svg></span>
-            <span class="tool-chip chip-coral"><svg><use href="#i-layers"/></svg></span>
-            <span class="tool-chip chip-violet"><svg><use href="#i-workflow"/></svg></span>
-            <span class="tool-chip chip-cyan"><svg><use href="#i-message"/></svg></span>
-            <span class="tool-chip chip-coral"><svg><use href="#i-table"/></svg></span>
-            <span class="tool-chip chip-violet"><svg><use href="#i-shield"/></svg></span>
-          </div>
+    <section class="section reviews" id="reviews">
+      <div class="lt-qpanel">
+        <div class="lt-quotes-head">
+          <h2>Client reviews.</h2>
+          <p class="lede">Amax is a client. A quote is published only after that client approves&nbsp;the&nbsp;exact&nbsp;words.</p>
+          <a class="hero-cta" href="#inquiry" data-cta="reviews">Book a finance diagnostic</a>
         </div>
-        <div class="icon-row animate-scroll-right">
-          <div class="icon-set">
-            <span class="tool-chip chip-cyan" title="Multi-user file"><svg><use href="#i-users"/></svg></span>
-            <span class="tool-chip chip-violet" title="Locations"><svg><use href="#i-pin"/></svg></span>
-            <span class="tool-chip chip-coral" title="Close calendar"><svg><use href="#i-calendar"/></svg></span>
-            <span class="tool-chip chip-cyan" title="Cash and spend"><svg><use href="#i-wallet"/></svg></span>
-            <span class="tool-chip chip-violet" title="Alerts"><svg><use href="#i-bell"/></svg></span>
-            <span class="tool-chip chip-coral" title="Named reviewer"><svg><use href="#i-check"/></svg></span>
-            <span class="tool-chip chip-cyan" title="Startups and mid-size"><svg><use href="#i-building"/></svg></span>
-          </div>
-          <div class="icon-set" aria-hidden="true">
-            <span class="tool-chip chip-cyan"><svg><use href="#i-users"/></svg></span>
-            <span class="tool-chip chip-violet"><svg><use href="#i-pin"/></svg></span>
-            <span class="tool-chip chip-coral"><svg><use href="#i-calendar"/></svg></span>
-            <span class="tool-chip chip-cyan"><svg><use href="#i-wallet"/></svg></span>
-            <span class="tool-chip chip-violet"><svg><use href="#i-bell"/></svg></span>
-            <span class="tool-chip chip-coral"><svg><use href="#i-check"/></svg></span>
-            <span class="tool-chip chip-cyan"><svg><use href="#i-building"/></svg></span>
-          </div>
-        </div>
-        <div class="icon-fade icon-fade-left"></div>
-        <div class="icon-fade icon-fade-right"></div>
-      </div>
-    </section>
-
-    <section class="section pains" id="problem">
-      <div class="section-narrow">
-        <h2>You should not have to give up evenings to make Advanced useful.</h2>
-        <p class="lede">If the plan is paid for and the month is still a scramble, the file is the problem, not your ambition.</p>
-        <div class="pain-list">
-          <article>
-            <h3>Features stay off</h3>
-            <p>Reports, workflows, permissions, classes, and locations need setup. Most teams never get there.</p>
-          </article>
-          <article>
-            <h3>The file gets messy</h3>
-            <p>A weak chart of accounts makes dashboards and Intelligence tools guess. Close then fights the structure.</p>
-          </article>
-          <article>
-            <h3>You still cannot see the month</h3>
-            <p>Project profit and budgets only help after books, classes, and review exist.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section services" id="advanced">
-      <div class="section-narrow">
-        <h2>What you actually get out of Advanced.</h2>
-        <p class="lede">Setup, intelligence tools with a human check, then the features that change the close.</p>
-        <div class="plan-board">
-          <header>
-            <div>
-              <h3>QuickBooks Online Advanced, put to work</h3>
-              <p>For startups and growing companies that need more than five users, cleaner reporting, and a file an accountant can actually review.</p>
-            </div>
-            <a class="hero-cta" href="#inquiry">Book a consultation</a>
-          </header>
-          <div class="plan-col">
-            <h4>We set up</h4>
-            <ul>
-              <li>Chart of accounts designed for how you actually operate</li>
-              <li>Unlimited classes and locations, mapped on purpose</li>
-              <li>Custom roles and permissions for each person</li>
-              <li>Month-end close checklist on the Advanced file</li>
-              <li>Accountant access and a named NeuralSync reviewer</li>
-            </ul>
-            <a class="ask-link" href="#inquiry" data-need="Setup">Ask about setup</a>
-          </div>
-          <div class="plan-col plan-col-accent">
-            <h4>Intelligence we turn on</h4>
-            <ul>
-              <li>Transaction categorization, then human review before it posts as truth</li>
-              <li>Sales-tax flags routed to a reviewer, not left in a chat window</li>
-              <li>Error review before close, with Accounting AI as a helper not an owner</li>
-              <li>Project and job views so profitability is visible before the invoice goes out</li>
-              <li>Operator questions answered from live books after the file is clean</li>
-            </ul>
-            <a class="ask-link" href="#inquiry" data-need="Setup">Ask about unused features</a>
-          </div>
-          <div class="plan-col">
-            <h4>Features we configure</h4>
-            <ul>
-              <li>Custom report builder and spreadsheet sync</li>
-              <li>Workflow automation and batch invoices or bills</li>
-              <li>Budgets, time, and project profitability</li>
-              <li>Multi-currency where the business actually needs it</li>
-              <li>Backup, restore, receipt capture, and team training</li>
-            </ul>
-            <a class="ask-link" href="#inquiry" data-need="Operate">Ask about reports</a>
-          </div>
-        </div>
-        <p class="board-note">QuickBooks, QuickBooks Online, and Intuit Intelligence are Intuit products. Feature names above describe what Advanced includes. NeuralSync configures and operates them. We do not resell Intuit pricing, promotions, or support.</p>
-      </div>
-    </section>
-
-    <section class="section process" id="how">
-      <div class="section-narrow">
-        <h2>Three steps, then a repeating close.</h2>
-        <p class="lede">You always know who owns the file.</p>
-        <div class="start-steps">
-          <article>
-            <span class="idx">01</span>
-            <h3>Scope the file</h3>
-            <p>Plan, users, classes, inventory, projects, currencies, and what is already paid for but unused.</p>
-          </article>
-          <article>
-            <span class="idx">02</span>
-            <h3>Configure Advanced</h3>
-            <p>Chart of accounts, permissions, workflows, reports, and intelligence tools, with a reviewer on every material change.</p>
-          </article>
-          <article>
-            <span class="idx">03</span>
-            <h3>Close and report</h3>
-            <p>A monthly calendar, exception path, and a pack operators can use before the next decision.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section packages" id="packages">
-      <div class="section-narrow">
-        <h2>Three ways in. Pick the one that matches the file.</h2>
-        <p class="lede">Packages keep the wrong fit off the call. Quote is scoped on a free 30-minute consultation. No public dollar figure until the file is seen.</p>
-        <div class="pkg-grid">
-          <article class="pkg">
-            <h3>Setup</h3>
-            <p class="pkg-for">For a new or neglected Advanced file.</p>
-            <ul>
-              <li>Chart of accounts, classes, locations</li>
-              <li>Roles, permissions, backup habit</li>
-              <li>Reports and workflows turned on</li>
-              <li>Handoff checklist</li>
-            </ul>
-            <p class="pkg-not">Not included: monthly close, tax filing, ERP.</p>
-            <a class="hero-cta hero-secondary" href="#inquiry" data-need="Setup">Ask about Setup</a>
-          </article>
-          <article class="pkg pkg-featured">
-            <p class="pkg-mark">Most operators start here</p>
-            <h3>Operate</h3>
-            <p class="pkg-for">For a file that must close every month.</p>
-            <ul>
-              <li>Everything in Setup</li>
-              <li>Recurring bookkeeping and close</li>
-              <li>Monthly management pack</li>
-              <li>Named reviewer on exceptions</li>
-            </ul>
-            <p class="pkg-not">Not included: a dedicated full-time seat, tax filing.</p>
-            <a class="hero-cta" href="#inquiry" data-need="Operate">Ask about Operate</a>
-          </article>
-          <article class="pkg">
-            <h3>Capacity</h3>
-            <p class="pkg-for">For volume that needs a named remote seat.</p>
-            <ul>
-              <li>Everything in Operate</li>
-              <li>Defined hours and backup coverage</li>
-              <li>Visible work status</li>
-              <li>Operator plus reviewer</li>
-            </ul>
-            <p class="pkg-not">Not included: replacing every local role or promising guaranteed savings.</p>
-            <a class="hero-cta hero-secondary" href="#inquiry" data-need="Capacity">Ask about Capacity</a>
-          </article>
-        </div>
-        <aside class="fit-box">
-          <div>
-            <h3>This is for you if</h3>
-            <ul>
-              <li>You run a startup or growing company in Canada or the US</li>
-              <li>You are on QuickBooks Online Advanced, moving to it, or about to buy it</li>
-              <li>You want the month visible without another rushed hire</li>
-            </ul>
-          </div>
-          <div>
-            <h3>This is not for you if</h3>
-            <ul>
-              <li>You only need basic Plus bookkeeping and five users</li>
-              <li>You need a warehouse ERP or 100k+ SKU inventory engine</li>
-              <li>You want a cheapest-possible quote before anyone sees the file</li>
-            </ul>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <section class="split-block" id="faster">
-      <div class="split-copy">
-        <h2>Get evenings back. Keep the close in the file.</h2>
-        <ul class="check-list">
-          <li>Recurring bills and invoices run as workflows, not weekly retyping.</li>
-          <li>Categorization is checked by a person before it becomes the books.</li>
-          <li>Time and project profit live next to the invoice.</li>
-        </ul>
-        <a class="ask-link" href="#inquiry" data-need="Setup">Ask about workflows</a>
-      </div>
-      <figure class="split-visual">
-        <img src="./assets/qbo-report-builder.jpg" alt="Illustrative custom report builder mock. Original NeuralSync visual, not a QuickBooks screenshot." width="1600" height="1200" loading="lazy">
-        <figcaption>Illustrative report view. Not a QuickBooks screenshot.</figcaption>
-      </figure>
-    </section>
-
-    <section class="split-block split-reverse" id="confidence">
-      <figure class="split-visual">
-        <img src="./assets/qbo-operators.jpg" alt="Illustrative scene of two operators reviewing a finance dashboard. Not a photograph of the NeuralSync team." width="1200" height="1600" loading="lazy">
-        <figcaption>Illustrative concept image</figcaption>
-      </figure>
-      <div class="split-copy">
-        <h2>The right people see the right numbers.</h2>
-        <ul class="check-list">
-          <li>Custom roles for sales, ops, and finance.</li>
-          <li>Backup as a habit, not a panic move.</li>
-          <li>A named reviewer on the close.</li>
-        </ul>
-        <a class="ask-link" href="#inquiry" data-need="Setup">Ask about access and review</a>
-      </div>
-    </section>
-
-    <section class="split-block" id="grow">
-      <div class="split-copy">
-        <h2>Know the month before you have to guess it.</h2>
-        <ul class="check-list">
-          <li>Reports by class, location, and project.</li>
-          <li>Spreadsheet sync when the board pack still lives in Excel.</li>
-          <li>Budgets only after the books can carry them.</li>
-        </ul>
-        <a class="ask-link" href="#inquiry" data-need="Operate">Ask about the monthly pack</a>
-      </div>
-      <figure class="split-visual">
-        <img src="./assets/qbo-command-dashboard.jpg" alt="Illustrative operating dashboard mock." width="1600" height="900" loading="lazy">
-        <figcaption>Illustrative operating view</figcaption>
-      </figure>
-    </section>
-
-    <div class="section-narrow convert-wrap">
-      <div class="convert-band">
-        <p>The month is already slipping. Book a free 30-minute consultation before the next close.</p>
-        <a class="hero-cta" href="#inquiry">Book a free 30-min consultation</a>
-      </div>
-    </div>
-
-    <section class="section voices" id="voices">
-      <div class="section-narrow">
-        <p class="kicker">Layout copy · replace before launch</p>
-        <h2>What it feels like when the file starts working.</h2>
-        <p class="lede">Placeholder operator voices for the testimonial masonry. Names, faces, and quotes are layout only until approved customer proof is pasted in.</p>
-        <div class="masonry">
-          <article class="masonry-card">
-            <img class="masonry-photo" src="./assets/qbo-operators.jpg" alt="Illustrative operators reviewing a finance dashboard. Not a photograph of a NeuralSync client." width="1200" height="1600" loading="lazy">
-            <div class="masonry-shade"></div>
-            <div class="masonry-copy">
-              <div class="masonry-person">
-                <img src="./assets/logo-harbor-line.svg" alt="">
-                Harbor Line
+        <div class="lt-marquee">
+          <div class="lt-qcol">
+            <div class="lt-qtrack">
+              <div class="lt-qset">
+                <article class="lt-qcard lt-q-narrow is-live">
+                  <p>Named as a client. The quote is added when Amax approves the exact wording.</p>
+                  <footer>
+                    <span class="lt-qav" aria-hidden="true">A</span>
+                    <span class="lt-qwho"><strong>Amax</strong><span>Client</span></span>
+                  </footer>
+                </article>
+                <article class="lt-qcard">
+                  <p>This seat takes a name, a role, and the sentence the client signed.</p>
+                  <footer>
+                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
+                    <span class="lt-qwho"><strong>Open seat</strong><span>Signed review</span></span>
+                  </footer>
+                </article>
+                <article class="lt-qcard">
+                  <p>The words stay exactly as approved. Nothing is rewritten into a smoother line.</p>
+                  <footer>
+                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
+                    <span class="lt-qwho"><strong>Open seat</strong><span>Exact wording</span></span>
+                  </footer>
+                </article>
+                <article class="lt-qcard">
+                  <p>A company mark goes on a card only when that company sends it.</p>
+                  <footer>
+                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
+                    <span class="lt-qwho"><strong>Open seat</strong><span>Company mark</span></span>
+                  </footer>
+                </article>
               </div>
-              <p>The close finally lives in the file, not in a Sunday spreadsheet.</p>
-            </div>
-          </article>
-          <figure class="masonry-card quote-card">
-            <blockquote>We stopped rebuilding the same report every month. Classes actually mean something now.</blockquote>
-            <figcaption>
-              <span class="quote-avatar">NS</span>
-              <span><strong>North Studio</strong> Operator voice · layout copy</span>
-            </figcaption>
-          </figure>
-          <article class="masonry-card">
-            <img class="masonry-photo" src="./assets/qbo-report-builder.jpg" alt="Illustrative custom report view. Not a QuickBooks screenshot." width="1600" height="1200" loading="lazy">
-            <div class="masonry-shade"></div>
-            <div class="masonry-copy">
-              <div class="masonry-person">
-                <span class="masonry-mark masonry-mark-hl">VC</span>
-                Vista Coast
+              <div class="lt-qset" aria-hidden="true">
+                <article class="lt-qcard lt-q-narrow is-live">
+                  <p>Named as a client. The quote is added when Amax approves the exact wording.</p>
+                  <footer>
+                    <span class="lt-qav" aria-hidden="true">A</span>
+                    <span class="lt-qwho"><strong>Amax</strong><span>Client</span></span>
+                  </footer>
+                </article>
+                <article class="lt-qcard">
+                  <p>This seat takes a name, a role, and the sentence the client signed.</p>
+                  <footer>
+                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
+                    <span class="lt-qwho"><strong>Open seat</strong><span>Signed review</span></span>
+                  </footer>
+                </article>
+                <article class="lt-qcard">
+                  <p>The words stay exactly as approved. Nothing is rewritten into a smoother line.</p>
+                  <footer>
+                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
+                    <span class="lt-qwho"><strong>Open seat</strong><span>Exact wording</span></span>
+                  </footer>
+                </article>
+                <article class="lt-qcard">
+                  <p>A company mark goes on a card only when that company sends it.</p>
+                  <footer>
+                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
+                    <span class="lt-qwho"><strong>Open seat</strong><span>Company mark</span></span>
+                  </footer>
+                </article>
               </div>
-              <p>Advanced was paid for. Now the unused features are actually on.</p>
             </div>
-          </article>
-          <figure class="masonry-card quote-card">
-            <blockquote>A named reviewer on the close changed the tone of month-end. Exceptions have an owner.</blockquote>
-            <figcaption>
-              <span class="quote-avatar">RC</span>
-              <span><strong>Ridge Co</strong> Controller voice · layout copy</span>
-            </figcaption>
-          </figure>
-          <article class="masonry-card">
-            <img class="masonry-photo" src="./assets/qbo-command-dashboard.jpg" alt="Illustrative operating dashboard. Original NeuralSync mock." width="1600" height="900" loading="lazy">
-            <div class="masonry-shade"></div>
-            <div class="masonry-copy">
-              <div class="masonry-person">
-                <img src="./assets/logo-vista-coast.svg" alt="">
-                Vista Coast
+          </div>
+          <div class="lt-qcol">
+            <div class="lt-qtrack lt-qtrack-rev">
+              <div class="lt-qset">
+                <article class="lt-qcard is-live">
+                  <p>Named as a client. The quote is added when Amax approves the exact wording.</p>
+                  <footer>
+                    <span class="lt-qav" aria-hidden="true">A</span>
+                    <span class="lt-qwho"><strong>Amax</strong><span>Client</span></span>
+                  </footer>
+                </article>
+                <article class="lt-qcard">
+                  <p>A founder, a controller, or the person who owns the file. The name has to be theirs.</p>
+                  <footer>
+                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
+                    <span class="lt-qwho"><strong>Open seat</strong><span>Next name</span></span>
+                  </footer>
+                </article>
+                <article class="lt-qcard">
+                  <p>Send the name with the approved line. That is the whole card.</p>
+                  <footer>
+                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
+                    <span class="lt-qwho"><strong>Open seat</strong><span>Approved line</span></span>
+                  </footer>
+                </article>
               </div>
-              <p>I can see the month before I have to guess it.</p>
-            </div>
-          </article>
-          <figure class="masonry-card quote-card">
-            <blockquote>Setup first, then the repeating close. We always know who owns the file.</blockquote>
-            <figcaption>
-              <span class="quote-avatar">HL</span>
-              <span><strong>Harbor Line</strong> Founder voice · layout copy</span>
-            </figcaption>
-          </figure>
-          <article class="masonry-card">
-            <img class="masonry-photo" src="./assets/remote-accounting-team-concept.png" alt="Illustrative remote accounting team concept. Not a photograph of the NeuralSync team." width="1600" height="1200" loading="lazy">
-            <div class="masonry-shade"></div>
-            <div class="masonry-copy">
-              <div class="masonry-person">
-                <img src="./assets/logo-ridge-co.svg" alt="">
-                Ridge Co
+              <div class="lt-qset" aria-hidden="true">
+                <article class="lt-qcard is-live">
+                  <p>Named as a client. The quote is added when Amax approves the exact wording.</p>
+                  <footer>
+                    <span class="lt-qav" aria-hidden="true">A</span>
+                    <span class="lt-qwho"><strong>Amax</strong><span>Client</span></span>
+                  </footer>
+                </article>
+                <article class="lt-qcard">
+                  <p>A founder, a controller, or the person who owns the file. The name has to be theirs.</p>
+                  <footer>
+                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
+                    <span class="lt-qwho"><strong>Open seat</strong><span>Next name</span></span>
+                  </footer>
+                </article>
+                <article class="lt-qcard">
+                  <p>Send the name with the approved line. That is the whole card.</p>
+                  <footer>
+                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
+                    <span class="lt-qwho"><strong>Open seat</strong><span>Approved line</span></span>
+                  </footer>
+                </article>
               </div>
-              <p>Permissions, workflows, and backup became a habit instead of a panic move.</p>
             </div>
-          </article>
-          <article class="masonry-card">
-            <img class="masonry-photo" src="./assets/ledger-to-clarity.png" alt="Illustrative ledger-to-clarity artwork." width="1600" height="1200" loading="lazy">
-            <div class="masonry-shade"></div>
-            <div class="masonry-copy">
-              <div class="masonry-person">
-                <img src="./assets/logo-north-studio.svg" alt="">
-                North Studio
+          </div>
+          <div class="lt-qcol">
+            <div class="lt-qtrack">
+              <div class="lt-qset">
+                <article class="lt-qcard">
+                  <p>The seat stays open until the name and the wording arrive together.</p>
+                  <footer>
+                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
+                    <span class="lt-qwho"><strong>Open seat</strong><span>Both required</span></span>
+                  </footer>
+                </article>
+                <article class="lt-qcard">
+                  <p>Toronto, Mississauga, Oakville, the rest of the GTA, or a remote file. The rule is the same.</p>
+                  <footer>
+                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
+                    <span class="lt-qwho"><strong>Open seat</strong><span>Any of those files</span></span>
+                  </footer>
+                </article>
+                <article class="lt-qcard">
+                  <p>No borrowed portrait. No borrowed logo.</p>
+                  <footer>
+                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
+                    <span class="lt-qwho"><strong>Open seat</strong><span>Real attribution</span></span>
+                  </footer>
+                </article>
               </div>
-              <p>The management pack arrives before the next decision, not after it.</p>
+              <div class="lt-qset" aria-hidden="true">
+                <article class="lt-qcard">
+                  <p>The seat stays open until the name and the wording arrive together.</p>
+                  <footer>
+                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
+                    <span class="lt-qwho"><strong>Open seat</strong><span>Both required</span></span>
+                  </footer>
+                </article>
+                <article class="lt-qcard">
+                  <p>Toronto, Mississauga, Oakville, the rest of the GTA, or a remote file. The rule is the same.</p>
+                  <footer>
+                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
+                    <span class="lt-qwho"><strong>Open seat</strong><span>Any of those files</span></span>
+                  </footer>
+                </article>
+                <article class="lt-qcard">
+                  <p>No borrowed portrait. No borrowed logo.</p>
+                  <footer>
+                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
+                    <span class="lt-qwho"><strong>Open seat</strong><span>Real attribution</span></span>
+                  </footer>
+                </article>
+              </div>
             </div>
-          </article>
+          </div>
         </div>
-      </div>
-    </section>
-
-    <section class="section proof" id="proof">
-      <div class="section-narrow">
-        <h2>Know the boundary before anyone touches the books.</h2>
-        <p class="lede">The first conversation is a fit check. We confirm the file, the owner, and the review path before proposing work.</p>
-        <div class="assurance-grid">
-          <article>
-            <span>File fit</span>
-            <h3>Advanced, Plus, or something else?</h3>
-            <p>We confirm whether QuickBooks Online Advanced is actually warranted before designing around its features.</p>
-          </article>
-          <article>
-            <span>Scope</span>
-            <h3>Setup, monthly operation, or capacity?</h3>
-            <p>The engagement starts with one explicit lane, named exclusions, and a handoff you can review.</p>
-          </article>
-          <article>
-            <span>Control</span>
-            <h3>Who can change what?</h3>
-            <p>Roles, approvals, and material-change review are agreed before access is configured.</p>
-          </article>
-          <article>
-            <span>Evidence</span>
-            <h3>What will prove the month is working?</h3>
-            <p>We define the close checklist, exception path, and management pack before recurring work begins.</p>
-          </article>
-        </div>
+        <label class="lt-qpause">
+          <input type="checkbox">
+          <span class="lt-qpause-off">Pause motion</span>
+          <span class="lt-qpause-on">Play motion</span>
+        </label>
       </div>
     </section>
 
     <section class="section faq" id="faq">
       <div class="section-narrow">
-        <h2>What this conversation will make explicit.</h2>
-        <p class="lede">The contact form is the start of qualification, not an Intuit purchase and not an engagement.</p>
+        <h2>Questions to ask <span class="lt-keep">before the diagnostic.</span></h2>
         <div class="faq-list">
           <details>
             <summary>Do you sell QuickBooks?</summary>
-            <p>No. Intuit sells QuickBooks Online Advanced. NeuralSync implements the file, turns on the useful Advanced features, and runs the close with a named reviewer. We do not quote Intuit’s promotions or list prices as our own.</p>
+            <p>No. Intuit sells QuickBooks. Ledger Tune keeps the books, coordinates tax records, and advises on that file.</p>
           </details>
           <details>
             <summary>Who is this for?</summary>
-            <p>Startups and mid-size operators in Canada and the United States that are on QuickBooks Online Advanced, moving to it from Plus, or about to buy it and do not want an unconfigured file.</p>
-          </details>
-          <details>
-            <summary>How do I know Advanced is the right plan?</summary>
-            <p>Advanced is usually the right file when you need more than five users, unlimited classes and locations, custom reports, workflows, or tighter permissions. If you only need basic bookkeeping, Plus may still be enough. We will say so.</p>
-          </details>
-          <details>
-            <summary>Will you turn on Intuit Intelligence tools?</summary>
-            <p>Yes, after the chart of accounts and coding structure can support them. Categorization, tax flags, and error review are helpers. A NeuralSync reviewer still owns the close. We do not treat chat answers as books.</p>
+            <p>Owner-managed companies, startups, professional firms, and agencies in Canada and the United States. Day-to-day coverage includes Toronto, Mississauga, Oakville, and the rest of the GTA. Remote work is fine.</p>
           </details>
           <details>
             <summary>What happens after I submit the form?</summary>
-            <p>Umair receives and filters the inquiry, then we email you to schedule a free 30-minute consultation. That call is a scoped discovery of the current QBO file. Larger or complex prospects can later escalate to Taya once that handoff is confirmed.</p>
+            <p>This preview stores the request on this device. It does not send email. When a live inbox is connected, the next step is a 30-minute look at the file.</p>
           </details>
           <details>
             <summary>Do you file our taxes?</summary>
-            <p>No blanket filing promise lives on this page. Tax coordination stays inside a confirmed jurisdiction and a named professional-responsibility boundary.</p>
+            <p>We prepare tax-ready books and schedules, and we work with the accountant who files. That is not a claim that Ledger Tune is the CPA of record.</p>
           </details>
         </div>
       </div>
     </section>
 
+    <section class="lt-ready" aria-labelledby="ready-title">
+      <div class="lt-wrap lt-ready-row">
+        <div>
+          <h2 id="ready-title">Ready for <span class="lt-keep">financial clarity?</span></h2>
+          <p>Book a 30-minute finance diagnostic. We look at the file with you before any work is proposed.</p>
+        </div>
+        <a class="hero-cta" href="#inquiry" data-cta="ready">Book a finance diagnostic</a>
+      </div>
+    </section>
+
     <section class="section inquiry" id="inquiry">
       <div class="section-narrow inquiry-grid">
-        <form class="inquiry-form" id="inquiry-form" name="consultation" method="POST" action="/#inquiry" novalidate data-netlify="true" netlify-honeypot="bot-field">
-          <input type="hidden" name="form-name" value="consultation">
-          <p class="hp" hidden>
-            <label>Leave this field empty <input name="bot-field" tabindex="-1" autocomplete="off"></label>
-          </p>
-          <h2>Book a free 30-minute consultation.</h2>
-          <p class="lede">Three fields. We email you a time. No obligation.</p>
+        <form class="inquiry-form" id="inquiry-form" method="post" action="#inquiry" data-local-preview="true" novalidate>
+          <h2>Book a finance diagnostic.</h2>
+          <p class="lede">Name, work email, and the kind of help you need. This preview stores the request on this device. It does not send email.</p>
           <div class="form-body">
             <div class="field">
               <label for="name">Name <abbr title="required">*</abbr></label>
@@ -579,35 +587,39 @@
             <div class="field">
               <label for="email">Work email <abbr title="required">*</abbr></label>
               <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="email-error" placeholder="you@company.com">
-              <p class="field-error" id="email-error" hidden>Use your work email so we can schedule the consultation.</p>
+              <p class="field-error" id="email-error" hidden>Use your work email so we can schedule the fit check.</p>
             </div>
             <div class="field">
               <label for="need">I need help with</label>
               <select id="need" name="need">
                 <option value="Not sure yet">Not sure yet</option>
-                <option value="Setup">Setup — new or neglected Advanced file</option>
+                <option value="Bookkeeping">Bookkeeping and close</option>
+                <option value="Tax coordination">Tax coordination</option>
+                <option value="Tech services">Technology and the accounting file</option>
+                <option value="Fractional CFO">Fractional CFO and FP&amp;A</option>
+                <option value="Migration">Data migration onto QBO</option>
+                <option value="Setup">Setup — new or neglected file</option>
                 <option value="Operate">Operate — monthly close</option>
                 <option value="Capacity">Capacity — dedicated remote seat</option>
               </select>
             </div>
           </div>
           <div class="form-success" id="form-success" hidden>
-            <h3>Consultation request received.</h3>
-            <p>We will review your file context and email you to schedule a free 30-minute consultation. This is not a commitment to engage.</p>
+            <h3>Request saved on this device.</h3>
+            <p>No email was sent. When a live inbox is connected, the next step is a 30-minute look at the file.</p>
           </div>
           <div class="form-actions">
-            <button class="form-submit" type="submit" id="submit-inquiry">Request a consultation</button>
-            <p class="form-note">We’ll email your work address to book the 30-minute call. No spam.</p>
+            <button class="form-submit" type="submit" id="submit-inquiry">Send the diagnostic request</button>
+            <p class="form-note">Saved on this device only. No email is sent, and nothing is sent to Intuit.</p>
             <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
           </div>
         </form>
         <aside class="preview-card" id="consultation-next">
           <h3>What happens next</h3>
-          <p>Name, work email, one dropdown. Then a 30-minute fit call.</p>
           <ol class="next-steps">
-            <li>You send the form from your work email.</li>
-            <li>We email a time for a free 30-minute consultation.</li>
-            <li>The call confirms Setup, Operate, or Capacity before anyone touches the books.</li>
+            <li>You send your name, work email, and what you need.</li>
+            <li>This preview keeps the request on the device. Nothing is emailed yet.</li>
+            <li>When a live inbox is connected, the next step is a 30-minute look at the file.</li>
           </ol>
         </aside>
       </div>
@@ -615,14 +627,10 @@
   </main>
 
   <footer class="site-footer">
-    <div>NeuralSync. QuickBooks Online Advanced implementation for startups and growing businesses in Canada and the US.</div>
-    <div>
-      <a href="https://www.neuralsync.ca" rel="noreferrer">neuralsync.ca</a>
-      ·
-      <a href="mailto:info@neuralsync.ca">info@neuralsync.ca</a>
-    </div>
+    <a class="brand" href="#top"><img src="./assets/ledger-tune-logo.jpg" alt="Ledger Tune" width="1231" height="706"></a>
+    <div>Ledger Tune. Books, tax coordination, and advice for growing businesses in Canada and the US. QuickBooks Online is the system the work runs in.</div>
   </footer>
-  <a class="mobile-dock is-hidden" id="mobile-dock" href="#inquiry">Book a free 30-min consultation</a>
+  <a class="mobile-dock is-hidden" id="mobile-dock" href="#inquiry" data-cta="mobile_dock">Book a finance diagnostic</a>
   <script src="./app.js"></script>
 </body>
 </html>

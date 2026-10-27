@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Services | Ledger Tune</title>
+  <meta name="description" content="Ledger Tune services: books and close, reporting, and advisory on the accounting file.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="./assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <style>
+    .services-hero {
+      min-height: calc(100vh - var(--nav-h));
+      padding: 48px 7vw 72px;
+      background:
+        radial-gradient(900px 480px at 100% 0%, rgba(139, 99, 255, 0.16), transparent 55%),
+        radial-gradient(800px 500px at 0% 100%, rgba(110, 231, 255, 0.1), transparent 50%),
+        var(--bg);
+    }
+    .services-board {
+      display: grid;
+      grid-template-columns: minmax(240px, 0.9fr) repeat(3, minmax(0, 1.1fr));
+      min-height: 640px;
+      border-top: 1px solid var(--line);
+    }
+    .services-brand {
+      padding: 28px 36px 28px 0;
+    }
+    .services-brand .brand {
+      margin-bottom: 28px;
+    }
+    .services-brand p {
+      max-width: 28ch;
+      margin: 0 0 32px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.5;
+    }
+    .services-col {
+      position: relative;
+      padding: 36px 28px 28px;
+      border-left: 1px dashed var(--line-strong);
+    }
+    .services-col .pillar-mark {
+      left: -8px;
+    }
+    .services-col h2 {
+      margin: 0 0 20px;
+      font-family: var(--serif);
+      font-size: clamp(1.4rem, 2vw, 1.85rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      text-align: left;
+      max-width: 14ch;
+    }
+    .services-col.accent h2 { color: var(--coral); }
+    .services-col.accent .pillar-mark {
+      background: linear-gradient(135deg, var(--coral), var(--violet));
+    }
+    .services-col ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+    .services-col li {
+      position: relative;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.45;
+    }
+    .services-col li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cyan);
+    }
+    .services-col.accent li::before { background: var(--coral); }
+    .services-map {
+      margin-top: 56px;
+      padding-top: 36px;
+      border-top: 1px solid var(--line);
+    }
+    .services-map h2 {
+      margin-bottom: 8px;
+      text-align: left;
+    }
+    .services-map .lede {
+      margin-left: 0;
+      text-align: left;
+    }
+    .services-map img {
+      width: 100%;
+      height: auto;
+      margin-top: 28px;
+      border: 1px solid var(--line);
+      background: #070814;
+    }
+    @media (max-width: 980px) {
+      .services-board {
+        grid-template-columns: 1fr;
+      }
+      .services-col {
+        border-left: 0;
+        border-top: 1px dashed var(--line-strong);
+        padding: 32px 0;
+      }
+      .services-brand { padding: 0 0 24px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#inquiry">Skip to consultation form</a>
+  <header class="site-header" id="site-header">
+    <a class='brand' href='/'>
+      <img src="./assets/ledger-tune-logo.jpg" alt="Ledger Tune" width="1231" height="706">
+    </a>
+    <button class="menu-toggle" type="button" id="menu-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">
+      <span class="bars"></span>
+    </button>
+    <nav class="site-nav" id="site-nav">
+      <a href='/'>Home</a>
+      <a aria-current='page' href='/#services'>Services</a>
+      <a href='/#packages'>Packages</a>
+      <a href='/#inquiry'>Contact us</a>
+      <a class='nav-cta' href='/#inquiry'>Book a consultation</a>
+    </nav>
+  </header>
+
+  <main class="services-hero" id="top">
+    <div class="services-board">
+      <aside class="services-brand">
+        <a class='brand' href='/'>
+          <img src="./assets/ledger-tune-logo.jpg" alt="Ledger Tune" width="1231" height="706">
+        </a>
+        <p>QuickBooks Online Advanced implementation for startups and growing businesses. Intuit sells the software. We make the file usable.</p>
+        <a class='hero-cta' href='/#inquiry'>Book a free 30-min consultation</a>
+      </aside>
+      <article class="services-col">
+        <span class="pillar-mark" aria-hidden="true"></span>
+        <h2>Books &amp; Close</h2>
+        <ul>
+          <li>Bank and credit card reconciliation</li>
+          <li>Categorization, reviewed by a person before it posts</li>
+          <li>Chart of accounts built for how you operate</li>
+          <li>Month-end close checklist inside the Advanced file</li>
+          <li>Named Ledger Tune reviewer on every close</li>
+        </ul>
+      </article>
+      <article class="services-col">
+        <span class="pillar-mark" aria-hidden="true"></span>
+        <h2>Reporting &amp; Compliance</h2>
+        <ul>
+          <li>Classes, locations, and custom roles mapped on purpose</li>
+          <li>Custom report builder and spreadsheet sync</li>
+          <li>Sales-tax flags routed to a reviewer, not left in a chat window</li>
+          <li>Workflow automation for recurring bills and invoices</li>
+          <li>Backup, restore, and receipt capture set up as a habit</li>
+        </ul>
+      </article>
+      <article class="services-col accent">
+        <span class="pillar-mark" aria-hidden="true"></span>
+        <h2>Fractional Controller &amp; Advisory</h2>
+        <ul>
+          <li>Project and job profitability visible before the invoice goes out</li>
+          <li>Budgets, once the books can carry them</li>
+          <li>Monthly management pack for the next decision</li>
+          <li>Operator questions answered from live books, reviewer-checked</li>
+          <li>Multi-currency and multi-user access, configured not guessed</li>
+        </ul>
+      </article>
+    </div>
+
+    <section class="services-map" aria-label="Full services map">
+      <h2>The full map, one Advanced file.</h2>
+      <p class="lede">Shareable HD graphic for social and the client deck. Same copy as the page. No prices. No invented proof.</p>
+      <img src="./assets/qbo-services-map.png" alt="Ledger Tune services map covering Setup, Books and Close, Reporting, and Capacity." width="2400" height="1880">
+    </section>
+  </main>
+  <script>
+    const header = document.getElementById("site-header");
+    const menuToggle = document.getElementById("menu-toggle");
+    menuToggle?.addEventListener("click", () => {
+      const open = header.classList.toggle("is-open");
+      menuToggle.setAttribute("aria-expanded", String(open));
+    });
+  </script>
+</body>
+</html>

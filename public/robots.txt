@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://neuralsync-qbo.netlify.app/sitemap.xml
