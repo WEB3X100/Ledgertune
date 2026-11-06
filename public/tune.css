@@ -1552,3 +1552,31 @@ body.tune .inquiry .section-narrow:not(.inquiry-grid) .inquiry-form {
   margin-inline: auto;
 }
 /* branched-form-narrow */
+
+/* ---- Team page: one profile at a time, alternating photo sides ----
+   Replaces the 4-card grid on /team/ only. Photos are the supplied team
+   portraits; bios and experience are the user's supplied text, verbatim.
+   NOT committed / NOT pushed — awaiting screenshot approval. */
+body.tune .lt-members { display: grid; gap: 28px; margin: 40px 0 8px; }
+body.tune .lt-member { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 40px; padding: 36px; background: #ffffff; border-radius: 20px; box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06); }
+body.tune .lt-member--flip { grid-template-columns: minmax(0, 1fr) 340px; }
+body.tune .lt-member--flip .lt-member-photo { order: 2; }
+body.tune .lt-member-photo { width: 100%; height: 460px; object-fit: cover; object-position: top; border-radius: 16px; }
+body.tune .lt-member-index { margin: 0 0 6px; color: #0c6e5c; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.14em; }
+body.tune .lt-member-body h2 { margin: 0 0 6px; color: #102438; font-size: clamp(1.6rem, 2.4vw, 2.1rem); font-weight: 560; }
+body.tune .lt-member-role { margin: 0 0 16px; color: #0c6e5c; font-size: 1rem; font-weight: 650; }
+body.tune .lt-member-body > p { color: #536475; font-size: 1rem; line-height: 1.6; }
+body.tune .lt-member-body h3 { margin: 26px 0 14px; color: #102438; font-size: 1.05rem; font-weight: 650; letter-spacing: 0.02em; }
+body.tune .lt-member-exp { margin: 0; padding: 0 0 0 14px; list-style: none; border-left: 2px solid #ddf2fa; }
+body.tune .lt-member-exp li { position: relative; padding: 0 0 14px 20px; color: #102438; font-size: 0.95rem; line-height: 1.45; }
+body.tune .lt-member-exp li:last-child { padding-bottom: 0; }
+body.tune .lt-member-exp li::before { content: ""; position: absolute; left: -20px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: #13b89b; border: 2px solid #ffffff; box-shadow: 0 0 0 2px #ddf2fa; }
+body.tune .lt-member-exp li span { display: block; margin-top: 2px; color: #536475; font-size: 0.85rem; }
+body.tune .lt-member-link { color: #0c6e5c; font-weight: 650; text-decoration: none; }
+body.tune .lt-member-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 860px) {
+  body.tune .lt-member, body.tune .lt-member--flip { grid-template-columns: 1fr; gap: 20px; padding: 24px; }
+  body.tune .lt-member--flip .lt-member-photo { order: 0; }
+  body.tune .lt-member-photo { height: 380px; }
+}
+/* team-profiles */
