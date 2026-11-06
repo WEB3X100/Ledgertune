@@ -1416,3 +1416,48 @@ body.tune .lt-reviews-grid .lt-qcard p { font-size: 1.1rem; }
 /* Round 2 fix: role forms sit inside a 3-column grid, so the .section
    viewport padding (7vw each side) must not apply there. */
 body.tune .lt-role .section { padding: 0; }
+
+/* Holographic monogram: a slow iridescent sheen sweeps across the logo so the
+   transparent monogram blends with the navy header/footer instead of sitting
+   in a box. Respects reduced-motion. */
+body.tune .brand { position: relative; }
+body.tune .brand img { display: block; position: relative; z-index: 1; }
+body.tune .brand::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 15%, rgba(255, 0, 128, .16) 35%, rgba(0, 229, 255, .16) 50%, rgba(255, 214, 64, .16) 65%, transparent 85%);
+  background-size: 250% 100%;
+  mix-blend-mode: screen;
+  /* Mask the sheen to the monogram itself, so no rectangle ever shows on the navy. */
+  -webkit-mask-image: url(./assets/ledger-tune-logo.png);
+  mask-image: url(./assets/ledger-tune-logo.png);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: lt-holo 7s linear infinite;
+}
+@keyframes lt-holo {
+  from { background-position: 200% 0; }
+  to { background-position: -50% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.tune .brand::after { animation: none; }
+}
+/* Stat line inside a review card, same convention as the service-card stats:
+   bold figure, source line underneath, always labelled an industry figure. */
+body.tune .lt-qstat { margin: 12px 0 0; font-size: .95rem; color: #102438; }
+body.tune .lt-qstat span { display: block; font-size: .72rem; color: #536475; margin-top: 2px; }
+
+/* What's included list on service pages: numbered, two columns on desktop. */
+body.tune .lt-included { list-style: none; counter-reset: inc; padding: 0; margin: 24px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 18px 32px; }
+body.tune .lt-included li { counter-increment: inc; padding-left: 42px; position: relative; }
+body.tune .lt-included li::before { content: counter(inc, decimal-leading-zero); position: absolute; left: 0; top: 0; font-family: Fraunces, Georgia, serif; font-weight: 600; color: #0c6e5c; }
+@media (max-width: 700px) {
+  body.tune .lt-included { grid-template-columns: 1fr; }
+}
