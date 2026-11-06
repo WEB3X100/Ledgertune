@@ -1461,3 +1461,6 @@ body.tune .lt-included li::before { content: counter(inc, decimal-leading-zero);
 /* Testimonial company logos replace the letter tiles: rounded square, whole
    logo visible, gold border kept so it matches the Amax letter tile. */
 body.tune img.lt-qav { border-radius: 12px; object-fit: contain; background: #ffffff; padding: 0; }
+
+/* Small 5-star row on testimonial cards, under the quote, Google-review style. */
+body.tune .lt-qcard p.lt-qstars { margin: 0; color: #fbbc04; font-size: .85rem; letter-spacing: 2px; line-height: 1; }
