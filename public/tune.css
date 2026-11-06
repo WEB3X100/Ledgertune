@@ -1526,19 +1526,10 @@ body.tune .lt-hub-mark { position: absolute; right: -14px; bottom: -18px; width:
 }
 /* tools-flow-concept */
 
-/* ---- Header alignment: nav + CTA on the monogram's centreline ----
-   Measured 2026-11-06: header 92px; logo 78px (top 7); monogram centre
-   36.5px from header top; nav row 26px and CTA 48px were both centred
-   at 46px (header centre) — 9.5px below the monogram, lined up with the
-   gap between monogram and wordmark. Desktop only; mobile keeps its own
-   header layout. NOT committed / NOT pushed — awaiting screenshot approval. */
-@media (min-width: 981px) {
-  body.tune .site-header { align-items: flex-start; }
-  body.tune .site-header .brand { margin-top: 7px; }
-  body.tune .site-header .site-nav { margin-top: 23px; }
-  body.tune .site-header .nav-cta { margin-top: 12px; }
-}
-/* header-monogram-align */
+/* header-monogram-align REMOVED 2026-11-06 17:23 — user asked for the nav
+   centred in the blue band instead, so the header is back to
+   align-items: center (base styles.css). Nav + CTA centre on the band's
+   middle, exactly beside each other. */
 
 /* ---- Branched-page diagnostic form: narrower box, same side spacing ----
    The white form card on branched pages filled the whole 1280px content
