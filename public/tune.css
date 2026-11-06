@@ -1338,3 +1338,81 @@ body.tune .lt-team-card li::before { content: "\2713"; position: absolute; left:
 @media (max-width: 560px) {
   body.tune .lt-team-grid { grid-template-columns: 1fr; }
 }
+
+/* Round 2: Services dropdown in the nav */
+body.tune .nav-drop-wrap { position: relative; }
+body.tune .nav-drop-btn {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  color: #e7eef4;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0;
+}
+body.tune .nav-drop-btn:hover { color: #ffffff; }
+body.tune .nav-drop-btn::after { content: "\25BE"; margin-left: 6px; font-size: 0.8em; }
+body.tune .nav-drop {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  min-width: 250px;
+  background: #0b2031;
+  border-radius: 12px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+  padding: 8px;
+  display: none;
+  z-index: 70;
+}
+body.tune .nav-drop-wrap:hover .nav-drop,
+body.tune .nav-drop-wrap:focus-within .nav-drop,
+body.tune .nav-drop-wrap.is-open .nav-drop { display: block; }
+body.tune .nav-drop a { display: block; padding: 10px 12px; border-radius: 8px; }
+body.tune .nav-drop a:hover { background: rgba(255, 255, 255, 0.08); }
+
+/* Round 2: footer links (Prompt 6) */
+body.tune .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
+body.tune .footer-links a { color: #d5e0e8; font-weight: 600; }
+body.tune .footer-links a:hover { color: #ffffff; }
+
+/* Round 2: Process step links (Prompt 6) */
+body.tune .lt-steps h3 a { color: #102438; text-decoration: none; }
+body.tune .lt-steps h3 a:hover { color: #0c6e5c; text-decoration: underline; text-underline-offset: 3px; }
+
+/* Round 2: team cards are links to the roles page */
+body.tune a.lt-team-card { display: block; text-decoration: none; color: inherit; }
+body.tune a.lt-team-card:hover { box-shadow: 0 16px 32px rgba(0, 0, 0, 0.16); }
+
+/* Round 2: good-fit line on service subpages */
+body.tune .fit-line { color: #536475; margin: 24px 0 0; }
+body.tune .fit-line strong { color: #102438; }
+
+/* Round 2: roles page — three columns, form under each card */
+body.tune .lt-roles-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 28px; }
+body.tune .lt-role { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+body.tune .lt-role .inquiry-form h2 { font-size: 1.35rem; }
+@media (max-width: 1020px) {
+  body.tune .lt-roles-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  body.tune .lt-roles-grid { grid-template-columns: 1fr; }
+}
+
+/* Round 2: Client Reviews page — bigger boxes */
+body.tune .lt-reviews-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 28px; }
+body.tune .lt-reviews-grid .lt-qcard { padding: 28px; }
+body.tune .lt-reviews-grid .lt-qcard p { font-size: 1.1rem; }
+@media (max-width: 640px) {
+  body.tune .lt-reviews-grid { grid-template-columns: 1fr; }
+}
+
+/* Round 2: dropdown opens as a plain list inside the mobile menu */
+@media (max-width: 980px) {
+  body.tune .nav-drop { position: static; display: block; box-shadow: none; background: transparent; padding: 4px 0 0 12px; }
+  body.tune .nav-drop-btn::after { content: ""; }
+}
+
+/* Round 2 fix: role forms sit inside a 3-column grid, so the .section
+   viewport padding (7vw each side) must not apply there. */
+body.tune .lt-role .section { padding: 0; }

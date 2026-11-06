@@ -91,6 +91,7 @@ document.querySelectorAll(".close-state").forEach((button) => {
 
 const requiredFields = [
   { name: "name", error: "name-error" },
+  { name: "company", error: "company-error" },
   { name: "email", error: "email-error" },
 ];
 
@@ -102,7 +103,9 @@ function readForm() {
   const data = new FormData(form);
   return {
     name: String(data.get("name") || "").trim(),
+    company: String(data.get("company") || "").trim(),
     email: String(data.get("email") || "").trim(),
+    phone: String(data.get("phone") || "").trim(),
     need: String(data.get("need") || "Not sure yet").trim(),
   };
 }
@@ -218,6 +221,22 @@ menuToggle?.addEventListener("click", () => {
     headerFormWrap.hidden = true;
     openHeaderForm?.setAttribute("aria-expanded", "false");
   }
+});
+
+// Services dropdown (Round 2): click toggles on desktop; hover/focus also opens it.
+document.querySelectorAll(".nav-drop-btn").forEach((btn) => {
+  btn.addEventListener("click", (event) => {
+    event.stopPropagation();
+    const wrap = btn.closest(".nav-drop-wrap");
+    const open = wrap.classList.toggle("is-open");
+    btn.setAttribute("aria-expanded", String(open));
+  });
+});
+document.addEventListener("click", () => {
+  document.querySelectorAll(".nav-drop-wrap.is-open").forEach((wrap) => {
+    wrap.classList.remove("is-open");
+    wrap.querySelector(".nav-drop-btn")?.setAttribute("aria-expanded", "false");
+  });
 });
 
 document.querySelectorAll("#site-nav a").forEach((link) => {

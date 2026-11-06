@@ -15,13 +15,23 @@
     <a class="brand" href="/"><img src="../assets/ledger-tune-logo.jpg" alt="Ledger Tune" width="1231" height="706"></a>
     <nav class="site-nav">
       <a href="/">Home</a>
-      <a href="/#services">Services</a>
-      <a href="/#reviews">Client Reviews</a>
-      <a href="/#team">Our Team</a>
-      <a href="/#about">About</a>
-      <a href="/#diagnostic-form">Contact Us</a>
+      <div class="nav-drop-wrap">
+        <button class="nav-drop-btn" type="button" aria-expanded="false" aria-haspopup="true">Services</button>
+        <div class="nav-drop" role="menu">
+          <a href="/#services">All services</a>
+          <a href="/accounting/">Accounting</a>
+          <a href="/bookkeeping/">Bookkeeping</a>
+          <a href="/business-advisory/">Business Advisory</a>
+          <a href="/tax/">Tax</a>
+          <a href="/family-business-advisory/">Family Business Advisory</a>
+        </div>
+      </div>
+      <a href="/client-reviews/">Client Reviews</a>
+      <a href="/team/">Our Team</a>
+      <a href="/about/">About</a>
+      <a href="#diagnostic-form">Contact Us</a>
     </nav>
-    <a class="nav-cta header-cta" href="/#diagnostic-form">Free Finance Diagnostic</a>
+    <a class="nav-cta header-cta" href="#diagnostic-form">Book Free Finance Diagnostic</a>
   </header>
   <main>
     <section class="section">
@@ -42,14 +52,115 @@
             <p>You keep access to the file and decide how to run the business. Tax filing remains with the accountant engaged for that work.</p>
           </article>
         </div>
-        <p class="proof-cta"><a class="hero-cta" href="/#diagnostic-form">Free Finance Diagnostic</a></p>
+<p class="fit-line"><strong>A good fit:</strong> A good fit when the books need to be clean, reconciled, and reported every month.</p>
+<section class="section">
+      <div class="section-narrow">
+        <h2>Three ways to work with us.</h2>
+        <div class="pkg-grid">
+          <article class="pkg">
+            <h3>Automation only</h3>
+            <p>Software and workflows handle the routine work.</p>
+          </article>
+          <article class="pkg">
+            <h3>Dedicated talent</h3>
+            <p>A dedicated person works on your file.</p>
+          </article>
+          <article class="pkg">
+            <h3>Hybrid team</h3>
+            <p>Automation plus dedicated talent, together.</p>
+          </article>
+        </div>
       </div>
     </section>
-  </main>
+<section class="lt-band lt-process">
+      <div class="lt-wrap">
+        <h2>How it will work.</h2>
+<ol class="lt-steps">
+          <li>
+            <span>1</span>
+            <h3><a class="lt-step-link" href="/accounting/">Data intake</a></h3>
+            <p>Collect and organize the financial records from the sources you already use.</p>
+          </li>
+          <li>
+            <span>2</span>
+            <h3><a class="lt-step-link" href="/bookkeeping/">Clean and reconcile</a></h3>
+            <p>Fix errors, match transactions, and reconcile the accounts.</p>
+          </li>
+          <li>
+            <span>3</span>
+            <h3><a class="lt-step-link" href="/tax/">Close and report</a></h3>
+            <p>Deliver the financial statements and the reports the month needs.</p>
+          </li>
+          <li>
+            <span>4</span>
+            <h3><a class="lt-step-link" href="/business-advisory/">Review the numbers</a></h3>
+            <p>Walk through the results and the items that need a decision.</p>
+          </li>
+          <li>
+            <span>5</span>
+            <h3><a class="lt-step-link" href="/family-business-advisory/">Ongoing support</a></h3>
+            <p>Keep the books current and stay with the file after the first close.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+        <p class="proof-cta"><a class="hero-cta" href="#diagnostic-form">Book Free Finance Diagnostic</a></p>
+      </div>
+    </section>
+  <section class="section inquiry" id="diagnostic-form">
+      <div class="section-narrow">
+        <!-- Netlify form notifications must be set to hello@ledgertune.com in Site settings > Forms -->
+        <form class="inquiry-form" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="free-finance-diagnostic-accounting">
+          <p hidden><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
+          <h2>Book Free Finance Diagnostic.</h2>
+          <p class="form-note">Prefer to talk first? Email <a href="mailto:hello@ledgertune.com">hello@ledgertune.com</a> or call <a href="tel:+16478897654">+1-647-889-7654</a>.</p>
+          <p class="lede">Name, company name, work email, phone number, and the kind of help you need.</p>
+<div class="form-body">
+            <div class="field">
+              <label for="name-accounting">Name <abbr title="required">*</abbr></label>
+              <input id="name-accounting" name="name" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="company-accounting">Company name <abbr title="required">*</abbr></label>
+              <input id="company-accounting" name="company" autocomplete="organization" required>
+            </div>
+            <div class="field">
+              <label for="email-accounting">Work email <abbr title="required">*</abbr></label>
+              <input id="email-accounting" name="email" type="email" autocomplete="email" inputmode="email" required placeholder="you@company.com">
+            </div>
+            <div class="field">
+              <label for="phone-accounting">Phone number</label>
+              <input id="phone-accounting" name="phone" type="tel" autocomplete="tel" inputmode="tel">
+            </div>
+            <div class="field">
+              <label for="need-accounting">I need help with</label>
+              <select id="need-accounting" name="need">
+                <option value="Not sure yet">Not sure yet</option>
+                <option value="Accounting Services" selected>Accounting Services</option>
+                <option value="Bookkeeping Services">Bookkeeping Services</option>
+                <option value="Business Advisory Services">Business Advisory Services</option>
+                <option value="Tax Services">Tax Services</option>
+                <option value="Family Business Advisory">Family Business Advisory</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="form-submit" type="submit">Send the diagnostic request</button>
+            <p class="form-note">Book a free 30-minute finance diagnostic. We look at the file with you before any work is proposed.</p>
+          </div>
+        </form>
+      </div>
+    </section></main>
   <footer class="site-footer">
     <a class="brand" href="/"><img src="../assets/ledger-tune-logo.jpg" alt="Ledger Tune" width="1231" height="706"></a>
     <div class="footer-info">
       <div>Ledger Tune. Books, tax coordination, and advice for growing businesses in Canada and the US. QuickBooks Online is the system the work runs in.</div>
+<nav class="footer-links" aria-label="Footer">
+        <a href="/#services">Services</a>
+        <a href="/about/">About</a>
+        <a href="#diagnostic-form">Contact Us</a>
+      </nav>
       <div class="footer-contact">
         <a href="mailto:hello@ledgertune.com">hello@ledgertune.com</a>
         <a href="tel:+16478897654">+1-647-889-7654</a>
