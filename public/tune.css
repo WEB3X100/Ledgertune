@@ -847,7 +847,7 @@ body.tune .lt-steps span {
 }
 
 body.tune .lt-steps li:nth-child(4) span { background: #d9f6ef; }
-body.tune .lt-steps li:nth-child(5) span { background: #ffe1dc; }
+body.tune .lt-steps li:nth-child(5) span { background: #ddf2fa; }
 
 body.tune .lt-steps h3 {
   margin: 0 0 8px;
@@ -1464,3 +1464,91 @@ body.tune img.lt-qav { border-radius: 12px; object-fit: contain; background: #ff
 
 /* Small 5-star row on testimonial cards, under the quote, Google-review style. */
 body.tune .lt-qcard p.lt-qstars { margin: 0; color: #fbbc04; font-size: .85rem; letter-spacing: 2px; line-height: 1; }
+
+/* ---- Services section concept: light cards on the navy panel ----
+   Creative rework for Usman's review. Content untouched (same 5 cards, same
+   copy, stats, sources, links). CSS-only override of the Hersom dark cards.
+   NOT committed / NOT pushed — awaiting screenshot approval. */
+body.tune #services .lt-card { background: #ffffff; color: #102438; border: 1px solid #e6ebef; border-top: 5px solid var(--accent2); box-shadow: 0 12px 24px rgba(0,0,0,0.12); }
+body.tune #services .lt-card:hover, body.tune #services .lt-card:focus-within { transform: translateY(-6px); border-color: #d5dee5; border-top-color: var(--accent2); box-shadow: 0 20px 36px rgba(0,0,0,0.18); z-index: 2; }
+body.tune #services .lt-card.lt-featured { transform: none; border: 1px solid var(--accent2); border-top: 5px solid var(--accent2); box-shadow: 0 16px 32px rgba(0,0,0,0.16); }
+body.tune #services .lt-card.lt-featured:hover, body.tune #services .lt-card.lt-featured:focus-within { transform: translateY(-6px); }
+body.tune #services .lt-visual { height: auto; padding: 26px 24px 0; background: transparent; overflow: visible; }
+body.tune #services .lt-visual::after { display: none; }
+body.tune #services .lt-visual--purple, body.tune #services .lt-visual--teal, body.tune #services .lt-visual--coral, body.tune #services .lt-visual--sky, body.tune #services .lt-visual--gold { background: transparent; }
+body.tune #services .lt-hex { width: 84px; height: 94px; filter: drop-shadow(0 8px 14px rgba(16,36,56,0.18)); }
+body.tune #services .lt-hex-glass { fill: var(--accent2); fill-opacity: 1; stroke: none; }
+body.tune #services .lt-hex-shine { fill-opacity: 0; }
+body.tune #services .lt-hex-icon svg { width: 36px; height: 36px; stroke-width: 2.2; filter: none; }
+body.tune #services .lt-card.lt-featured .lt-hex { transform: none; }
+body.tune #services .lt-card:hover .lt-hex, body.tune #services .lt-card:focus-within .lt-hex { transform: scale(1.08) rotate(-2deg); }
+body.tune #services .lt-card-body { padding: 16px 24px 24px; }
+body.tune #services .lt-card-body h3 { color: #102438; }
+body.tune #services .lt-card-body > p { color: #536475; }
+body.tune #services .lt-card-body .lt-stat { margin-top: auto; padding-top: 14px; border-top: 1px solid #e6ebef; color: #102438; }
+body.tune #services .lt-card-body .lt-stat strong { display: block; margin-bottom: 4px; color: var(--accent2); font-size: 1.4rem; line-height: 1.15; white-space: nowrap; }
+body.tune #services .lt-card-body .lt-stat-source { color: #536475; margin-bottom: 16px; }
+body.tune #services .lt-learn { margin-top: 0; color: var(--accent2); border: 1px solid var(--accent2); background: transparent; }
+body.tune #services .lt-card:hover .lt-learn, body.tune #services .lt-card:focus-within .lt-learn, body.tune #services .lt-card.lt-featured .lt-learn { background: var(--accent2); border-color: var(--accent2); color: #ffffff; }
+/* services-concept-light */
+
+/* Header nav: all six items on one line, never wrapping (desktop). */
+body.tune .site-nav { flex-wrap: nowrap; align-items: center; }
+body.tune .site-nav a, body.tune .site-nav .nav-drop-btn { white-space: nowrap; flex-shrink: 0; }
+@media (max-width: 1180px) and (min-width: 981px) {
+  body.tune .site-nav { gap: 14px; }
+  body.tune .site-header .site-nav a:not(.nav-cta), body.tune .site-nav .nav-drop-btn { font-size: 0.9rem; }
+}
+/* site-nav-one-line */
+
+/* ---- Tools section concept: your files feed into QuickBooks ----
+   Replaces the straight line of pills. Same content, same words: the four
+   data sources on the left flow into the QuickBooks Online hub on the right.
+   NOT committed / NOT pushed — awaiting screenshot approval. */
+body.tune .lt-tools-flow { display: flex; align-items: stretch; gap: 14px; margin: 18px 0 14px; }
+body.tune .lt-sources { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1 1 auto; min-width: 0; margin: 0; padding: 0; list-style: none; }
+body.tune .lt-sources li { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: #f8fafb; border-radius: 14px; color: #102438; font-weight: 650; }
+body.tune .lt-src-icon { width: 40px; height: 40px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 12px; background: #ddf2fa; color: #0b2031; }
+body.tune .lt-src-icon svg { width: 22px; height: 22px; stroke-width: 1.8; }
+body.tune .lt-src-text { display: flex; flex-direction: column; min-width: 0; }
+body.tune .lt-src-text span { color: #536475; font-size: 0.75rem; font-weight: 600; }
+body.tune .lt-flow-arrow { display: flex; align-items: center; justify-content: center; flex: 0 0 auto; color: #0c6e5c; font-size: 2rem; font-weight: 700; line-height: 1; }
+body.tune .lt-hub { position: relative; overflow: hidden; flex: 0 0 300px; display: flex; flex-direction: column; justify-content: center; padding: 28px 24px; background: #0b2031; border-radius: 16px; color: #ffffff; }
+body.tune .lt-hub strong { position: relative; z-index: 1; font-family: Fraunces, Georgia, serif; font-size: 1.3rem; font-weight: 560; line-height: 1.2; }
+body.tune .lt-hub span { position: relative; z-index: 1; margin-top: 6px; color: #d5e0e8; font-size: 0.85rem; font-weight: 600; }
+body.tune .lt-hub-mark { position: absolute; right: -14px; bottom: -18px; width: 130px; height: 130px; color: #ffffff; opacity: 0.08; stroke-width: 1.4; }
+@media (max-width: 700px) {
+  body.tune .lt-tools-flow { flex-direction: column; }
+  body.tune .lt-flow-arrow { transform: rotate(90deg); }
+  body.tune .lt-hub { flex: none; }
+  body.tune .lt-sources li { flex-direction: column; align-items: flex-start; gap: 8px; padding: 12px 14px; }
+  body.tune .lt-src-icon { width: 36px; height: 36px; }
+}
+/* tools-flow-concept */
+
+/* ---- Header alignment: nav + CTA on the monogram's centreline ----
+   Measured 2026-11-06: header 92px; logo 78px (top 7); monogram centre
+   36.5px from header top; nav row 26px and CTA 48px were both centred
+   at 46px (header centre) — 9.5px below the monogram, lined up with the
+   gap between monogram and wordmark. Desktop only; mobile keeps its own
+   header layout. NOT committed / NOT pushed — awaiting screenshot approval. */
+@media (min-width: 981px) {
+  body.tune .site-header { align-items: flex-start; }
+  body.tune .site-header .brand { margin-top: 7px; }
+  body.tune .site-header .site-nav { margin-top: 23px; }
+  body.tune .site-header .nav-cta { margin-top: 12px; }
+}
+/* header-monogram-align */
+
+/* ---- Branched-page diagnostic form: narrower box, same side spacing ----
+   The white form card on branched pages filled the whole 1280px content
+   width. Narrowed a little (1020px) and centred, so the gap on the left
+   and right stays equal; internal padding (28px) unchanged. Scoped to the
+   single-column form only — the homepage keeps its two-column
+   .inquiry-grid layout untouched. NOT committed / NOT pushed — awaiting
+   screenshot approval. */
+body.tune .inquiry .section-narrow:not(.inquiry-grid) .inquiry-form {
+  max-width: 1020px;
+  margin-inline: auto;
+}
+/* branched-form-narrow */
