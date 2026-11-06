@@ -1449,10 +1449,6 @@ body.tune .brand::after {
 @media (prefers-reduced-motion: reduce) {
   body.tune .brand::after { animation: none; }
 }
-/* Stat line inside a review card, same convention as the service-card stats:
-   bold figure, source line underneath, always labelled an industry figure. */
-body.tune .lt-qstat { margin: 12px 0 0; font-size: .95rem; color: #102438; }
-body.tune .lt-qstat span { display: block; font-size: .72rem; color: #536475; margin-top: 2px; }
 
 /* What's included list on service pages: numbered, two columns on desktop. */
 body.tune .lt-included { list-style: none; counter-reset: inc; padding: 0; margin: 24px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 18px 32px; }
