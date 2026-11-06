@@ -1457,3 +1457,7 @@ body.tune .lt-included li::before { content: counter(inc, decimal-leading-zero);
 @media (max-width: 700px) {
   body.tune .lt-included { grid-template-columns: 1fr; }
 }
+
+/* Testimonial company logos replace the letter tiles: rounded square, whole
+   logo visible, gold border kept so it matches the Amax letter tile. */
+body.tune img.lt-qav { border-radius: 12px; object-fit: contain; background: #ffffff; padding: 0; }
