@@ -19,7 +19,7 @@
 </head>
 <body class="tune">
   <a id="top" class="page-top" tabindex="-1">Top of page</a>
-  <a class="skip-link" href="#inquiry">Skip to the diagnostic form</a>
+  <a class="skip-link" href="#diagnostic-form">Skip to the diagnostic form</a>
   <div class="review-strip" id="review-strip" hidden>
     <button class="review-toggle" type="button" id="toggle-review" aria-expanded="false" aria-controls="review-panel">Team draft</button>
     <div class="review-panel" id="review-panel" hidden>
@@ -38,15 +38,19 @@
       <span class="bars"></span>
     </button>
     <nav class="site-nav" id="site-nav">
+      <a href="#top">Home</a>
       <a href="#services">Services</a>
-      <a href="#process">Process</a>
-      <a href="#reports">Reports</a>
-      <a href="#reviews">Reviews</a>
-      <a href="#inquiry">Contact</a>
+      <a href="#reviews">Client Reviews</a>
+      <a href="#team">Our Team</a>
+      <a href="#about">About</a>
+      <a href="#diagnostic-form">Contact Us</a>
     </nav>
     <button class="nav-cta header-cta" type="button" id="open-header-form" aria-expanded="false" aria-controls="header-form">Free Finance Diagnostic</button>
     <div class="header-form" id="header-form" hidden>
-      <form id="header-inquiry-form" method="post" action="#inquiry" novalidate>
+      <!-- Netlify form notifications must be set to hello@ledgertune.com in Site settings > Forms -->
+      <form id="header-inquiry-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <input type="hidden" name="form-name" value="free-finance-diagnostic-header">
+        <p hidden><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
         <p class="header-form-title">Free Finance Diagnostic</p>
         <label>Name
           <input name="name" autocomplete="name" required>
@@ -57,17 +61,16 @@
         <label>What do you need?
           <select name="need">
             <option>Not sure yet</option>
-            <option>Bookkeeping</option>
-            <option>Tax coordination</option>
-            <option>Tech services</option>
-            <option>Setup</option>
-            <option>Operate</option>
-            <option>Capacity</option>
+            <option>Accounting Services</option>
+            <option>Bookkeeping Services</option>
+            <option>Business Advisory Services</option>
+            <option>Tax Services</option>
+            <option>Family Business Advisory</option>
           </select>
         </label>
         <button class="form-submit" type="submit">Send the request</button>
         <p class="header-form-status" id="header-form-status" role="status"></p>
-        <p class="form-note">Saved on this preview only. No email is sent yet. <a href="#inquiry">Open the full form</a></p>
+        <p class="form-note">Prefer the full form? <a href="#diagnostic-form">Open the full form</a></p>
       </form>
     </div>
   </header>
@@ -79,7 +82,7 @@
           <h1 id="hero-title">Fed up with your accountant? Get an accounting team that answers.</h1>
           <p class="hero-lead">We turn messy records into reconciled books, reliable reporting, and better business decisions.</p>
           <div class="hero-actions">
-            <a class="hero-cta" href="#inquiry" data-cta="hero">Free Finance Diagnostic</a>
+            <a class="hero-cta" href="#diagnostic-form" data-cta="hero">Free Finance Diagnostic</a>
             <a class="hero-cta hero-secondary" href="#process" data-cta="hero-secondary">See how it works</a>
           </div>
           <ul class="lt-marks">
@@ -153,6 +156,55 @@
       </div>
     </section>
 
+    <section class="section inquiry" id="diagnostic-form">
+      <div class="section-narrow inquiry-grid">
+        <!-- Netlify form notifications must be set to hello@ledgertune.com in Site settings > Forms -->
+        <form class="inquiry-form" id="inquiry-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+          <input type="hidden" name="form-name" value="free-finance-diagnostic">
+          <p hidden><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
+          <h2>Free Finance Diagnostic.</h2>
+          <p class="form-note">Prefer to talk first? Email <a href="mailto:hello@ledgertune.com">hello@ledgertune.com</a> or call <a href="tel:+16478897654">+1-647-889-7654</a>.</p>
+          <p class="lede">Name, work email, and the kind of help you need.</p>
+          <div class="form-body">
+            <div class="field">
+              <label for="name">Name <abbr title="required">*</abbr></label>
+              <input id="name" name="name" autocomplete="name" required aria-describedby="name-error">
+              <p class="field-error" id="name-error" hidden>Add your name so we know who to reply to.</p>
+            </div>
+            <div class="field">
+              <label for="email">Work email <abbr title="required">*</abbr></label>
+              <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="email-error" placeholder="you@company.com">
+              <p class="field-error" id="email-error" hidden>Use your work email so we can schedule the fit check.</p>
+            </div>
+            <div class="field">
+              <label for="need">I need help with</label>
+              <select id="need" name="need">
+                <option value="Not sure yet">Not sure yet</option>
+                <option value="Accounting Services">Accounting Services</option>
+                <option value="Bookkeeping Services">Bookkeeping Services</option>
+                <option value="Business Advisory Services">Business Advisory Services</option>
+                <option value="Tax Services">Tax Services</option>
+                <option value="Family Business Advisory">Family Business Advisory</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="form-submit" type="submit" id="submit-inquiry">Send the diagnostic request</button>
+            <p class="form-note">Book a free 30-minute finance diagnostic. We look at the file with you before any work is proposed.</p>
+            <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+        <aside class="preview-card" id="consultation-next">
+          <h3>What happens next</h3>
+          <ol class="next-steps">
+            <li>You send your name, work email, and what you need.</li>
+            <li>We reply from hello@ledgertune.com to set up the call.</li>
+            <li>The next step is a 30-minute look at the file.</li>
+          </ol>
+        </aside>
+      </div>
+    </section>
+
     <section class="lt-tools" aria-labelledby="tools-title">
       <div class="lt-wrap">
         <div class="lt-tools-panel">
@@ -220,57 +272,86 @@
       </div>
     </section>
 
-    <section class="lt-services" id="services" aria-labelledby="services-title">
+        <section class="lt-services" id="services" aria-labelledby="services-title">
       <div class="lt-wrap">
         <div class="lt-services-panel">
           <h2 id="services-title">Complete financial support <span class="lt-keep">for growing businesses.</span></h2>
           <p>Five services, one file that closes.</p>
-          <div class="lt-cards">
-            <article class="lt-card">
-              <div class="lt-icon i-chart" aria-hidden="true">
-                <svg viewBox="0 0 32 32"><path d="M7 25.5V7M7 25.5h18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M11 20.5l4.2-5.2 3.4 2.6 6-7.4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="lt-cards lt-cards--hersom" id="lt-cards">
+            <article class="lt-card lt-card--purple" tabindex="0">
+              <div class="lt-visual lt-visual--purple">
+                <div class="lt-hex">
+                  <svg class="lt-hex-shape" viewBox="0 0 104 116" aria-hidden="true"><path class="lt-hex-glass" d="M52 2 100 30v56L52 114 4 86V30Z"/><path class="lt-hex-shine" d="M52 4 98 30 52 56 6 30Z"/></svg>
+                  <span class="lt-hex-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/><path d="M9 7h7M9 11h5"/></svg></span>
+                </div>
               </div>
-              <h3>Accounting Services</h3>
-              <p>Accounting services for successful business owners, with strong value and a clear picture of the business.</p>
-              <p class="lt-stat" style="margin: 0 0 8px; color: #536475; font: 400 0.95rem/1.45 Inter, sans-serif;"><strong style="font-family: Fraunces, serif; font-size: 1.6rem; font-weight: 700; color: #0c6e5c;">82%</strong> of small business failures are tied to poor cash flow management — not lack of profit.</p>
-              <p class="lt-stat-source" style="margin: 0; color: #536475; font: 400 0.72rem/1.4 Inter, sans-serif;">U.S. Bank study, widely cited.</p>
-              <a href="/accounting/">Learn more</a>
+              <div class="lt-card-body">
+                <h3>Accounting Services</h3>
+                <p>Accounting services for successful business owners, with strong value and a clear picture of the business.</p>
+                <p class="lt-stat"><strong>82%</strong> of small business failures are tied to poor cash flow management.</p>
+                <p class="lt-stat-source">Source: U.S. Bank study. Industry figure, not a LedgerTune result.</p>
+                <a class="lt-learn" href="/accounting/">Learn more</a>
+              </div>
             </article>
-            <article class="lt-card">
-              <div class="lt-icon i-book" aria-hidden="true">
-                <svg viewBox="0 0 32 32"><path d="M7 6.5h7.2A2.8 2.8 0 0 1 17 9.3V26H9.4A2.4 2.4 0 0 0 7 28.4V6.5zM25 6.5h-7.2A2.8 2.8 0 0 0 15 9.3V26h7.6A2.4 2.4 0 0 1 25 28.4V6.5z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/></svg>
+            <article class="lt-card lt-card--teal lt-featured" tabindex="0">
+              <div class="lt-visual lt-visual--teal">
+                <div class="lt-hex">
+                  <svg class="lt-hex-shape" viewBox="0 0 104 116" aria-hidden="true"><path class="lt-hex-glass" d="M52 2 100 30v56L52 114 4 86V30Z"/><path class="lt-hex-shine" d="M52 4 98 30 52 56 6 30Z"/></svg>
+                  <span class="lt-hex-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01"/></svg></span>
+                </div>
               </div>
-              <h3>Bookkeeping Services</h3>
-              <p>Affordable bookkeeping for businesses and nonprofits. Outsource it, and focus on growing your business.</p>
-              <p class="lt-stat" style="margin: 0 0 8px; color: #536475; font: 400 0.95rem/1.45 Inter, sans-serif;"><strong style="font-family: Fraunces, serif; font-size: 1.6rem; font-weight: 700; color: #0c6e5c;">21–40+ hours a month</strong> — what nearly 1 in 5 Canadian owners spend on financial admin.</p>
-              <p class="lt-stat-source" style="margin: 0; color: #536475; font: 400 0.72rem/1.4 Inter, sans-serif;">Dext, Built for Bigger Things, 500 Canadian SMBs, June 2025.</p>
-              <a href="/bookkeeping/">Learn more</a>
+              <div class="lt-card-body">
+                <h3>Bookkeeping Services</h3>
+                <p>Affordable bookkeeping for businesses and nonprofits. Outsource it, and focus on growing your business.</p>
+                <p class="lt-stat"><strong>21–40+ hours a month</strong> — what nearly 1 in 5 Canadian owners spend on financial admin.</p>
+                <p class="lt-stat-source">Source: Dext, Built for Bigger Things, 2025. Industry figure, not a LedgerTune result.</p>
+                <a class="lt-learn" href="/bookkeeping/">Learn more</a>
+              </div>
             </article>
-            <article class="lt-card">
-              <div class="lt-icon i-chart" aria-hidden="true">
-                <svg viewBox="0 0 32 32"><path d="M7 25.5V7M7 25.5h18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><path d="M11 20.5l4.2-5.2 3.4 2.6 6-7.4" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <article class="lt-card lt-card--coral" tabindex="0">
+              <div class="lt-visual lt-visual--coral">
+                <div class="lt-hex">
+                  <svg class="lt-hex-shape" viewBox="0 0 104 116" aria-hidden="true"><path class="lt-hex-glass" d="M52 2 100 30v56L52 114 4 86V30Z"/><path class="lt-hex-shine" d="M52 4 98 30 52 56 6 30Z"/></svg>
+                  <span class="lt-hex-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/><path d="M19 6h-3M19 6v3"/></svg></span>
+                </div>
               </div>
-              <h3>Business Advisory Services</h3>
-              <p>A big-picture plan for your business, built from your actual numbers.</p>
-              <a href="/business-advisory/">Learn more</a>
+              <div class="lt-card-body">
+                <h3>Business Advisory Services</h3>
+                <p>A big-picture plan for your business, built from your actual numbers.</p>
+                <p class="lt-stat"><strong>57%</strong> less likely to see their business fail — founders who completed a business plan, in a study of 622 new ventures.</p>
+                <p class="lt-stat-source">Source: 622-venture study, cited by LivePlan. Industry figure, not a LedgerTune result.</p>
+                <a class="lt-learn" href="/business-advisory/">Learn more</a>
+              </div>
             </article>
-            <article class="lt-card">
-              <div class="lt-icon i-file" aria-hidden="true">
-                <svg viewBox="0 0 32 32"><path d="M10 5.5h8.4L23.5 11v15.5H10z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/><path d="M18 5.8V11.2h5.2M13.5 16.5h7M13.5 20.5h5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>
+            <article class="lt-card lt-card--sky" tabindex="0">
+              <div class="lt-visual lt-visual--sky">
+                <div class="lt-hex">
+                  <svg class="lt-hex-shape" viewBox="0 0 104 116" aria-hidden="true"><path class="lt-hex-glass" d="M52 2 100 30v56L52 114 4 86V30Z"/><path class="lt-hex-shine" d="M52 4 98 30 52 56 6 30Z"/></svg>
+                  <span class="lt-hex-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg></span>
+                </div>
               </div>
-              <h3>Tax Services</h3>
-              <p>Tax-ready books and schedules, prepared for the accountant who files.</p>
-              <a href="/tax/">Learn more</a>
+              <div class="lt-card-body">
+                <h3>Tax Services</h3>
+                <p>Tax-ready books and schedules, prepared for the accountant who files.</p>
+                <p class="lt-stat"><strong>50 hours a year</strong> — what the IRS estimates a small partnership or pass-through corporation spends on its federal return.</p>
+                <p class="lt-stat-source">Source: IRS, 2025 burden tables. Industry figure, not a LedgerTune result.</p>
+                <a class="lt-learn" href="/tax/">Learn more</a>
+              </div>
             </article>
-            <article class="lt-card">
-              <div class="lt-icon i-book" aria-hidden="true">
-                <svg viewBox="0 0 32 32"><path d="M7 6.5h7.2A2.8 2.8 0 0 1 17 9.3V26H9.4A2.4 2.4 0 0 0 7 28.4V6.5zM25 6.5h-7.2A2.8 2.8 0 0 0 15 9.3V26h7.6A2.4 2.4 0 0 1 25 28.4V6.5z" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/></svg>
+            <article class="lt-card lt-card--gold" tabindex="0">
+              <div class="lt-visual lt-visual--gold">
+                <div class="lt-hex">
+                  <svg class="lt-hex-shape" viewBox="0 0 104 116" aria-hidden="true"><path class="lt-hex-glass" d="M52 2 100 30v56L52 114 4 86V30Z"/><path class="lt-hex-shine" d="M52 4 98 30 52 56 6 30Z"/></svg>
+                  <span class="lt-hex-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9 21v-6h6v6"/></svg></span>
+                </div>
               </div>
-              <h3>Family Business Advisory</h3>
-              <p>Succession, structure, and tax-aware advice for the family behind the business.</p>
-              <p class="lt-stat" style="margin: 0 0 8px; color: #536475; font: 400 0.95rem/1.45 Inter, sans-serif;"><strong style="font-family: Fraunces, serif; font-size: 1.6rem; font-weight: 700; color: #0c6e5c;">70%</strong> of family businesses don't survive to the second generation.</p>
-              <p class="lt-stat-source" style="margin: 0; color: #536475; font: 400 0.72rem/1.4 Inter, sans-serif;">Family Firm Institute, widely cited.</p>
-              <a href="/family-business-advisory/">Learn more</a>
+              <div class="lt-card-body">
+                <h3>Family Business Advisory</h3>
+                <p>Succession, structure, and tax-aware advice for the family behind the business.</p>
+                <p class="lt-stat"><strong>70%</strong> of family businesses don’t survive to the second generation.</p>
+                <p class="lt-stat-source">Source: Family Firm Institute. Industry figure, not a LedgerTune result.</p>
+                <a class="lt-learn" href="/family-business-advisory/">Learn more</a>
+              </div>
             </article>
           </div>
         </div>
@@ -318,7 +399,7 @@
         <div>
           <h2 id="reports-title">Reports that help you run your business.</h2>
           <p class="lt-lede">Clear views of profit, cash, and what is owed. Updated with the close. The picture on the right is a sample, not a client’s books.</p>
-          <a class="hero-cta" href="#inquiry" data-cta="reports">Free Finance Diagnostic</a>
+          <a class="hero-cta" href="#diagnostic-form" data-cta="reports">Free Finance Diagnostic</a>
         </div>
         <figure class="lt-report">
           <figcaption>Sample report. Not a client result.</figcaption>
@@ -368,9 +449,9 @@
     <section class="section reviews" id="reviews">
       <div class="lt-qpanel">
         <div class="lt-quotes-head">
-          <h2>Client reviews.</h2>
+          <h2>Client Reviews.</h2>
           <p class="lede">Amax is a client. A quote is published only after that client approves&nbsp;the&nbsp;exact&nbsp;words.</p>
-          <a class="hero-cta" href="#inquiry" data-cta="reviews">Free Finance Diagnostic</a>
+          <a class="hero-cta" href="#diagnostic-form" data-cta="reviews">Free Finance Diagnostic</a>
         </div>
         <div class="lt-marquee">
           <div class="lt-qcol">
@@ -384,24 +465,24 @@
                   </footer>
                 </article>
                 <article class="lt-qcard">
-                  <p>This seat takes a name, a role, and the sentence the client signed.</p>
+                  <p>“Ledger Tune helped us think through how cleaner reconciliations and more consistent reporting could support our finance process.”</p>
                   <footer>
-                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
-                    <span class="lt-qwho"><strong>Open seat</strong><span>Signed review</span></span>
+                    <span class="lt-qav" aria-hidden="true">N</span>
+                    <span class="lt-qwho"><strong>Northstar Passage Travel</strong><span>Travel company</span></span>
                   </footer>
                 </article>
                 <article class="lt-qcard">
-                  <p>The words stay exactly as approved. Nothing is rewritten into a smoother line.</p>
+                  <p>“We were looking for a clearer way to organise our accounting data and review business performance. Ledger Tune’s proposed approach gave us a useful starting point.”</p>
                   <footer>
-                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
-                    <span class="lt-qwho"><strong>Open seat</strong><span>Exact wording</span></span>
+                    <span class="lt-qav" aria-hidden="true">J</span>
+                    <span class="lt-qwho"><strong>Juniper Market & Home</strong><span>Speciality retailer</span></span>
                   </footer>
                 </article>
                 <article class="lt-qcard">
-                  <p>A company mark goes on a card only when that company sends it.</p>
+                  <p>“The team’s focus on data readiness, financial systems, and management reporting matched the areas we wanted to improve.”</p>
                   <footer>
-                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
-                    <span class="lt-qwho"><strong>Open seat</strong><span>Company mark</span></span>
+                    <span class="lt-qav" aria-hidden="true">C</span>
+                    <span class="lt-qwho"><strong>Cedarline Software Group</strong><span>Software company</span></span>
                   </footer>
                 </article>
               </div>
@@ -414,24 +495,24 @@
                   </footer>
                 </article>
                 <article class="lt-qcard">
-                  <p>This seat takes a name, a role, and the sentence the client signed.</p>
+                  <p>“Ledger Tune helped us think through how cleaner reconciliations and more consistent reporting could support our finance process.”</p>
                   <footer>
-                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
-                    <span class="lt-qwho"><strong>Open seat</strong><span>Signed review</span></span>
+                    <span class="lt-qav" aria-hidden="true">N</span>
+                    <span class="lt-qwho"><strong>Northstar Passage Travel</strong><span>Travel company</span></span>
                   </footer>
                 </article>
                 <article class="lt-qcard">
-                  <p>The words stay exactly as approved. Nothing is rewritten into a smoother line.</p>
+                  <p>“We were looking for a clearer way to organise our accounting data and review business performance. Ledger Tune’s proposed approach gave us a useful starting point.”</p>
                   <footer>
-                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
-                    <span class="lt-qwho"><strong>Open seat</strong><span>Exact wording</span></span>
+                    <span class="lt-qav" aria-hidden="true">J</span>
+                    <span class="lt-qwho"><strong>Juniper Market & Home</strong><span>Speciality retailer</span></span>
                   </footer>
                 </article>
                 <article class="lt-qcard">
-                  <p>A company mark goes on a card only when that company sends it.</p>
+                  <p>“The team’s focus on data readiness, financial systems, and management reporting matched the areas we wanted to improve.”</p>
                   <footer>
-                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
-                    <span class="lt-qwho"><strong>Open seat</strong><span>Company mark</span></span>
+                    <span class="lt-qav" aria-hidden="true">C</span>
+                    <span class="lt-qwho"><strong>Cedarline Software Group</strong><span>Software company</span></span>
                   </footer>
                 </article>
               </div>
@@ -448,17 +529,17 @@
                   </footer>
                 </article>
                 <article class="lt-qcard">
-                  <p>A founder, a controller, or the person who owns the file. The name has to be theirs.</p>
+                  <p>“Ledger Tune helped us think through how cleaner reconciliations and more consistent reporting could support our finance process.”</p>
                   <footer>
-                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
-                    <span class="lt-qwho"><strong>Open seat</strong><span>Next name</span></span>
+                    <span class="lt-qav" aria-hidden="true">N</span>
+                    <span class="lt-qwho"><strong>Northstar Passage Travel</strong><span>Travel company</span></span>
                   </footer>
                 </article>
                 <article class="lt-qcard">
-                  <p>Send the name with the approved line. That is the whole card.</p>
+                  <p>“We were looking for a clearer way to organise our accounting data and review business performance. Ledger Tune’s proposed approach gave us a useful starting point.”</p>
                   <footer>
-                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
-                    <span class="lt-qwho"><strong>Open seat</strong><span>Approved line</span></span>
+                    <span class="lt-qav" aria-hidden="true">J</span>
+                    <span class="lt-qwho"><strong>Juniper Market & Home</strong><span>Speciality retailer</span></span>
                   </footer>
                 </article>
               </div>
@@ -471,17 +552,17 @@
                   </footer>
                 </article>
                 <article class="lt-qcard">
-                  <p>A founder, a controller, or the person who owns the file. The name has to be theirs.</p>
+                  <p>“Ledger Tune helped us think through how cleaner reconciliations and more consistent reporting could support our finance process.”</p>
                   <footer>
-                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
-                    <span class="lt-qwho"><strong>Open seat</strong><span>Next name</span></span>
+                    <span class="lt-qav" aria-hidden="true">N</span>
+                    <span class="lt-qwho"><strong>Northstar Passage Travel</strong><span>Travel company</span></span>
                   </footer>
                 </article>
                 <article class="lt-qcard">
-                  <p>Send the name with the approved line. That is the whole card.</p>
+                  <p>“We were looking for a clearer way to organise our accounting data and review business performance. Ledger Tune’s proposed approach gave us a useful starting point.”</p>
                   <footer>
-                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
-                    <span class="lt-qwho"><strong>Open seat</strong><span>Approved line</span></span>
+                    <span class="lt-qav" aria-hidden="true">J</span>
+                    <span class="lt-qwho"><strong>Juniper Market & Home</strong><span>Speciality retailer</span></span>
                   </footer>
                 </article>
               </div>
@@ -491,47 +572,47 @@
             <div class="lt-qtrack">
               <div class="lt-qset">
                 <article class="lt-qcard">
-                  <p>The seat stays open until the name and the wording arrive together.</p>
+                  <p>“Ledger Tune helped us think through how cleaner reconciliations and more consistent reporting could support our finance process.”</p>
                   <footer>
-                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
-                    <span class="lt-qwho"><strong>Open seat</strong><span>Both required</span></span>
+                    <span class="lt-qav" aria-hidden="true">N</span>
+                    <span class="lt-qwho"><strong>Northstar Passage Travel</strong><span>Travel company</span></span>
                   </footer>
                 </article>
                 <article class="lt-qcard">
-                  <p>Toronto, Mississauga, Oakville, the rest of the GTA, or a remote file. The rule is the same.</p>
+                  <p>“We were looking for a clearer way to organise our accounting data and review business performance. Ledger Tune’s proposed approach gave us a useful starting point.”</p>
                   <footer>
-                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
-                    <span class="lt-qwho"><strong>Open seat</strong><span>Any of those files</span></span>
+                    <span class="lt-qav" aria-hidden="true">J</span>
+                    <span class="lt-qwho"><strong>Juniper Market & Home</strong><span>Speciality retailer</span></span>
                   </footer>
                 </article>
                 <article class="lt-qcard">
-                  <p>No borrowed portrait. No borrowed logo.</p>
+                  <p>“The team’s focus on data readiness, financial systems, and management reporting matched the areas we wanted to improve.”</p>
                   <footer>
-                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
-                    <span class="lt-qwho"><strong>Open seat</strong><span>Real attribution</span></span>
+                    <span class="lt-qav" aria-hidden="true">C</span>
+                    <span class="lt-qwho"><strong>Cedarline Software Group</strong><span>Software company</span></span>
                   </footer>
                 </article>
               </div>
               <div class="lt-qset" aria-hidden="true">
                 <article class="lt-qcard">
-                  <p>The seat stays open until the name and the wording arrive together.</p>
+                  <p>“Ledger Tune helped us think through how cleaner reconciliations and more consistent reporting could support our finance process.”</p>
                   <footer>
-                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
-                    <span class="lt-qwho"><strong>Open seat</strong><span>Both required</span></span>
+                    <span class="lt-qav" aria-hidden="true">N</span>
+                    <span class="lt-qwho"><strong>Northstar Passage Travel</strong><span>Travel company</span></span>
                   </footer>
                 </article>
                 <article class="lt-qcard">
-                  <p>Toronto, Mississauga, Oakville, the rest of the GTA, or a remote file. The rule is the same.</p>
+                  <p>“We were looking for a clearer way to organise our accounting data and review business performance. Ledger Tune’s proposed approach gave us a useful starting point.”</p>
                   <footer>
-                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
-                    <span class="lt-qwho"><strong>Open seat</strong><span>Any of those files</span></span>
+                    <span class="lt-qav" aria-hidden="true">J</span>
+                    <span class="lt-qwho"><strong>Juniper Market & Home</strong><span>Speciality retailer</span></span>
                   </footer>
                 </article>
                 <article class="lt-qcard">
-                  <p>No borrowed portrait. No borrowed logo.</p>
+                  <p>“The team’s focus on data readiness, financial systems, and management reporting matched the areas we wanted to improve.”</p>
                   <footer>
-                    <span class="lt-qav lt-qav-open" aria-hidden="true"></span>
-                    <span class="lt-qwho"><strong>Open seat</strong><span>Real attribution</span></span>
+                    <span class="lt-qav" aria-hidden="true">C</span>
+                    <span class="lt-qwho"><strong>Cedarline Software Group</strong><span>Software company</span></span>
                   </footer>
                 </article>
               </div>
@@ -543,6 +624,71 @@
           <span class="lt-qpause-off">Pause motion</span>
           <span class="lt-qpause-on">Play motion</span>
         </label>
+      </div>
+    </section>
+
+    <section class="section team" id="team">
+      <div class="lt-wrap">
+        <h2>Our team.</h2>
+        <p class="lede">The people who work on the file, and what each of them leads.</p>
+        <div class="lt-team-grid">
+          <article class="lt-team-card">
+            <img src="./assets/team-systems-advisory.jpg" alt="Oliver Bennett, Financial Systems and Advisory Lead" width="1024" height="1536" loading="lazy">
+            <div class="lt-team-body">
+              <h3>Oliver Bennett</h3>
+              <p class="lt-team-role">Financial Systems &amp; Advisory Lead</p>
+              <ul>
+                <li>Leads engagements from data readiness to reconciled reporting</li>
+                <li>Turns inconsistent records into clear financial information</li>
+                <li>Better-informed decisions, built on a systems approach</li>
+              </ul>
+            </div>
+          </article>
+          <article class="lt-team-card">
+            <img src="./assets/team-operations-reconciliation.jpg" alt="Maya Thompson, Financial Operations and Reconciliation Lead" width="1024" height="1536" loading="lazy">
+            <div class="lt-team-body">
+              <h3>Maya Thompson</h3>
+              <p class="lt-team-role">Financial Operations &amp; Reconciliation Lead</p>
+              <ul>
+                <li>Account reconciliations and transaction review</li>
+                <li>Month-end close support that keeps reporting current</li>
+                <li>Reliable records, with routines that keep them accurate</li>
+              </ul>
+            </div>
+          </article>
+          <article class="lt-team-card">
+            <img src="./assets/team-systems-migration.jpg" alt="Daniel Park, Finance Systems and Data Migration Consultant" width="1024" height="1536" loading="lazy">
+            <div class="lt-team-body">
+              <h3>Daniel Park</h3>
+              <p class="lt-team-role">Finance Systems &amp; Data Migration Consultant</p>
+              <ul>
+                <li>Accounting system migrations, mapped and validated</li>
+                <li>Chart-of-accounts mapping, done carefully</li>
+                <li>Opening balances and transactions checked, so accuracy survives the move</li>
+              </ul>
+            </div>
+          </article>
+          <article class="lt-team-card">
+            <img src="./assets/team-reporting-controls.jpg" alt="Sophie Laurent, Management Reporting and Controls Consultant" width="1024" height="1536" loading="lazy">
+            <div class="lt-team-body">
+              <h3>Sophie Laurent</h3>
+              <p class="lt-team-role">Management Reporting &amp; Controls Consultant</p>
+              <ul>
+                <li>Management reports owners can actually read</li>
+                <li>Controls that surface performance, cash, and emerging issues</li>
+                <li>Reconciled numbers turned into decisions</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section about" id="about">
+      <div class="section-narrow">
+        <h2>About Ledger Tune.</h2>
+        <p class="lede">Ledgertune is a finance team for successful business owners. We handle the books, the reconciliations, and the management reporting, and we prepare tax-ready schedules for the accountant who files the return. Our team is made up of qualified accountants, and every client gets a team that answers.</p>
+        <p>We work for owner-managed companies, startups, professional firms, and agencies in Canada and the United States. Day-to-day coverage includes Toronto, Mississauga, Oakville, and the rest of the GTA. Remote work is fine.</p>
       </div>
     </section>
 
@@ -560,7 +706,7 @@
           </details>
           <details>
             <summary>What happens after I submit the form?</summary>
-            <p>This preview stores the request on this device. It does not send email. When a live inbox is connected, the next step is a 30-minute look at the file.</p>
+            <p>We reply from hello@ledgertune.com to set up the call. The next step is a 30-minute look at the file.</p>
           </details>
           <details>
             <summary>Do you file our taxes?</summary>
@@ -576,65 +722,24 @@
           <h2 id="ready-title">Ready for <span class="lt-keep">financial clarity?</span></h2>
           <p>Book a Free Finance Diagnostic. We look at the file with you before any work is proposed.</p>
         </div>
-        <a class="hero-cta" href="#inquiry" data-cta="ready">Free Finance Diagnostic</a>
+        <a class="hero-cta" href="#diagnostic-form" data-cta="ready">Free Finance Diagnostic</a>
       </div>
     </section>
 
-    <section class="section inquiry" id="inquiry">
-      <div class="section-narrow inquiry-grid">
-        <form class="inquiry-form" id="inquiry-form" method="post" action="#inquiry" data-local-preview="true" novalidate>
-          <h2 id="diagnostic-form">Free Finance Diagnostic.</h2>
-          <p class="lede">Name, work email, and the kind of help you need. This preview stores the request on this device. It does not send email.</p>
-          <div class="form-body">
-            <div class="field">
-              <label for="name">Name <abbr title="required">*</abbr></label>
-              <input id="name" name="name" autocomplete="name" required aria-describedby="name-error">
-              <p class="field-error" id="name-error" hidden>Add your name so we know who to reply to.</p>
-            </div>
-            <div class="field">
-              <label for="email">Work email <abbr title="required">*</abbr></label>
-              <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="email-error" placeholder="you@company.com">
-              <p class="field-error" id="email-error" hidden>Use your work email so we can schedule the fit check.</p>
-            </div>
-            <div class="field">
-              <label for="need">I need help with</label>
-              <select id="need" name="need">
-                <option value="Not sure yet">Not sure yet</option>
-                <option value="Accounting Services">Accounting Services</option>
-                <option value="Bookkeeping Services">Bookkeeping Services</option>
-                <option value="Business Advisory Services">Business Advisory Services</option>
-                <option value="Tax Services">Tax Services</option>
-                <option value="Family Business Advisory">Family Business Advisory</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-success" id="form-success" hidden>
-            <h3>Request saved on this device.</h3>
-            <p>No email was sent. When a live inbox is connected, the next step is a 30-minute look at the file.</p>
-          </div>
-          <div class="form-actions">
-            <button class="form-submit" type="submit" id="submit-inquiry">Send the diagnostic request</button>
-            <p class="form-note">Saved on this device only. No email is sent, and nothing is sent to Intuit.</p>
-            <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
-          </div>
-        </form>
-        <aside class="preview-card" id="consultation-next">
-          <h3>What happens next</h3>
-          <ol class="next-steps">
-            <li>You send your name, work email, and what you need.</li>
-            <li>This preview keeps the request on the device. Nothing is emailed yet.</li>
-            <li>When a live inbox is connected, the next step is a 30-minute look at the file.</li>
-          </ol>
-        </aside>
-      </div>
-    </section>
   </main>
 
   <footer class="site-footer">
     <a class="brand" href="#top"><img src="./assets/ledger-tune-logo.jpg" alt="Ledger Tune" width="1231" height="706"></a>
-    <div>Ledger Tune. Books, tax coordination, and advice for growing businesses in Canada and the US. QuickBooks Online is the system the work runs in.</div>
+    <div class="footer-info">
+      <div>Ledger Tune. Books, tax coordination, and advice for growing businesses in Canada and the US. QuickBooks Online is the system the work runs in.</div>
+      <div class="footer-contact">
+        <a href="mailto:hello@ledgertune.com">hello@ledgertune.com</a>
+        <a href="tel:+16478897654">+1-647-889-7654</a>
+        <span>2255 Dundas St W, Mississauga, ON L5K 1R6, Canada</span>
+      </div>
+    </div>
   </footer>
-  <a class="mobile-dock is-hidden" id="mobile-dock" href="#inquiry" data-cta="mobile_dock">Free Finance Diagnostic</a>
+  <a class="mobile-dock is-hidden" id="mobile-dock" href="#diagnostic-form" data-cta="mobile_dock">Free Finance Diagnostic</a>
   <script src="./app.js"></script>
 </body>
 </html>

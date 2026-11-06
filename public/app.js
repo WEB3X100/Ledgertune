@@ -8,9 +8,8 @@ const reviewStrip = document.getElementById("review-strip");
 const menuToggle = document.getElementById("menu-toggle");
 const header = document.getElementById("site-header");
 const mobileDock = document.getElementById("mobile-dock");
-const inquiry = document.getElementById("inquiry");
+const diagnosticForm = document.getElementById("diagnostic-form");
 const hero = document.querySelector(".hero");
-const formSuccess = document.getElementById("form-success");
 const brandHome = document.getElementById("brand-home");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -146,13 +145,6 @@ function validate() {
   return { values, firstInvalid };
 }
 
-function markSent() {
-  form.classList.add("is-sent");
-  if (formSuccess) formSuccess.hidden = false;
-  submitButton.disabled = true;
-  setStatus("Request saved on this device. No email was sent.", "ok");
-}
-
 document.querySelectorAll("[data-cta]").forEach((el) => {
   el.addEventListener("click", () => {
     emit("fit_check_cta_click", { placement: el.getAttribute("data-cta") });
@@ -160,7 +152,7 @@ document.querySelectorAll("[data-cta]").forEach((el) => {
 });
 
 form?.addEventListener("focusin", function onStart() {
-  emit("fit_check_form_start", { placement: "inquiry" });
+  emit("fit_check_form_start", { placement: "diagnostic-form" });
   form.removeEventListener("focusin", onStart);
 });
 
@@ -179,47 +171,34 @@ openHeaderForm?.addEventListener("click", () => {
   }
 });
 headerForm?.addEventListener("submit", (event) => {
-  event.preventDefault();
   const data = new FormData(headerForm);
   const name = String(data.get("name") || "").trim();
   const email = String(data.get("email") || "").trim();
-  const need = String(data.get("need") || "Not sure yet").trim();
   headerForm.querySelectorAll("input").forEach((input) => input.setAttribute("aria-invalid", "false"));
   if (!name || !isEmail(email)) {
+    event.preventDefault();
     if (!name) headerForm.elements.name.setAttribute("aria-invalid", "true");
     if (!isEmail(email)) headerForm.elements.email.setAttribute("aria-invalid", "true");
     headerStatus.textContent = "Add your name and a work email.";
     return;
   }
-  try {
-    window.localStorage.setItem(
-      "qbo-fit-check-preview",
-      JSON.stringify({ name, email, need, savedAt: new Date().toISOString(), placement: "header" })
-    );
-  } catch { /* preview still confirms */ }
-  headerStatus.textContent = "Request saved on this device. No email was sent.";
-  headerForm.reset();
+  // Valid: let the browser submit natively — Netlify Forms handles delivery.
+  headerStatus.textContent = "Sending…";
 });
 
 form?.addEventListener("submit", (event) => {
-  event.preventDefault();
   const { values, firstInvalid } = validate();
   if (firstInvalid) {
+    event.preventDefault();
     setStatus("Fix the highlighted fields, then submit.", "error");
     firstInvalid.focus();
     return;
   }
   emit("fit_check_submit_attempt", { need: values.need });
-  try {
-    window.localStorage.setItem(
-      "qbo-fit-check-preview",
-      JSON.stringify({ ...values, savedAt: new Date().toISOString() })
-    );
-  } catch {
-    /* local preview still succeeds without persistence */
-  }
-  markSent();
-  emit("fit_check_submit_success", { destination: "local-preview" });
+  // Valid: let the browser submit natively — Netlify Forms handles delivery.
+  // On localhost there is no Netlify, so a submit there will not send email.
+  submitButton.disabled = true;
+  setStatus("Sending…", "ok");
 });
 
 toggleReview?.addEventListener("click", () => {
@@ -296,14 +275,14 @@ if (sections.length && "IntersectionObserver" in window) {
 }
 
 const updateDock = () => {
-  if (!mobileDock || !hero || !inquiry) return;
+  if (!mobileDock || !hero || !diagnosticForm) return;
   if (window.matchMedia("(min-width: 981px)").matches) {
     mobileDock.classList.add("is-hidden");
     return;
   }
   const heroVisible = hero.getBoundingClientRect().bottom > 72;
-  const inquiryVisible = inquiry.getBoundingClientRect().top < window.innerHeight - 48;
-  mobileDock.classList.toggle("is-hidden", heroVisible || inquiryVisible);
+  const diagnosticVisible = diagnosticForm.getBoundingClientRect().top < window.innerHeight - 48;
+  mobileDock.classList.toggle("is-hidden", heroVisible || diagnosticVisible);
 };
 window.addEventListener("scroll", updateDock, { passive: true });
 window.addEventListener("resize", updateDock);
@@ -453,3 +432,18 @@ if (tstack) {
   });
   layout();
 }
+
+// Hersom services: move the glow to whichever card is hovered / tapped / focused.
+// CSS :hover does it instantly; this keeps it on the last hovered card.
+(function () {
+  var cards = document.querySelectorAll("#services .lt-card");
+  function activate(card) {
+    cards.forEach(function (c) { c.classList.remove("lt-featured"); });
+    card.classList.add("lt-featured");
+  }
+  cards.forEach(function (card) {
+    card.addEventListener("mouseenter", function () { activate(card); });
+    card.addEventListener("focusin", function () { activate(card); });
+    card.addEventListener("click", function () { activate(card); });
+  });
+})();
