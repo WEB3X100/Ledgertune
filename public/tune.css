@@ -148,6 +148,9 @@ body.tune .site-footer {
 }
 
 body.tune .site-footer .brand img { height: 112px; }
+body.tune .site-footer { align-items: flex-end; }
+body.tune .site-footer .footer-info { display: flex; flex-direction: column; gap: 10px; flex: 1 1 420px; }
+body.tune .site-footer .footer-contact { display: flex; flex-wrap: wrap; gap: 4px 18px; }
 body.tune .site-footer a { color: #f4f7f8; }
 
 /* Hero */
@@ -844,7 +847,7 @@ body.tune .lt-steps span {
 }
 
 body.tune .lt-steps li:nth-child(4) span { background: #d9f6ef; }
-body.tune .lt-steps li:nth-child(5) span { background: #ffe1dc; }
+body.tune .lt-steps li:nth-child(5) span { background: #ddf2fa; }
 
 body.tune .lt-steps h3 {
   margin: 0 0 8px;
@@ -945,8 +948,10 @@ body.tune #services,
 body.tune #process,
 body.tune #reports,
 body.tune #reviews,
+body.tune #team,
+body.tune #about,
 body.tune #faq,
-body.tune #inquiry,
+body.tune #diagnostic-form,
 body.tune .lt-tools,
 body.tune .lt-ready {
   scroll-margin-top: calc(var(--nav-h) + 16px);
@@ -1277,3 +1282,315 @@ body.tune .lt-qpause input:checked ~ .lt-qpause-on { display: inline; }
   }
   body.tune .lt-qpause { display: none; }
 }
+
+/* Hersom-style services — added locally 2026-11-05, T-074. Scoped to #services only.
+   Liquid-glass icons are SVG hexagons only: no background, no clip-path,
+   no backdrop-filter on the icon box, so no square pane can render behind them. */
+body.tune #services .lt-cards--hersom { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px; margin-top: 28px; }
+body.tune #services .lt-card { --accent: #14e0b8; --accent2: #0d9488; --glow: rgba(20, 224, 184, 0.5); display: flex; flex-direction: column; padding: 0; overflow: hidden; background: linear-gradient(180deg, #12283a, #0a1826); color: #e8eef2; border: 1px solid rgba(255,255,255,0.10); border-radius: 20px; box-shadow: 0 12px 24px rgba(0,0,0,0.35); cursor: pointer; transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease; }
+body.tune #services .lt-card--purple { --accent: #a78bfa; --accent2: #7c3aed; --glow: rgba(167,139,250,0.50); }
+body.tune #services .lt-card--teal { --accent: #14e0b8; --accent2: #0d9488; --glow: rgba(20,224,184,0.50); }
+body.tune #services .lt-card--coral { --accent: #ff7065; --accent2: #e14b3f; --glow: rgba(255,112,101,0.50); }
+body.tune #services .lt-card--sky { --accent: #7dd3fc; --accent2: #0369a1; --glow: rgba(125,211,252,0.45); }
+body.tune #services .lt-card--gold { --accent: #f4c95d; --accent2: #b45309; --glow: rgba(244,201,93,0.45); }
+body.tune #services .lt-card:hover, body.tune #services .lt-card:focus-within, body.tune #services .lt-card.lt-featured { transform: scale(1.04) translateY(-6px); border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 0 32px var(--glow), 0 24px 48px rgba(0,0,0,0.45); z-index: 2; }
+body.tune #services .lt-visual { height: 190px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+body.tune #services .lt-visual::after { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, rgba(255,255,255,0.22), transparent 45%); pointer-events: none; }
+body.tune #services .lt-visual--purple { background: linear-gradient(135deg, #2e1065, #7c3aed 55%, #c4b5fd); }
+body.tune #services .lt-visual--teal { background: linear-gradient(135deg, #0f766e, #13b89b 55%, #ff9a8a); }
+body.tune #services .lt-visual--coral { background: linear-gradient(135deg, #3a1d2b, #ff7065 70%, #f4e2b8); }
+body.tune #services .lt-visual--sky { background: linear-gradient(135deg, #0b2031, #2a6f8e 60%, #ddf2fa); }
+body.tune #services .lt-visual--gold { background: linear-gradient(135deg, #102438, #8a6d3b 60%, #f4e2b8); }
+body.tune #services .lt-hex { width: 132px; height: 148px; position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; background: transparent; filter: drop-shadow(0 0 22px var(--glow)) drop-shadow(0 12px 22px rgba(0,0,0,0.45)); transition: transform 0.35s ease, filter 0.35s ease; }
+body.tune #services .lt-hex-shape { position: absolute; inset: 0; width: 100%; height: 100%; }
+body.tune #services .lt-hex-glass { fill: var(--accent); fill-opacity: 0.32; stroke: rgba(255,255,255,0.7); stroke-width: 1.5; }
+body.tune #services .lt-hex-shine { fill: #fff; fill-opacity: 0.28; }
+body.tune #services .lt-hex-icon { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; color: #fff; }
+body.tune #services .lt-hex-icon svg { width: 62px; height: 62px; stroke-width: 2.4; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.45)) drop-shadow(0 0 10px rgba(255,255,255,0.35)); }
+body.tune #services .lt-card:hover .lt-hex, body.tune #services .lt-card:focus-within .lt-hex, body.tune #services .lt-card.lt-featured .lt-hex { transform: scale(1.14) rotate(-2deg); }
+body.tune #services .lt-card-body { padding: 24px; display: flex; flex-direction: column; flex: 1; }
+body.tune #services .lt-card-body h3 { margin: 0 0 10px; font-family: Fraunces, serif; font-size: 1.35rem; font-weight: 560; line-height: 1.15; color: #fff; align-self: stretch; text-align: left; }
+body.tune #services .lt-card-body > p { margin: 0 0 14px; color: #a9bcc9; font-size: 0.98rem; }
+body.tune #services .lt-card-body .lt-stat { font-size: 0.95rem; color: #a9bcc9; }
+body.tune #services .lt-card-body .lt-stat strong { color: #fff; font-weight: 700; font-size: 0.95rem; font-family: Inter, sans-serif; }
+body.tune #services .lt-card-body .lt-stat-source { font-size: 0.72rem; color: #7d94a5; margin-bottom: 18px; }
+body.tune #services .lt-learn { margin-top: auto; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 18px; border-radius: 999px; font-weight: 650; font-size: 0.95rem; text-decoration: none; color: #fff; border: 1px solid rgba(255,255,255,0.28); background: transparent; width: fit-content; transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+body.tune #services .lt-card:hover .lt-learn, body.tune #services .lt-card:focus-within .lt-learn, body.tune #services .lt-card.lt-featured .lt-learn { background: var(--accent); border-color: var(--accent); color: #04241d; }
+@media (max-width: 1020px) { body.tune #services .lt-cards--hersom { grid-template-columns: repeat(2, minmax(0, 1fr)); } body.tune #services .lt-card:hover, body.tune #services .lt-card.lt-featured { transform: translateY(-6px); } }
+@media (max-width: 560px) { body.tune #services .lt-cards--hersom { grid-template-columns: 1fr; } }
+
+/* Team (Prompt 5): white cards, same radius/shadow as service cards */
+body.tune .team { background: #ffffff; }
+body.tune .team h2 { color: #102438; }
+body.tune .lt-team-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 28px; }
+body.tune .lt-team-card { background: #ffffff; border-radius: 20px; box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12); overflow: hidden; }
+body.tune .lt-team-card img { width: 100%; height: 420px; object-fit: cover; object-position: top; display: block; }
+body.tune .lt-team-body { padding: 20px 20px 24px; }
+body.tune .lt-team-card h3 { font-size: 1.35rem; font-weight: 560; color: #102438; margin: 0 0 4px; }
+body.tune .lt-team-card .lt-team-role { color: #0c6e5c; font-weight: 650; font-size: 0.95rem; margin: 0 0 14px; }
+body.tune .lt-team-card p { color: #536475; margin: 0; }
+body.tune .lt-team-card ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+body.tune .lt-team-card li { position: relative; padding-left: 24px; color: #536475; }
+body.tune .lt-team-card li::before { content: "\2713"; position: absolute; left: 0; top: 0; color: #0c6e5c; font-weight: 700; }
+@media (max-width: 1020px) {
+  body.tune .lt-team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  body.tune .lt-team-grid { grid-template-columns: 1fr; }
+}
+
+/* Round 2: Services dropdown in the nav */
+body.tune .nav-drop-wrap { position: relative; }
+body.tune .nav-drop-btn {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  color: #e7eef4;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0;
+}
+body.tune .nav-drop-btn:hover { color: #ffffff; }
+body.tune .nav-drop-btn::after { content: "\25BE"; margin-left: 6px; font-size: 0.8em; }
+body.tune .nav-drop {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  min-width: 250px;
+  background: #0b2031;
+  border-radius: 12px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+  padding: 8px;
+  display: none;
+  z-index: 70;
+}
+body.tune .nav-drop-wrap:hover .nav-drop,
+body.tune .nav-drop-wrap:focus-within .nav-drop,
+body.tune .nav-drop-wrap.is-open .nav-drop { display: block; }
+body.tune .nav-drop a { display: block; padding: 10px 12px; border-radius: 8px; }
+body.tune .nav-drop a:hover { background: rgba(255, 255, 255, 0.08); }
+
+/* Round 2: footer links (Prompt 6) */
+body.tune .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
+body.tune .footer-links a { color: #d5e0e8; font-weight: 600; }
+body.tune .footer-links a:hover { color: #ffffff; }
+
+/* Round 2: Process step links (Prompt 6) */
+body.tune .lt-steps h3 a { color: #102438; text-decoration: none; }
+body.tune .lt-steps h3 a:hover { color: #0c6e5c; text-decoration: underline; text-underline-offset: 3px; }
+
+/* Round 2: team cards are links to the roles page */
+body.tune a.lt-team-card { display: block; text-decoration: none; color: inherit; }
+body.tune a.lt-team-card:hover { box-shadow: 0 16px 32px rgba(0, 0, 0, 0.16); }
+
+/* Round 2: good-fit line on service subpages */
+body.tune .fit-line { color: #536475; margin: 24px 0 0; }
+body.tune .fit-line strong { color: #102438; }
+
+/* Round 2: roles page — three columns, form under each card */
+body.tune .lt-roles-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 28px; }
+body.tune .lt-role { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+body.tune .lt-role .inquiry-form h2 { font-size: 1.35rem; }
+@media (max-width: 1020px) {
+  body.tune .lt-roles-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  body.tune .lt-roles-grid { grid-template-columns: 1fr; }
+}
+
+/* Round 2: Client Reviews page — bigger boxes */
+body.tune .lt-reviews-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 28px; }
+body.tune .lt-reviews-grid .lt-qcard { padding: 28px; }
+body.tune .lt-reviews-grid .lt-qcard p { font-size: 1.1rem; }
+@media (max-width: 640px) {
+  body.tune .lt-reviews-grid { grid-template-columns: 1fr; }
+}
+
+/* Round 2: dropdown opens as a plain list inside the mobile menu */
+@media (max-width: 980px) {
+  body.tune .nav-drop { position: static; display: block; box-shadow: none; background: transparent; padding: 4px 0 0 12px; }
+  body.tune .nav-drop-btn::after { content: ""; }
+}
+
+/* Round 2 fix: role forms sit inside a 3-column grid, so the .section
+   viewport padding (7vw each side) must not apply there. */
+body.tune .lt-role .section { padding: 0; }
+
+/* Holographic monogram: a slow iridescent sheen sweeps across the logo so the
+   transparent monogram blends with the navy header/footer instead of sitting
+   in a box. Respects reduced-motion. */
+body.tune .brand { position: relative; }
+body.tune .brand img { display: block; position: relative; z-index: 1; }
+body.tune .brand::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 15%, rgba(255, 0, 128, .16) 35%, rgba(0, 229, 255, .16) 50%, rgba(255, 214, 64, .16) 65%, transparent 85%);
+  background-size: 250% 100%;
+  mix-blend-mode: screen;
+  /* Mask the sheen to the monogram itself, so no rectangle ever shows on the navy. */
+  -webkit-mask-image: url(./assets/ledger-tune-logo.png);
+  mask-image: url(./assets/ledger-tune-logo.png);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: lt-holo 7s linear infinite;
+}
+@keyframes lt-holo {
+  from { background-position: 200% 0; }
+  to { background-position: -50% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.tune .brand::after { animation: none; }
+}
+
+/* What's included list on service pages: numbered, two columns on desktop. */
+body.tune .lt-included { list-style: none; counter-reset: inc; padding: 0; margin: 24px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 18px 32px; }
+body.tune .lt-included li { counter-increment: inc; padding-left: 42px; position: relative; }
+body.tune .lt-included li::before { content: counter(inc, decimal-leading-zero); position: absolute; left: 0; top: 0; font-family: Fraunces, Georgia, serif; font-weight: 600; color: #0c6e5c; }
+@media (max-width: 700px) {
+  body.tune .lt-included { grid-template-columns: 1fr; }
+}
+
+/* Testimonial company logos replace the letter tiles: rounded square, whole
+   logo visible, gold border kept so it matches the Amax letter tile. */
+body.tune img.lt-qav { border-radius: 12px; object-fit: contain; background: #ffffff; padding: 0; }
+
+/* Small 5-star row on testimonial cards, under the quote, Google-review style. */
+body.tune .lt-qcard p.lt-qstars { margin: 0; color: #fbbc04; font-size: .85rem; letter-spacing: 2px; line-height: 1; }
+
+/* ---- Services section concept: light cards on the navy panel ----
+   Creative rework for Usman's review. Content untouched (same 5 cards, same
+   copy, stats, sources, links). CSS-only override of the Hersom dark cards.
+   NOT committed / NOT pushed — awaiting screenshot approval. */
+body.tune #services .lt-card { background: #ffffff; color: #102438; border: 1px solid #e6ebef; border-top: 5px solid var(--accent2); box-shadow: 0 12px 24px rgba(0,0,0,0.12); }
+body.tune #services .lt-card:hover, body.tune #services .lt-card:focus-within { transform: translateY(-6px); border-color: #d5dee5; border-top-color: var(--accent2); box-shadow: 0 20px 36px rgba(0,0,0,0.18); z-index: 2; }
+body.tune #services .lt-card.lt-featured { transform: none; border: 1px solid var(--accent2); border-top: 5px solid var(--accent2); box-shadow: 0 16px 32px rgba(0,0,0,0.16); }
+body.tune #services .lt-card.lt-featured:hover, body.tune #services .lt-card.lt-featured:focus-within { transform: translateY(-6px); }
+body.tune #services .lt-visual { height: auto; padding: 26px 24px 0; background: transparent; overflow: visible; }
+body.tune #services .lt-visual::after { display: none; }
+body.tune #services .lt-visual--purple, body.tune #services .lt-visual--teal, body.tune #services .lt-visual--coral, body.tune #services .lt-visual--sky, body.tune #services .lt-visual--gold { background: transparent; }
+body.tune #services .lt-hex { width: 84px; height: 94px; filter: drop-shadow(0 8px 14px rgba(16,36,56,0.18)); }
+body.tune #services .lt-hex-glass { fill: var(--accent2); fill-opacity: 1; stroke: none; }
+body.tune #services .lt-hex-shine { fill-opacity: 0; }
+body.tune #services .lt-hex-icon svg { width: 36px; height: 36px; stroke-width: 2.2; filter: none; }
+body.tune #services .lt-card.lt-featured .lt-hex { transform: none; }
+body.tune #services .lt-card:hover .lt-hex, body.tune #services .lt-card:focus-within .lt-hex { transform: scale(1.08) rotate(-2deg); }
+body.tune #services .lt-card-body { padding: 16px 24px 24px; }
+body.tune #services .lt-card-body h3 { color: #102438; }
+body.tune #services .lt-card-body > p { color: #536475; }
+body.tune #services .lt-card-body .lt-stat { margin-top: auto; padding-top: 14px; border-top: 1px solid #e6ebef; color: #102438; }
+body.tune #services .lt-card-body .lt-stat strong { display: block; margin-bottom: 4px; color: var(--accent2); font-size: 1.4rem; line-height: 1.15; white-space: nowrap; }
+body.tune #services .lt-card-body .lt-stat-source { color: #536475; margin-bottom: 16px; }
+body.tune #services .lt-learn { margin-top: 0; color: var(--accent2); border: 1px solid var(--accent2); background: transparent; }
+body.tune #services .lt-card:hover .lt-learn, body.tune #services .lt-card:focus-within .lt-learn, body.tune #services .lt-card.lt-featured .lt-learn { background: var(--accent2); border-color: var(--accent2); color: #ffffff; }
+/* services-concept-light */
+
+/* Header nav: all six items on one line, never wrapping (desktop). */
+body.tune .site-nav { flex-wrap: nowrap; align-items: center; }
+body.tune .site-nav a, body.tune .site-nav .nav-drop-btn { white-space: nowrap; flex-shrink: 0; }
+@media (max-width: 1180px) and (min-width: 981px) {
+  body.tune .site-nav { gap: 14px; }
+  body.tune .site-header .site-nav a:not(.nav-cta), body.tune .site-nav .nav-drop-btn { font-size: 0.9rem; }
+}
+/* site-nav-one-line */
+
+/* ---- Tools section concept: your files feed into QuickBooks ----
+   Replaces the straight line of pills. Same content, same words: the four
+   data sources on the left flow into the QuickBooks Online hub on the right.
+   NOT committed / NOT pushed — awaiting screenshot approval. */
+body.tune .lt-tools-flow { display: flex; align-items: stretch; gap: 14px; margin: 18px 0 14px; }
+body.tune .lt-sources { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1 1 auto; min-width: 0; margin: 0; padding: 0; list-style: none; }
+body.tune .lt-sources li { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: #f8fafb; border-radius: 14px; color: #102438; font-weight: 650; }
+body.tune .lt-src-icon { width: 40px; height: 40px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 12px; background: #ddf2fa; color: #0b2031; }
+body.tune .lt-src-icon svg { width: 22px; height: 22px; stroke-width: 1.8; }
+body.tune .lt-src-text { display: flex; flex-direction: column; min-width: 0; }
+body.tune .lt-src-text span { color: #536475; font-size: 0.75rem; font-weight: 600; }
+body.tune .lt-flow-arrow { display: flex; align-items: center; justify-content: center; flex: 0 0 auto; color: #0c6e5c; font-size: 2rem; font-weight: 700; line-height: 1; }
+body.tune .lt-hub { position: relative; overflow: hidden; flex: 0 0 300px; display: flex; flex-direction: column; justify-content: center; padding: 28px 24px; background: #0b2031; border-radius: 16px; color: #ffffff; }
+body.tune .lt-hub strong { position: relative; z-index: 1; font-family: Fraunces, Georgia, serif; font-size: 1.3rem; font-weight: 560; line-height: 1.2; }
+body.tune .lt-hub span { position: relative; z-index: 1; margin-top: 6px; color: #d5e0e8; font-size: 0.85rem; font-weight: 600; }
+body.tune .lt-hub-mark { position: absolute; right: -14px; bottom: -18px; width: 130px; height: 130px; color: #ffffff; opacity: 0.08; stroke-width: 1.4; }
+@media (max-width: 700px) {
+  body.tune .lt-tools-flow { flex-direction: column; }
+  body.tune .lt-flow-arrow { transform: rotate(90deg); }
+  body.tune .lt-hub { flex: none; }
+  body.tune .lt-sources li { flex-direction: column; align-items: flex-start; gap: 8px; padding: 12px 14px; }
+  body.tune .lt-src-icon { width: 36px; height: 36px; }
+}
+/* tools-flow-concept */
+
+/* header-monogram-align REMOVED 2026-11-06 17:23 — user asked for the nav
+   centred in the blue band instead, so the header is back to
+   align-items: center (base styles.css). Nav + CTA centre on the band's
+   middle, exactly beside each other. */
+
+/* ---- Branched-page diagnostic form: narrower box, same side spacing ----
+   The white form card on branched pages filled the whole 1280px content
+   width. Narrowed a little (1020px) and centred, so the gap on the left
+   and right stays equal; internal padding (28px) unchanged. Scoped to the
+   single-column form only — the homepage keeps its two-column
+   .inquiry-grid layout untouched. NOT committed / NOT pushed — awaiting
+   screenshot approval. */
+body.tune .inquiry .section-narrow:not(.inquiry-grid) .inquiry-form {
+  max-width: 1020px;
+  margin-inline: auto;
+}
+/* branched-form-narrow */
+
+/* ---- Team page: one profile at a time, alternating photo sides ----
+   Replaces the 4-card grid on /team/ only. Photos are the supplied team
+   portraits; bios and experience are the user's supplied text, verbatim.
+   NOT committed / NOT pushed — awaiting screenshot approval. */
+body.tune .lt-members { display: grid; gap: 28px; margin: 40px 0 8px; }
+body.tune .lt-member { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 40px; padding: 36px; background: #ffffff; border-radius: 20px; box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06); }
+body.tune .lt-member--flip { grid-template-columns: minmax(0, 1fr) 340px; }
+body.tune .lt-member--flip .lt-member-photo { order: 2; }
+body.tune .lt-member-photo { width: 100%; height: 460px; object-fit: cover; object-position: top; border-radius: 16px; }
+body.tune .lt-member-index { margin: 0 0 6px; color: #0c6e5c; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.14em; }
+body.tune .lt-member-body h2 { margin: 0 0 6px; color: #102438; font-size: clamp(1.6rem, 2.4vw, 2.1rem); font-weight: 560; }
+body.tune .lt-member-role { margin: 0 0 16px; color: #0c6e5c; font-size: 1rem; font-weight: 650; }
+body.tune .lt-member-body > p { color: #536475; font-size: 1rem; line-height: 1.6; }
+body.tune .lt-member-body h3 { margin: 26px 0 14px; color: #102438; font-size: 1.05rem; font-weight: 650; letter-spacing: 0.02em; }
+body.tune .lt-member-exp { margin: 0; padding: 0 0 0 14px; list-style: none; border-left: 2px solid #ddf2fa; }
+body.tune .lt-member-exp li { position: relative; padding: 0 0 14px 20px; color: #102438; font-size: 0.95rem; line-height: 1.45; }
+body.tune .lt-member-exp li:last-child { padding-bottom: 0; }
+body.tune .lt-member-exp li::before { content: ""; position: absolute; left: -20px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: #13b89b; border: 2px solid #ffffff; box-shadow: 0 0 0 2px #ddf2fa; }
+body.tune .lt-member-exp li span { display: block; margin-top: 2px; color: #536475; font-size: 0.85rem; }
+body.tune .lt-member-link { color: #0c6e5c; font-weight: 650; text-decoration: none; }
+body.tune .lt-member-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 860px) {
+  body.tune .lt-member, body.tune .lt-member--flip { grid-template-columns: 1fr; gap: 20px; padding: 24px; }
+  body.tune .lt-member--flip .lt-member-photo { order: 0; }
+  body.tune .lt-member-photo { height: 380px; }
+}
+/* team-profiles */
+
+/* ---- Service page identity: small icon + colour theme (all five pages) ----
+   Each branch page gets its card's icon and accent colours so you can tell
+   which service you are on. Accounting = purple. The badge + eyebrow sit
+   above the H1; the What's included numbers and the "A good fit" label
+   pick up the accent too. Other pages keep the default teal until this
+   preview was approved 2026-11-06 17:30 and rolled out to all five. NOT committed / NOT pushed. */
+body.tune .svc-accounting { --svc-accent: #a78bfa; --svc-accent2: #7c3aed; }
+body.tune .svc-bookkeeping { --svc-accent: #14e0b8; --svc-accent2: #0d9488; }
+body.tune .svc-business-advisory { --svc-accent: #ff7065; --svc-accent2: #e14b3f; }
+body.tune .svc-tax { --svc-accent: #7dd3fc; --svc-accent2: #0369a1; }
+body.tune .svc-family-business-advisory { --svc-accent: #f4c95d; --svc-accent2: #b45309; }
+body.tune .svc-id { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+body.tune .svc-hex { position: relative; width: 64px; height: 72px; flex: 0 0 auto; display: flex; align-items: center; justify-content: center; filter: drop-shadow(0 6px 12px rgba(16, 36, 56, 0.18)); }
+body.tune .svc-hex-shape { position: absolute; inset: 0; width: 100%; height: 100%; }
+body.tune .svc-hex-glass { fill: var(--svc-accent2); }
+body.tune .svc-hex-shine { fill: #ffffff; fill-opacity: 0.22; }
+body.tune .svc-hex-icon { position: relative; z-index: 1; display: flex; color: #ffffff; }
+body.tune .svc-hex-icon svg { width: 28px; height: 28px; stroke-width: 2.2; }
+body.tune .svc-eyebrow { color: var(--svc-accent2); font-size: 0.95rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+body.tune .svc-hero .lt-included li::before { color: var(--svc-accent2); }
+body.tune .svc-hero .fit-line strong { color: var(--svc-accent2); }
+/* svc-identity-preview */
