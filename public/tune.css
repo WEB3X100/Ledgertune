@@ -8,9 +8,21 @@ body.tune {
   --gold: #f4c95d;
   --gold-deep: #b45309;
   --gold-border: #d4b483;
+  /* Logo gold, sampled from the Ledger Tune logo (14 Nov 2026):
+     most common #c19b5d, average #c8a66c. Pure #c19b5d is 2.47:1 on
+     light bg, so highlighted words use the darker --gold-logo-text
+     (#8a6d3b, 4.63:1) in the same hue. Buttons use the true logo
+     gold as a fill with navy text (6.09:1). */
+  --gold-logo: #c19b5d;
+  --gold-logo-hover: #cfa96f;
+  --gold-logo-text: #8a6d3b;
   --coral: #ff7065;
-  --teal: #13b89b;
-  --teal-ink: #0c6e5c;
+  /* Green text replaced with logo-gold secondary (14 Nov 2026):
+     --teal-ink is now the darker logo gold for readable text,
+     --teal is the true logo gold for fills/badges. Service identity
+     teal (#0d9488 Bookkeeping) and chart data colours are unchanged. */
+  --teal: #c19b5d;
+  --teal-ink: #8a6d3b;
   --sky: #ddf2fa;
   --serif: "Fraunces", "Iowan Old Style", Palatino, Georgia, serif;
   --sans: "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -109,7 +121,7 @@ body.tune .nav-cta,
 body.tune .hero-cta,
 body.tune .form-submit,
 body.tune .mobile-dock {
-  background: var(--coral);
+  background: var(--gold-logo);
   color: #102438;
   border: 0;
   border-radius: 999px;
@@ -123,7 +135,7 @@ body.tune .nav-cta:hover,
 body.tune .hero-cta:hover,
 body.tune .form-submit:hover,
 body.tune .mobile-dock:hover {
-  background: #ff5e52;
+  background: var(--gold-logo-hover);
   color: #102438;
 }
 
@@ -188,6 +200,13 @@ body.tune .hero h1 {
   line-height: 1.08;
 }
 
+/* Logo-gold highlight for attention words. Primary text stays navy
+   (#102438), secondary text stays grey (#536475); only the wrapped
+   words take the darker logo-gold so they stay readable. */
+body.tune .lt-gold {
+  color: var(--gold-logo-text);
+}
+
 body.tune .hero-lead {
   max-width: 38ch;
   margin: 18px 0 0;
@@ -229,8 +248,41 @@ body.tune .lt-marks li::before {
   flex: 0 0 18px;
   border-radius: 50%;
   background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.2 6.4 11 12.5 5' fill='none' stroke='%230C6E5C' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 14px no-repeat,
-    #e7f7f3;
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.2 6.4 11 12.5 5' fill='none' stroke='%238A6D3B' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 14px no-repeat,
+    #f7f0dd;
+}
+
+/* Hero check items: rise in order, one by one. JS arms the list
+   (adds .lt-armed) then adds .is-in on load, so without JS the items
+   stay visible — nothing is hidden by CSS alone. Each item rises
+   12px and fades in; its check circle scales up with it. */
+body.tune .lt-marks.lt-armed li {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+body.tune .lt-marks.lt-armed li::before {
+  transform: scale(0.6);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+body.tune .lt-marks.lt-armed.is-in li {
+  opacity: 1;
+  transform: translateY(0);
+}
+body.tune .lt-marks.lt-armed.is-in li::before {
+  transform: scale(1);
+}
+body.tune .lt-marks.lt-armed li:nth-child(1) { transition-delay: 0.40s; }
+body.tune .lt-marks.lt-armed li:nth-child(2) { transition-delay: 0.52s; }
+body.tune .lt-marks.lt-armed li:nth-child(3) { transition-delay: 0.64s; }
+body.tune .lt-marks.lt-armed li:nth-child(4) { transition-delay: 0.76s; }
+@media (prefers-reduced-motion: reduce) {
+  body.tune .lt-marks.lt-armed li,
+  body.tune .lt-marks.lt-armed li::before {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 /* Dashboard */
@@ -459,7 +511,7 @@ body.tune .lt-recon {
   margin: 10px 0 0;
   padding: 8px 10px;
   border-radius: 10px;
-  background: #e7f7f3;
+  background: #f7f0dd;
   color: #102438;
   font-size: 0.82rem;
   font-weight: 650;
@@ -636,8 +688,9 @@ body.tune .mini-rows i:nth-child(5) { background: #a8d8c5; width: 100%; height: 
 
 body.tune .sheet.s1 { top: 24px; left: 18px; transform: rotate(-7deg); }
 body.tune .sheet.s2 { top: 78px; left: 34%; transform: rotate(4deg); }
-body.tune .sheet.s3 { top: 36px; right: 16px; width: 150px; background: #102438; color: #f4f7f8; }
-body.tune .sheet.s3 span { background: rgba(255, 255, 255, 0.2); }
+/* Bank card is white like Spreadsheet and Invoice — same .sheet base,
+   navy text and grey rows. The red ! badge stays as the warning marker. */
+body.tune .sheet.s3 { top: 36px; right: 16px; width: 150px; }
 body.tune .sheet em {
   position: absolute;
   top: -10px;
@@ -739,8 +792,8 @@ body.tune .lt-reports-float p {
   bottom: 16px;
   margin: 0;
   padding: 8px 12px;
-  background: #e7f7f3;
-  color: #0c6e5c;
+  background: #f7f0dd;
+  color: var(--gold-logo-text);
   border-radius: 10px;
   font-size: 0.85rem;
   font-weight: 700;
@@ -777,7 +830,7 @@ body.tune .lt-compare .lt-after {
   box-shadow: 0 18px 36px rgba(0, 0, 0, 0.35);
 }
 body.tune .lt-compare .lt-before { border-color: rgba(255, 112, 101, 0.35); }
-body.tune .lt-compare .lt-after { border-color: rgba(19, 184, 155, 0.4); }
+body.tune .lt-compare .lt-after { border-color: rgba(193, 155, 93, 0.4); }
 body.tune .lt-compare .lt-papers,
 body.tune .lt-compare .lt-reports-float {
   min-height: 280px;
@@ -811,8 +864,8 @@ body.tune .lt-compare .lt-before li::before {
 }
 body.tune .lt-compare .lt-after li::before {
   content: "✓";
-  background: rgba(19, 184, 155, 0.25);
-  color: #3ddc97;
+  background: rgba(193, 155, 93, 0.25);
+  color: var(--gold-logo);
 }
 /* Holographic arrow circle: light pearlescent sheen, no solid gold —
    the dark arrow reads clearly against it. */
@@ -838,11 +891,11 @@ body.tune .lt-compare .lt-reports-float article::after {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: #13b89b;
+  background: var(--gold-logo);
   color: #0b2031;
   font-size: 13px;
   font-weight: 800;
-  box-shadow: 0 0 0 3px rgba(19, 184, 155, 0.25), 0 0 14px rgba(19, 184, 155, 0.5);
+  box-shadow: 0 0 0 3px rgba(193, 155, 93, 0.25), 0 0 14px rgba(193, 155, 93, 0.5);
 }
 /* --- Animation sequence (gated by .lt-armed, played by .is-in) --- */
 body.tune .lt-compare .lt-before,
@@ -1358,7 +1411,8 @@ body.tune .header-form select {
 
 body.tune .field input::placeholder,
 body.tune .header-form input::placeholder { color: #536475; opacity: 1; }
-body.tune .next-steps li::before,
+body.tune .next-steps li::before { color: var(--gold-logo-text); }
+/* Required-field marker stays dark red, like form errors. */
 body.tune .field abbr { color: #8d2b22; }
 
 body.tune .lt-ready {
@@ -1631,7 +1685,7 @@ body.tune .lt-qpause input {
 }
 
 body.tune .lt-qpause span {
-  color: #0c6e5c;
+  color: var(--gold-logo-text);
   font-size: 0.88rem;
   font-weight: 600;
   text-decoration: underline;
@@ -1719,11 +1773,11 @@ body.tune .lt-team-card { background: #ffffff; border-radius: 20px; box-shadow: 
 body.tune .lt-team-card img { width: 100%; height: 420px; object-fit: cover; object-position: top; display: block; }
 body.tune .lt-team-body { padding: 20px 20px 24px; }
 body.tune .lt-team-card h3 { font-size: 1.35rem; font-weight: 560; color: #102438; margin: 0 0 4px; }
-body.tune .lt-team-card .lt-team-role { color: #0c6e5c; font-weight: 650; font-size: 0.95rem; margin: 0 0 14px; }
+body.tune .lt-team-card .lt-team-role { color: var(--gold-logo-text); font-weight: 650; font-size: 0.95rem; margin: 0 0 14px; }
 body.tune .lt-team-card p { color: #536475; margin: 0; }
 body.tune .lt-team-card ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
 body.tune .lt-team-card li { position: relative; padding-left: 24px; color: #536475; }
-body.tune .lt-team-card li::before { content: "\2713"; position: absolute; left: 0; top: 0; color: #0c6e5c; font-weight: 700; }
+body.tune .lt-team-card li::before { content: "\2713"; position: absolute; left: 0; top: 0; color: var(--gold-logo-text); font-weight: 700; }
 @media (max-width: 1020px) {
   body.tune .lt-team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
@@ -1771,7 +1825,7 @@ body.tune .footer-links a:hover { color: #ffffff; }
 /* Round 2: Process step links (Prompt 6) — cards are light again, so the
    links are navy, not white. */
 body.tune .lt-steps h3 a { color: #102438; text-decoration: none; }
-body.tune .lt-steps h3 a:hover { color: #0c6e5c; text-decoration: underline; text-underline-offset: 3px; }
+body.tune .lt-steps h3 a:hover { color: var(--gold-logo-text); text-decoration: underline; text-underline-offset: 3px; }
 
 /* Round 2: team cards are links to the roles page */
 body.tune a.lt-team-card { display: block; text-decoration: none; color: inherit; }
@@ -1846,7 +1900,7 @@ body.tune .brand::after {
 /* What's included list on service pages: numbered, two columns on desktop. */
 body.tune .lt-included { list-style: none; counter-reset: inc; padding: 0; margin: 24px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 18px 32px; }
 body.tune .lt-included li { counter-increment: inc; padding-left: 42px; position: relative; }
-body.tune .lt-included li::before { content: counter(inc, decimal-leading-zero); position: absolute; left: 0; top: 0; font-family: Fraunces, Georgia, serif; font-weight: 600; color: #0c6e5c; }
+body.tune .lt-included li::before { content: counter(inc, decimal-leading-zero); position: absolute; left: 0; top: 0; font-family: Fraunces, Georgia, serif; font-weight: 600; color: var(--gold-logo-text); }
 @media (max-width: 700px) {
   body.tune .lt-included { grid-template-columns: 1fr; }
 }
@@ -1856,7 +1910,7 @@ body.tune .lt-included li::before { content: counter(inc, decimal-leading-zero);
 body.tune img.lt-qav { border-radius: 12px; object-fit: contain; background: #ffffff; padding: 0; }
 
 /* Small 5-star row on testimonial cards, under the quote, Google-review style. */
-body.tune .lt-qcard p.lt-qstars { margin: 0; color: #fbbc04; font-size: .85rem; letter-spacing: 2px; line-height: 1; }
+body.tune .lt-qcard p.lt-qstars { margin: 0; color: var(--gold-logo-text); font-size: .85rem; letter-spacing: 2px; line-height: 1; }
 
 /* ---- Services section concept: light cards on the navy panel ----
    Creative rework for Usman's review. Content untouched (same 5 cards, same
@@ -1911,7 +1965,7 @@ body.tune .lt-src-icon { width: 40px; height: 40px; flex: 0 0 auto; display: gri
 body.tune .lt-src-icon svg { width: 22px; height: 22px; stroke-width: 1.8; }
 body.tune .lt-src-text { display: flex; flex-direction: column; min-width: 0; }
 body.tune .lt-src-text span { color: #536475; font-size: 0.75rem; font-weight: 600; }
-body.tune .lt-flow-arrow { display: flex; align-items: center; justify-content: center; flex: 0 0 auto; color: #0c6e5c; font-size: 2rem; font-weight: 700; line-height: 1; }
+body.tune .lt-flow-arrow { display: flex; align-items: center; justify-content: center; flex: 0 0 auto; color: var(--gold-logo-text); font-size: 2rem; font-weight: 700; line-height: 1; }
 body.tune .lt-hub { position: relative; overflow: hidden; flex: 0 0 300px; display: flex; flex-direction: column; justify-content: center; padding: 28px 24px; background: #0b2031; border-radius: 16px; color: #ffffff; }
 body.tune .lt-hub strong { position: relative; z-index: 1; font-family: Fraunces, Georgia, serif; font-size: 1.3rem; font-weight: 560; line-height: 1.2; }
 body.tune .lt-hub span { position: relative; z-index: 1; margin-top: 6px; color: #d5e0e8; font-size: 0.85rem; font-weight: 600; }
@@ -1952,9 +2006,9 @@ body.tune .lt-member { display: grid; grid-template-columns: 340px minmax(0, 1fr
 body.tune .lt-member--flip { grid-template-columns: minmax(0, 1fr) 340px; }
 body.tune .lt-member--flip .lt-member-photo { order: 2; }
 body.tune .lt-member-photo { width: 100%; height: 460px; object-fit: cover; object-position: top; border-radius: 16px; }
-body.tune .lt-member-index { margin: 0 0 6px; color: #0c6e5c; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.14em; }
+body.tune .lt-member-index { margin: 0 0 6px; color: var(--gold-logo-text); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.14em; }
 body.tune .lt-member-body h2 { margin: 0 0 6px; color: #102438; font-size: clamp(1.6rem, 2.4vw, 2.1rem); font-weight: 560; }
-body.tune .lt-member-role { margin: 0 0 16px; color: #0c6e5c; font-size: 1rem; font-weight: 650; }
+body.tune .lt-member-role { margin: 0 0 16px; color: var(--gold-logo-text); font-size: 1rem; font-weight: 650; }
 body.tune .lt-member-body > p { color: #536475; font-size: 1rem; line-height: 1.6; }
 body.tune .lt-member-body h3 { margin: 26px 0 14px; color: #102438; font-size: 1.05rem; font-weight: 650; letter-spacing: 0.02em; }
 body.tune .lt-member-exp { margin: 0; padding: 0 0 0 14px; list-style: none; border-left: 2px solid #ddf2fa; }
@@ -1962,7 +2016,7 @@ body.tune .lt-member-exp li { position: relative; padding: 0 0 14px 20px; color:
 body.tune .lt-member-exp li:last-child { padding-bottom: 0; }
 body.tune .lt-member-exp li::before { content: ""; position: absolute; left: -20px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: #13b89b; border: 2px solid #ffffff; box-shadow: 0 0 0 2px #ddf2fa; }
 body.tune .lt-member-exp li span { display: block; margin-top: 2px; color: #536475; font-size: 0.85rem; }
-body.tune .lt-member-link { color: #0c6e5c; font-weight: 650; text-decoration: none; }
+body.tune .lt-member-link { color: var(--gold-logo-text); font-weight: 650; text-decoration: none; }
 body.tune .lt-member-link:hover { text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 860px) {
   body.tune .lt-member, body.tune .lt-member--flip { grid-template-columns: 1fr; gap: 20px; padding: 24px; }

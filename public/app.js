@@ -382,6 +382,21 @@ if (shift) {
   }
 }
 
+// Hero check items: rise in order, one by one, on load. The hero is
+// already in view, so no observer — arm the list, then play it on the
+// next frame. Reduced motion or no JS leaves the finished state.
+const heroMarks = document.querySelector(".lt-marks");
+if (heroMarks) {
+  if (reduceMotion) {
+    heroMarks.classList.add("is-in");
+  } else {
+    heroMarks.classList.add("lt-armed");
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => heroMarks.classList.add("is-in"));
+    });
+  }
+}
+
 renderCloseWidget("review");
 
 const helpDeck = document.querySelector("[data-help-deck]");
