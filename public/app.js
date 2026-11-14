@@ -330,6 +330,58 @@ if ("IntersectionObserver" in window) {
   document.querySelectorAll("[data-reveal]").forEach((el) => el.classList.add("is-in"));
 }
 
+// Process flow 1 → 5: arm the animation, then play it once when the
+// section scrolls into view. Gold fill grows left to right; each numbered
+// circle turns gold in turn. Without IntersectionObserver, show the
+// finished state immediately so nothing stays hidden.
+const flowSteps = document.querySelector(".lt-steps");
+if (flowSteps) {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    flowSteps.classList.add("is-in");
+  } else if ("IntersectionObserver" in window) {
+    flowSteps.classList.add("lt-armed");
+    const flowWatch = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          flowSteps.classList.add("is-in");
+          flowWatch.unobserve(flowSteps);
+        });
+      },
+      { threshold: 0.3 }
+    );
+    flowWatch.observe(flowSteps);
+  } else {
+    flowSteps.classList.add("is-in");
+  }
+}
+
+// Before / after cards: left card first, its X items pop 1 by 1, then the
+// right card, its check items pop 1 by 1. Same arm-then-observe pattern as
+// the process flow, so with no IntersectionObserver the finished state
+// shows immediately and nothing stays hidden.
+const shift = document.querySelector(".lt-shift");
+if (shift) {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    shift.classList.add("is-in");
+  } else if ("IntersectionObserver" in window) {
+    shift.classList.add("lt-armed");
+    const shiftWatch = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          shift.classList.add("is-in");
+          shiftWatch.unobserve(shift);
+        });
+      },
+      { threshold: 0.25 }
+    );
+    shiftWatch.observe(shift);
+  } else {
+    shift.classList.add("is-in");
+  }
+}
+
 renderCloseWidget("review");
 
 const helpDeck = document.querySelector("[data-help-deck]");

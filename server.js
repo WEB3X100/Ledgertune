@@ -105,11 +105,20 @@ const server = http.createServer(async (req, res) => {
   }
 
   const requestPath = url.pathname === "/" ? "/index.html" : url.pathname;
-  const filePath = safeResolve(root, requestPath);
+  let filePath = safeResolve(root, requestPath);
   if (!filePath) {
     res.writeHead(403);
     res.end("Forbidden");
     return;
+  }
+  // Localhost only: serve directory indexes like Netlify does,
+  // so /accounting/ and /accounting both open the service page.
+  try {
+    if (fs.statSync(filePath).isDirectory()) {
+      filePath = path.join(filePath, "index.html");
+    }
+  } catch {
+    // Not a directory (or missing) — let serveFile return 404/500.
   }
   serveFile(res, filePath);
 });

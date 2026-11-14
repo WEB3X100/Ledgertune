@@ -5,6 +5,9 @@ body.tune {
   --ink: #102438;
   --muted: #536475;
   --navy: #0b2031;
+  --gold: #f4c95d;
+  --gold-deep: #b45309;
+  --gold-border: #d4b483;
   --coral: #ff7065;
   --teal: #13b89b;
   --teal-ink: #0c6e5c;
@@ -615,6 +618,21 @@ body.tune .mini-rows i {
   border-radius: 99px;
   background: #e4ebf0;
 }
+/* Filler inside the messy / clean cards: varied row lengths so the
+   Spreadsheet, Invoice and Balance sheet cards read as filled documents,
+   not empty boxes. The pink row in the Spreadsheet flags a mismatch;
+   the last row in Invoice and in Balance sheet is the total. */
+body.tune .sheet span:nth-child(3) { width: 88%; }
+body.tune .sheet span:nth-child(4) { width: 72%; }
+body.tune .sheet span:nth-child(5) { width: 90%; }
+body.tune .sheet span:nth-child(6) { width: 62%; }
+body.tune .sheet span:nth-child(7) { width: 78%; }
+body.tune .sheet.s1 span:nth-child(4) { background: #f3c1bb; }
+body.tune .sheet.s2 span:last-child { background: #cfe8dd; width: 58%; height: 8px; }
+body.tune .mini-rows i:nth-child(2) { width: 92%; }
+body.tune .mini-rows i:nth-child(3) { width: 78%; }
+body.tune .mini-rows i:nth-child(4) { width: 88%; }
+body.tune .mini-rows i:nth-child(5) { background: #a8d8c5; width: 100%; height: 8px; }
 
 body.tune .sheet.s1 { top: 24px; left: 18px; transform: rotate(-7deg); }
 body.tune .sheet.s2 { top: 78px; left: 34%; transform: rotate(4deg); }
@@ -728,13 +746,209 @@ body.tune .lt-reports-float p {
   font-weight: 700;
 }
 
+/* Comparative cards — "Your numbers shouldn't require detective work."
+   Two cards, as in the reference: left = messy, red X list; right = clean,
+   green check list; gold arrow between them. Section is dark navy, headings
+   white with "detective work." in gold; body text unchanged. Animation runs
+   in order when the section scrolls into view: left card first, its X items
+   pop 1 by 1, then the right card, its check items pop 1 by 1. Steps only
+   start hidden once JS arms them (class lt-armed), so with JS off the
+   section stays fully visible. */
+body.tune .lt-compare {
+  /* Page background stays as before — light. Only the two cards inside
+     are dark navy, as in the reference. */
+  background: #f8fafb;
+}
+body.tune .lt-compare h2 { color: #102438; }
+body.tune .lt-compare h2 .lt-keep {
+  background: linear-gradient(90deg, #8a6d3b, var(--gold-deep) 55%, #d4a017);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--gold-deep);
+}
+body.tune .lt-compare .lt-lede { color: #536475; }
+body.tune .lt-compare .lt-before,
+body.tune .lt-compare .lt-after {
+  padding: 22px;
+  border-radius: 24px;
+  background: #0e1e2e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.35);
+}
+body.tune .lt-compare .lt-before { border-color: rgba(255, 112, 101, 0.35); }
+body.tune .lt-compare .lt-after { border-color: rgba(19, 184, 155, 0.4); }
+body.tune .lt-compare .lt-papers,
+body.tune .lt-compare .lt-reports-float {
+  min-height: 280px;
+  background: #0a1826;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+}
+body.tune .lt-compare .lt-reports-float { background: #0a1826; }
+body.tune .lt-compare .lt-before li,
+body.tune .lt-compare .lt-after li { color: #e8eef2; padding-left: 32px; }
+body.tune .lt-compare .lt-before li::before,
+body.tune .lt-compare .lt-after li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.05em;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 800;
+  transform: none;
+}
+body.tune .lt-compare .lt-before li::before {
+  content: "✕";
+  background: rgba(255, 112, 101, 0.22);
+  color: #ff8a7a;
+}
+body.tune .lt-compare .lt-after li::before {
+  content: "✓";
+  background: rgba(19, 184, 155, 0.25);
+  color: #3ddc97;
+}
+/* Holographic arrow circle: light pearlescent sheen, no solid gold —
+   the dark arrow reads clearly against it. */
+body.tune .lt-compare .lt-arrow {
+  color: #0b2031;
+  background: conic-gradient(from 210deg, #ffffff 0%, #dff3ff 18%, #e9e4ff 36%, #ffe9f3 54%, #fff3d6 72%, #dcfbf0 88%, #ffffff 100%);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  place-self: center;
+  box-shadow: 0 0 0 4px #ffffff, 0 0 18px rgba(124, 58, 237, 0.18), 0 0 28px rgba(13, 148, 136, 0.15);
+}
+body.tune .lt-compare .lt-arrow svg { width: 30px; height: 30px; }
+/* Green check badges on the three clean report cards, like the reference. */
+body.tune .lt-compare .lt-reports-float article::after {
+  content: "✓";
+  position: absolute;
+  top: -10px;
+  right: -8px;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #13b89b;
+  color: #0b2031;
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 0 0 3px rgba(19, 184, 155, 0.25), 0 0 14px rgba(19, 184, 155, 0.5);
+}
+/* --- Animation sequence (gated by .lt-armed, played by .is-in) --- */
+body.tune .lt-compare .lt-before,
+body.tune .lt-compare .lt-after,
+body.tune .lt-compare .lt-arrow,
+body.tune .lt-compare .lt-papers .sheet,
+body.tune .lt-compare .lt-papers .sticky,
+body.tune .lt-compare .lt-reports-float article,
+body.tune .lt-compare .lt-reports-float p,
+body.tune .lt-compare .lt-before li,
+body.tune .lt-compare .lt-after li,
+body.tune .lt-compare .mini-bars i { transition-timing-function: ease; }
+body.tune .lt-shift.lt-armed .lt-before,
+body.tune .lt-shift.lt-armed .lt-after {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+body.tune .lt-shift.lt-armed.is-in .lt-before { opacity: 1; transform: none; transition-delay: 0s; }
+body.tune .lt-shift.lt-armed.is-in .lt-after { opacity: 1; transform: none; transition-delay: 2.6s; }
+body.tune .lt-shift.lt-armed .lt-papers .sheet,
+body.tune .lt-shift.lt-armed .lt-papers .sticky,
+body.tune .lt-shift.lt-armed .lt-reports-float article,
+body.tune .lt-shift.lt-armed .lt-reports-float p {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+body.tune .lt-shift.lt-armed.is-in .lt-papers .s1 { opacity: 1; transition-delay: 0.2s; }
+body.tune .lt-shift.lt-armed.is-in .lt-papers .s2 { opacity: 1; transition-delay: 0.45s; }
+body.tune .lt-shift.lt-armed.is-in .lt-papers .s3 { opacity: 1; transition-delay: 0.7s; }
+body.tune .lt-shift.lt-armed.is-in .lt-papers .sticky { opacity: 1; transition-delay: 0.9s; }
+body.tune .lt-shift.lt-armed.is-in .lt-reports-float article:nth-child(1) { opacity: 1; transition-delay: 2.8s; }
+body.tune .lt-shift.lt-armed.is-in .lt-reports-float article:nth-child(2) { opacity: 1; transition-delay: 3.0s; }
+body.tune .lt-shift.lt-armed.is-in .lt-reports-float article:nth-child(3) { opacity: 1; transition-delay: 3.2s; }
+body.tune .lt-shift.lt-armed.is-in .lt-reports-float p { opacity: 1; transition-delay: 3.4s; }
+body.tune .lt-shift.lt-armed .lt-reports-float article::after {
+  transform: scale(0);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+body.tune .lt-shift.lt-armed.is-in .lt-reports-float article:nth-child(1)::after { transform: scale(1); transition-delay: 3.1s; }
+body.tune .lt-shift.lt-armed.is-in .lt-reports-float article:nth-child(2)::after { transform: scale(1); transition-delay: 3.3s; }
+body.tune .lt-shift.lt-armed.is-in .lt-reports-float article:nth-child(3)::after { transform: scale(1); transition-delay: 3.5s; }
+body.tune .lt-shift.lt-armed .mini-bars i {
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.5s ease;
+}
+body.tune .lt-shift.lt-armed.is-in .mini-bars i:nth-child(1) { transform: scaleY(1); transition-delay: 2.9s; }
+body.tune .lt-shift.lt-armed.is-in .mini-bars i:nth-child(2) { transform: scaleY(1); transition-delay: 3.0s; }
+body.tune .lt-shift.lt-armed.is-in .mini-bars i:nth-child(3) { transform: scaleY(1); transition-delay: 3.1s; }
+body.tune .lt-shift.lt-armed.is-in .mini-bars i:nth-child(4) { transform: scaleY(1); transition-delay: 3.2s; }
+body.tune .lt-shift.lt-armed.is-in .mini-bars i:nth-child(5) { transform: scaleY(1); transition-delay: 3.3s; }
+body.tune .lt-shift.lt-armed .lt-arrow {
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.4s ease 2.4s, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 2.4s;
+}
+body.tune .lt-shift.lt-armed.is-in .lt-arrow { opacity: 1; transform: scale(1); }
+/* Left X items pop 1 by 1, then right check items pop 1 by 1. */
+body.tune .lt-shift.lt-armed .lt-before li,
+body.tune .lt-shift.lt-armed .lt-after li {
+  opacity: 0;
+  transform: translateY(8px) scale(0.96);
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+body.tune .lt-shift.lt-armed.is-in .lt-before li { opacity: 1; transform: none; }
+body.tune .lt-shift.lt-armed.is-in .lt-before li:nth-child(1) { transition-delay: 1.0s; }
+body.tune .lt-shift.lt-armed.is-in .lt-before li:nth-child(2) { transition-delay: 1.3s; }
+body.tune .lt-shift.lt-armed.is-in .lt-before li:nth-child(3) { transition-delay: 1.6s; }
+body.tune .lt-shift.lt-armed.is-in .lt-before li:nth-child(4) { transition-delay: 1.9s; }
+body.tune .lt-shift.lt-armed.is-in .lt-before li:nth-child(5) { transition-delay: 2.2s; }
+body.tune .lt-shift.lt-armed.is-in .lt-after li { opacity: 1; transform: none; }
+body.tune .lt-shift.lt-armed.is-in .lt-after li:nth-child(1) { transition-delay: 3.7s; }
+body.tune .lt-shift.lt-armed.is-in .lt-after li:nth-child(2) { transition-delay: 4.0s; }
+body.tune .lt-shift.lt-armed.is-in .lt-after li:nth-child(3) { transition-delay: 4.3s; }
+body.tune .lt-shift.lt-armed.is-in .lt-after li:nth-child(4) { transition-delay: 4.6s; }
+body.tune .lt-shift.lt-armed.is-in .lt-after li:nth-child(5) { transition-delay: 4.9s; }
+@media (max-width: 980px) {
+  body.tune .lt-compare .lt-arrow { height: 56px; }
+  body.tune .lt-compare .lt-arrow svg { transform: rotate(90deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.tune .lt-shift.lt-armed .lt-before,
+  body.tune .lt-shift.lt-armed .lt-after,
+  body.tune .lt-shift.lt-armed .lt-arrow,
+  body.tune .lt-shift.lt-armed .lt-papers .sheet,
+  body.tune .lt-shift.lt-armed .lt-papers .sticky,
+  body.tune .lt-shift.lt-armed .lt-reports-float article,
+  body.tune .lt-shift.lt-armed .lt-reports-float p,
+  body.tune .lt-shift.lt-armed .lt-before li,
+  body.tune .lt-shift.lt-armed .lt-after li {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  body.tune .lt-shift.lt-armed .mini-bars i { transform: scaleY(1); transition: none; }
+  body.tune .lt-shift.lt-armed .lt-reports-float article::after { transform: scale(1); transition: none; }
+}
+
 /* Services */
-body.tune .lt-services { padding: 28px 0 88px; }
+body.tune .lt-services { padding: 64px 0 88px; background: var(--navy); }
 
 body.tune .lt-services-panel {
-  padding: 48px 36px 36px;
-  background: var(--navy);
-  border-radius: 28px;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
 }
 
 body.tune .lt-services h2 { color: #ffffff; max-width: 16em; }
@@ -819,10 +1033,27 @@ body.tune .lt-card a {
 
 body.tune .lt-card a:hover { color: #084e41; }
 
-/* Process */
+/* Process — animated flow 1 → 5, built to the reference screenshot, then
+   audited 14 Nov: background back to light (as before, NOT blue), the
+   line is 4 separate segments that only run BETWEEN circles — never under
+   one — so it flows seamlessly, and the 5 cards below are liquid glass,
+   holographic, with very light neon only. No text changed. */
 body.tune .lt-process { background: #ffffff; }
+body.tune .lt-process h2 { color: #102438; }
+body.tune .lt-process .lt-lede { color: #536475; }
+
+/* "a confident close." keeps the same navy as the rest of this heading —
+   no gold gradient here, so the heading reads as one consistent colour. */
+body.tune .lt-process h2 .lt-keep {
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: #102438;
+  color: #102438;
+}
 
 body.tune .lt-steps {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 18px;
@@ -832,22 +1063,181 @@ body.tune .lt-steps {
   counter-reset: none;
 }
 
-body.tune .lt-steps li { min-width: 0; }
+/* AUDIT FIX 2 — circles are now centred above the centre of each card
+   for maximum alignment. The circle centre is at 50% of its column, so
+   a segment starts at the circle's right edge (50% + 24px) and ends at
+   the next circle's left edge — width calc(100% - 30px), i.e. one column
+   + 18px gap - 48px. */
+body.tune .lt-steps::before,
+body.tune .lt-steps::after { display: none; }
+body.tune .lt-steps li::before,
+body.tune .lt-steps li::after {
+  content: "";
+  position: absolute;
+  top: 24px;
+  left: calc(50% + 24px);
+  width: calc(100% - 30px);
+  height: 3px;
+  border-radius: 999px;
+  pointer-events: none;
+}
+body.tune .lt-steps li::before { background: rgba(16, 36, 56, 0.12); }
+body.tune .lt-steps li::after {
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.55s ease;
+}
+/* Simplified line: one solid flat colour per segment, no gradient, no
+   glow — the colour of the step it leaves, so the flow reads calmly. */
+body.tune .lt-steps li:nth-child(1)::after { background: #7c3aed; transition-delay: 0.15s; }
+body.tune .lt-steps li:nth-child(2)::after { background: #0d9488; transition-delay: 0.65s; }
+body.tune .lt-steps li:nth-child(3)::after { background: #e14b3f; transition-delay: 1.15s; }
+body.tune .lt-steps li:nth-child(4)::after { background: #0369a1; transition-delay: 1.65s; }
+body.tune .lt-steps.is-in li::after { transform: scaleX(1); }
+body.tune .lt-steps li:nth-child(5)::before,
+body.tune .lt-steps li:nth-child(5)::after { display: none; }
+
+/* Flow colours = the 5 service colours, in service order left to right:
+   1 Accounting purple (#7c3aed / #a78bfa), 2 Bookkeeping teal (#0d9488 /
+   #14e0b8), 3 Business Advisory coral (#e14b3f / #ff7065), 4 Tax sky
+   (#0369a1 / #7dd3fc), 5 Family Business gold (#b45309 / #f4c95d).
+   --step is the deeper accent2 used for rings/borders, --step-text the
+   legible number colour, --step-soft the very light glass wash. */
+body.tune .lt-steps li:nth-child(1) { --step: #7c3aed; --step-text: #6025e1; --step-soft: rgba(124, 58, 237, 0.10); }
+body.tune .lt-steps li:nth-child(2) { --step: #0d9488; --step-text: #0c6e5c; --step-soft: rgba(13, 148, 136, 0.10); }
+body.tune .lt-steps li:nth-child(3) { --step: #e14b3f; --step-text: #c73e32; --step-soft: rgba(225, 75, 63, 0.10); }
+body.tune .lt-steps li:nth-child(4) { --step: #0369a1; --step-text: #0369a1; --step-soft: rgba(3, 105, 161, 0.10); }
+body.tune .lt-steps li:nth-child(5) { --step: #b45309; --step-text: #8a6d3b; --step-soft: rgba(180, 83, 9, 0.10); }
+
+/* The li is now just the column: circle on top, card below it. */
+body.tune .lt-steps li {
+  position: relative;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+/* Each card below the line is liquid glass, holographic: translucent
+   white with a soft iridescent wash in its step colour, a bright top
+   edge, and a very light glow in parallel with its circle, same delay. */
+body.tune .lt-step-card {
+  margin-top: 28px;
+  padding: 20px 18px;
+  border: 1px solid rgba(16, 36, 56, 0.08);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, var(--step-soft) 100%);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 10px 28px rgba(16, 36, 56, 0.07);
+  transition: box-shadow 0.5s ease, border-color 0.5s ease, background-color 0.5s ease;
+}
+body.tune .lt-steps.is-in li .lt-step-card {
+  border-color: var(--step);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 10px 28px rgba(16, 36, 56, 0.08), 0 0 14px var(--step-soft);
+}
+/* Steps start hidden only once JS has armed the animation (so with JS
+   off, or if the observer never runs, the steps stay visible). */
+body.tune .lt-steps.lt-armed li {
+  /* No opacity fade here — fading the whole card would let the gold line
+     show through the circles while they fade in. Slide + glow only, so
+     the circles stay opaque and the line meets them cleanly. */
+  transform: translateY(10px);
+  transition: transform 0.5s ease, box-shadow 0.5s ease, border-color 0.5s ease, background-color 0.5s ease;
+}
+body.tune .lt-steps.lt-armed.is-in li { transform: translateY(0); }
+body.tune .lt-steps.lt-armed.is-in li:nth-child(1) { transition-delay: 0.1s; }
+body.tune .lt-steps.lt-armed.is-in li:nth-child(2) { transition-delay: 0.6s; }
+body.tune .lt-steps.lt-armed.is-in li:nth-child(3) { transition-delay: 1.1s; }
+body.tune .lt-steps.lt-armed.is-in li:nth-child(4) { transition-delay: 1.6s; }
+body.tune .lt-steps.lt-armed.is-in li:nth-child(5) { transition-delay: 2.1s; }
 
 body.tune .lt-steps span {
+  position: relative;
+  z-index: 1;
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
-  margin-bottom: 12px;
+  width: 48px;
+  height: 48px;
+  margin: 0 auto;
   border-radius: 50%;
-  background: #ddf2fa;
-  color: #0b2031;
+  background: #f8fafb;
+  color: #8a9aa8;
   font-weight: 700;
+  font-size: 1.1rem;
+  border: 2px solid rgba(16, 36, 56, 0.14);
+  transition: background 0.45s ease, color 0.45s ease, border-color 0.45s ease, box-shadow 0.45s ease;
+}
+/* Simplified circle: plain white with a faint tint of its own step colour
+   only — no rainbow, no multi-colour sheen. Ring and number in the step
+   colour, very light glow. Solid white, so nothing behind it shows through. */
+body.tune .lt-steps.is-in li span {
+  background: radial-gradient(circle at 50% 35%, #ffffff 0%, var(--step-soft) 130%);
+  color: var(--step-text, var(--step));
+  border-color: var(--step);
+  box-shadow: 0 0 0 4px #ffffff, 0 0 8px var(--step-soft);
+}
+body.tune .lt-steps.is-in li:nth-child(1) span { transition-delay: 0.1s; }
+body.tune .lt-steps.is-in li:nth-child(2) span { transition-delay: 0.6s; }
+body.tune .lt-steps.is-in li:nth-child(3) span { transition-delay: 1.1s; }
+body.tune .lt-steps.is-in li:nth-child(4) span { transition-delay: 1.6s; }
+body.tune .lt-steps.is-in li:nth-child(5) span { transition-delay: 2.1s; }
+
+/* Pulse + light up, aligned: when a step lights, its circle pulses once
+   and its card below lights at the exact same moment — same delay for
+   circle, card and the line segment feeding it (0.1 / 0.6 / 1.1 / 1.6 /
+   2.1s), so circle and card below are always in sync. */
+@keyframes lt-circle-pulse {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.22); }
+  100% { transform: scale(1); }
+}
+@keyframes lt-card-pulse {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+body.tune .lt-steps.is-in li span { animation: lt-circle-pulse 0.7s ease-out 1; }
+body.tune .lt-steps.is-in li .lt-step-card { animation: lt-card-pulse 0.7s ease-out 1; }
+body.tune .lt-steps.is-in li:nth-child(1) span,
+body.tune .lt-steps.is-in li:nth-child(1) .lt-step-card { animation-delay: 0.1s; }
+body.tune .lt-steps.is-in li:nth-child(2) span,
+body.tune .lt-steps.is-in li:nth-child(2) .lt-step-card { animation-delay: 0.6s; }
+body.tune .lt-steps.is-in li:nth-child(3) span,
+body.tune .lt-steps.is-in li:nth-child(3) .lt-step-card { animation-delay: 1.1s; }
+body.tune .lt-steps.is-in li:nth-child(4) span,
+body.tune .lt-steps.is-in li:nth-child(4) .lt-step-card { animation-delay: 1.6s; }
+body.tune .lt-steps.is-in li:nth-child(5) span,
+body.tune .lt-steps.is-in li:nth-child(5) .lt-step-card { animation-delay: 2.1s; }
+
+/* Card glow follows the same stagger as its circle. */
+body.tune .lt-steps.lt-armed.is-in li:nth-child(1) .lt-step-card { transition-delay: 0.1s; }
+body.tune .lt-steps.lt-armed.is-in li:nth-child(2) .lt-step-card { transition-delay: 0.6s; }
+body.tune .lt-steps.lt-armed.is-in li:nth-child(3) .lt-step-card { transition-delay: 1.1s; }
+body.tune .lt-steps.lt-armed.is-in li:nth-child(4) .lt-step-card { transition-delay: 1.6s; }
+body.tune .lt-steps.lt-armed.is-in li:nth-child(5) .lt-step-card { transition-delay: 2.1s; }
+
+/* Below desktop the steps wrap (3 cols, then 1 col), so the horizontal
+   segments no longer line up — hide them and keep only the staggered step-in. */
+@media (max-width: 1100px) {
+  body.tune .lt-steps li::before,
+  body.tune .lt-steps li::after { display: none; }
 }
 
-body.tune .lt-steps li:nth-child(4) span { background: #d9f6ef; }
-body.tune .lt-steps li:nth-child(5) span { background: #ddf2fa; }
+@media (prefers-reduced-motion: reduce) {
+  body.tune .lt-steps li::after { transform: scaleX(1); transition: none; }
+  body.tune .lt-steps li,
+  body.tune .lt-steps.lt-armed li { opacity: 1; transform: none; transition: none; }
+  body.tune .lt-steps li span,
+  body.tune .lt-steps li .lt-step-card { animation: none; }
+  body.tune .lt-steps li span {
+    background: #ffffff;
+    border-color: var(--step);
+    color: var(--step-text, var(--step));
+    box-shadow: 0 0 0 4px #ffffff;
+    transition: none;
+  }
+}
 
 body.tune .lt-steps h3 {
   margin: 0 0 8px;
@@ -855,6 +1245,8 @@ body.tune .lt-steps h3 {
   font-weight: 560;
   color: #102438;
 }
+
+body.tune .lt-steps h3 a { color: #102438; }
 
 body.tune .lt-steps p {
   margin: 0;
@@ -1376,7 +1768,8 @@ body.tune .footer-links { display: flex; gap: 18px; flex-wrap: wrap; }
 body.tune .footer-links a { color: #d5e0e8; font-weight: 600; }
 body.tune .footer-links a:hover { color: #ffffff; }
 
-/* Round 2: Process step links (Prompt 6) */
+/* Round 2: Process step links (Prompt 6) — cards are light again, so the
+   links are navy, not white. */
 body.tune .lt-steps h3 a { color: #102438; text-decoration: none; }
 body.tune .lt-steps h3 a:hover { color: #0c6e5c; text-decoration: underline; text-underline-offset: 3px; }
 
@@ -1473,21 +1866,27 @@ body.tune #services .lt-card { background: #ffffff; color: #102438; border: 1px 
 body.tune #services .lt-card:hover, body.tune #services .lt-card:focus-within { transform: translateY(-6px); border-color: #d5dee5; border-top-color: var(--accent2); box-shadow: 0 20px 36px rgba(0,0,0,0.18); z-index: 2; }
 body.tune #services .lt-card.lt-featured { transform: none; border: 1px solid var(--accent2); border-top: 5px solid var(--accent2); box-shadow: 0 16px 32px rgba(0,0,0,0.16); }
 body.tune #services .lt-card.lt-featured:hover, body.tune #services .lt-card.lt-featured:focus-within { transform: translateY(-6px); }
-body.tune #services .lt-visual { height: auto; padding: 26px 24px 0; background: transparent; overflow: visible; }
+body.tune #services .lt-cards--hersom { gap: 16px; }
+body.tune #services .lt-visual { height: auto; padding: 20px 20px 0; background: transparent; overflow: visible; }
 body.tune #services .lt-visual::after { display: none; }
 body.tune #services .lt-visual--purple, body.tune #services .lt-visual--teal, body.tune #services .lt-visual--coral, body.tune #services .lt-visual--sky, body.tune #services .lt-visual--gold { background: transparent; }
-body.tune #services .lt-hex { width: 84px; height: 94px; filter: drop-shadow(0 8px 14px rgba(16,36,56,0.18)); }
+body.tune #services .lt-hex { width: 72px; height: 80px; filter: drop-shadow(0 8px 14px rgba(16,36,56,0.18)); }
 body.tune #services .lt-hex-glass { fill: var(--accent2); fill-opacity: 1; stroke: none; }
 body.tune #services .lt-hex-shine { fill-opacity: 0; }
-body.tune #services .lt-hex-icon svg { width: 36px; height: 36px; stroke-width: 2.2; filter: none; }
+body.tune #services .lt-hex-icon svg { width: 32px; height: 32px; stroke-width: 2.2; filter: none; }
 body.tune #services .lt-card.lt-featured .lt-hex { transform: none; }
 body.tune #services .lt-card:hover .lt-hex, body.tune #services .lt-card:focus-within .lt-hex { transform: scale(1.08) rotate(-2deg); }
-body.tune #services .lt-card-body { padding: 16px 24px 24px; }
-body.tune #services .lt-card-body h3 { color: #102438; }
-body.tune #services .lt-card-body > p { color: #536475; }
-body.tune #services .lt-card-body .lt-stat { margin-top: auto; padding-top: 14px; border-top: 1px solid #e6ebef; color: #102438; }
-body.tune #services .lt-card-body .lt-stat strong { display: block; margin-bottom: 4px; color: var(--accent2); font-size: 1.4rem; line-height: 1.15; white-space: nowrap; }
-body.tune #services .lt-card-body .lt-stat-source { color: #536475; margin-bottom: 16px; }
+/* Compressed, aligned card body: every card is a flex column; the title
+   always takes exactly 2 lines of space, so every description starts at
+   the same height; the stat block is pushed to the bottom with
+   margin-top: auto, so stats, sources and Learn more buttons line up
+   across all 5 cards despite different text lengths. */
+body.tune #services .lt-card-body { display: flex; flex-direction: column; padding: 12px 20px 20px; }
+body.tune #services .lt-card-body h3 { color: #102438; font-size: 1.18rem; line-height: 1.2; min-height: 2.4em; margin-bottom: 8px; text-align: center; }
+body.tune #services .lt-card-body > p { color: #536475; font-size: 0.92rem; line-height: 1.5; }
+body.tune #services .lt-card-body .lt-stat { margin-top: auto; padding-top: 14px; border-top: 1px solid #e6ebef; color: #102438; min-height: 7.2rem; }
+body.tune #services .lt-card-body .lt-stat strong { display: block; margin-bottom: 4px; color: var(--accent2); font-size: 1.25rem; line-height: 1.15; white-space: nowrap; }
+body.tune #services .lt-card-body .lt-stat-source { color: #536475; min-height: 2.4em; font-size: 0.7rem; margin-bottom: 14px; }
 body.tune #services .lt-learn { margin-top: 0; color: var(--accent2); border: 1px solid var(--accent2); background: transparent; }
 body.tune #services .lt-card:hover .lt-learn, body.tune #services .lt-card:focus-within .lt-learn, body.tune #services .lt-card.lt-featured .lt-learn { background: var(--accent2); border-color: var(--accent2); color: #ffffff; }
 /* services-concept-light */
@@ -1594,3 +1993,37 @@ body.tune .svc-eyebrow { color: var(--svc-accent2); font-size: 0.95rem; font-wei
 body.tune .svc-hero .lt-included li::before { color: var(--svc-accent2); }
 body.tune .svc-hero .fit-line strong { color: var(--svc-accent2); }
 /* svc-identity-preview */
+
+/* ---- Full-homepage type audit fix — 14 Nov 2026 ----
+   One type scale for the homepage, from a computed-style audit of all
+   299 text elements + full-page screenshots. No copy changed.
+   H1/H2: Fraunces 560, clamp(2rem, 3vw, 2.7rem), line-height 1.12,
+   navy #102438 (white on dark sections). H3: Fraunces 560, 1.2rem
+   (19.2px), line-height 1.25. Body: Inter 17px, grey #536475.
+   Fixes: tools h2 was 27.2px (looked like a subheading), team h2 was
+   40.8px, diagnostic h2 was 41.6px, "What happens next" h3 was 28.8px
+   weight 400, team-name h3 was 21.6px, services h3 used a short font
+   stack and 1.18rem, process h3 line-height was 1.55, tools paragraph
+   was 14.72px and process lede 15.2px (now both 17px), services card
+   text 14.72px (now 15.2px), stat numbers used a short sans stack.
+   Gold accent: the compare heading was the only heading left with a
+   gold second line after the process heading was made plain navy —
+   now also plain navy, so every heading is one consistent colour. */
+body.tune .lt-tools h2 { font-size: clamp(2rem, 3vw, 2.7rem); font-weight: 560; line-height: 1.12; }
+body.tune .team h2 { font-size: clamp(2rem, 3vw, 2.7rem); font-weight: 560; line-height: 1.12; color: #102438; }
+body.tune .inquiry-form h2 { font-size: clamp(2rem, 3vw, 2.7rem); font-weight: 560; line-height: 1.12; }
+body.tune .preview-card h3 { font-family: var(--serif); font-size: 1.2rem; font-weight: 560; line-height: 1.25; color: #102438; }
+body.tune .lt-team-card h3 { font-size: 1.2rem; line-height: 1.25; }
+body.tune .lt-steps h3 { line-height: 1.25; }
+body.tune #services .lt-card-body h3 { font-family: var(--serif); font-size: 1.2rem; line-height: 1.25; min-height: 2.5em; }
+body.tune #services .lt-card-body .lt-stat strong { font-family: var(--sans); }
+body.tune #services .lt-card-body > p { font-size: 0.95rem; }
+body.tune .lt-tools p { font-size: 1.0625rem; }
+body.tune .lt-process .lt-lede { font-size: 1.0625rem; }
+body.tune .lt-compare h2 .lt-keep {
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: #102438;
+  color: #102438;
+}
