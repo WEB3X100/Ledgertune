@@ -307,6 +307,18 @@ window.addEventListener("scroll", updateDock, { passive: true });
 window.addEventListener("resize", updateDock);
 updateDock();
 
+// Fixed transparent header over the hero (homepage only — the header
+// carries .site-header--over-hero): gains a solid navy background once
+// the page has scrolled a little, so it stays readable on the light
+// sections below. At the very top it stays transparent over the photo.
+const updateHeader = () => {
+  if (!header || !hero || !header.classList.contains("site-header--over-hero")) return;
+  header.classList.toggle("is-scrolled", window.scrollY > 100);
+};
+window.addEventListener("scroll", updateHeader, { passive: true });
+window.addEventListener("resize", updateHeader);
+updateHeader();
+
 const query = new URLSearchParams(window.location.search);
 const localReview = ["localhost", "127.0.0.1"].includes(window.location.hostname);
 if (reviewStrip) reviewStrip.hidden = query.get("review") !== "1";
@@ -534,20 +546,16 @@ if (tstack) {
   });
 })();
 
-// Hero flowing table + spending donut + profit bars + mini calculator.
-// One data model drives all four: the 12 months cycle through the feed,
-// the donut centre shows the top month's net profit, the bars show each
-// month's profit, and the calculator rescales everything. Reduced motion
-// or no JS shows the full static 12-row table instead.
+// Hero flowing table + spending donut + profit bars.
+// One fixed data model drives all three: the 12 months cycle through the
+// feed, the donut centre shows the bottom month's net profit, and the bars
+// show each month's profit. Reduced motion or no JS shows the full static
+// 12-row table instead.
 (function () {
   var card = document.querySelector(".lt-flow");
   if (!card) return;
   var list = card.querySelector(".lt-flow-list");
   if (!list || !list.children.length) return;
-  var SHAPE = [46, 52, 40, 61, 48, 70, 58, 74, 63, 80, 68, 86];
-  var SHAPE_SUM = 746;
-  var SPEND = 4136.67 + 2190 + 1946.67 + 2433.33 + 1460; // $12,166.67 / month
-  var DEF_REV = 40000, DEF_COST = 22500;
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   var months = Array.prototype.map.call(list.children, function (li, i) {
@@ -560,39 +568,34 @@ if (tstack) {
   var centreMonth = card.querySelector("#lt-flow-centre-month");
   var bars = Array.prototype.slice.call(card.querySelectorAll(".lt-flow-barfill"));
   var barlabs = Array.prototype.slice.call(card.querySelectorAll(".lt-flow-barlabs span"));
-  var revInput = card.querySelector("#lt-flow-rev");
-  var costInput = card.querySelector("#lt-flow-cost");
-  var resetBtn = card.querySelector(".lt-flow-reset");
 
   var next = 6;
   var shifting = false;
   var shiftTimer = null;
-  var lastRev = DEF_REV, lastCost = DEF_COST;
-  var model = compute(DEF_REV, DEF_COST);
+  // Fixed sample data, read from the table itself; the year totals are the
+  // static figures shown in the table (monthly values are rounded, so they
+  // are not summed from the rows).
+  var model = {
+    rows: Array.prototype.map.call(list.children, function (li, i) {
+      return {
+        m: months[i].m,
+        alt: months[i].alt,
+        rev: parseFloat(li.getAttribute("data-rev")),
+        cost: parseFloat(li.getAttribute("data-cost")),
+        profit: parseFloat(li.getAttribute("data-profit"))
+      };
+    }),
+    totals: { rev: 480000, cost: 416000, profit: 64000 }
+  };
 
   function fmt(n) {
     return (n < 0 ? "\u2212$" : "$") + Math.abs(Math.round(n)).toLocaleString("en-US");
   }
-  // Monthly revenue[m] = revenue * shape[m] / 746 * 12; monthly cost of
-  // sales the same shape; table Costs[m] = cost[m] + fixed spending.
-  // Evaluated left to right so the defaults reproduce the static table.
-  function compute(revMonthly, costMonthly) {
-    var rows = months.map(function (mo, i) {
-      var rev = revMonthly * SHAPE[i] / SHAPE_SUM * 12;
-      var cos = costMonthly * SHAPE[i] / SHAPE_SUM * 12;
-      var cost = cos + SPEND;
-      return { m: mo.m, alt: mo.alt, rev: rev, cost: cost, profit: rev - cost };
-    });
-    return {
-      rows: rows,
-      totals: {
-        rev: revMonthly * 12,
-        cost: costMonthly * 12 + SPEND * 12,
-        profit: revMonthly * 12 - (costMonthly * 12 + SPEND * 12)
-      }
-    };
-  }
-  function topIndex() { return (((next - 6) % 12) + 12) % 12; }
+  // Anchor for the donut centre and the highlighted bar: the LAST row of
+  // the visible window — the month that just slid in at the bottom. In
+  // reduced motion the full 12-row table is static, so the anchor stays on
+  // the first month (Jan), as before.
+  function anchorIndex() { return reduced ? 0 : (((next - 1) % 12) + 12) % 12; }
 
   function makeRow(d) {
     var li = document.createElement("li");
@@ -623,24 +626,10 @@ if (tstack) {
     }
     requestAnimationFrame(frame);
   }
-  function countTo(el, target) {
-    if (!el) return;
-    if (reduced) { el.textContent = fmt(target); return; }
-    var cur = parseFloat(el.textContent.replace(/\u2212/g, "-").replace(/[^0-9.\-]/g, "")) || 0;
-    var start = null;
-    function frame(ts) {
-      if (start === null) start = ts;
-      var t = Math.min((ts - start) / 500, 1);
-      var eased = 1 - Math.pow(1 - t, 3);
-      el.textContent = fmt(cur + (target - cur) * eased);
-      if (t < 1) requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
-  }
   function markCurrent() {
-    var top = topIndex();
-    bars.forEach(function (fill, i) { fill.classList.toggle("is-now", i === top); });
-    barlabs.forEach(function (lab, i) { lab.classList.toggle("is-now", i === top); });
+    var anchor = anchorIndex();
+    bars.forEach(function (fill, i) { fill.classList.toggle("is-now", i === anchor); });
+    barlabs.forEach(function (lab, i) { lab.classList.toggle("is-now", i === anchor); });
   }
   function renderBars() {
     var max = 0;
@@ -650,10 +639,10 @@ if (tstack) {
       var p = model.rows[i].profit;
       var h;
       if (p >= 0) {
-        h = Math.max(3, Math.round(p / max * 56));
+        h = Math.max(3, Math.round(p / max * 88));
         fill.classList.remove("neg");
       } else {
-        h = Math.min(8, Math.max(3, Math.round(Math.abs(p) / max * 56)));
+        h = Math.min(8, Math.max(3, Math.round(Math.abs(p) / max * 88)));
         fill.classList.add("neg");
       }
       fill.style.height = h + "px";
@@ -666,13 +655,13 @@ if (tstack) {
     if (totCost) totCost.textContent = fmt(model.totals.cost);
     if (totProfit) totProfit.textContent = fmt(model.totals.profit);
   }
-  function renderCentre(animate) {
-    var d = model.rows[topIndex()];
+  // Donut centre is set instantly, label and value together, in the same
+  // synchronous pass as the bar highlight — so a still frame never catches
+  // a mid-count value that matches no month.
+  function renderCentre() {
+    var d = model.rows[anchorIndex()];
     if (centreMonth) centreMonth.textContent = d.m + " \u00b7 profit";
-    if (centreVal) {
-      if (animate) countTo(centreVal, d.profit);
-      else centreVal.textContent = fmt(d.profit);
-    }
+    if (centreVal) centreVal.textContent = fmt(d.profit);
   }
   function rebuildWindow() {
     if (shiftTimer !== null) { clearTimeout(shiftTimer); shiftTimer = null; }
@@ -692,49 +681,6 @@ if (tstack) {
     void list.offsetHeight;
     list.style.transition = "";
   }
-  function renderRowsStatic() {
-    Array.prototype.forEach.call(list.children, function (li, i) {
-      var d = model.rows[i];
-      if (!d) return;
-      li.setAttribute("data-rev", d.rev);
-      li.setAttribute("data-cost", d.cost);
-      li.setAttribute("data-profit", d.profit);
-      var spans = li.querySelectorAll(".lt-flow-n");
-      if (spans[0]) spans[0].textContent = fmt(d.rev);
-      if (spans[1]) spans[1].textContent = fmt(d.cost);
-      if (spans[2]) {
-        spans[2].textContent = fmt(d.profit);
-        spans[2].classList.toggle("lt-flow-neg", d.profit < 0);
-      }
-    });
-  }
-  function readInputs() {
-    var r = revInput ? parseFloat(revInput.value) : NaN;
-    var c = costInput ? parseFloat(costInput.value) : NaN;
-    if (isNaN(r) || r < 0) r = lastRev;
-    if (isNaN(c) || c < 0) c = lastCost;
-    return { rev: r, cost: c };
-  }
-  function rescale(animateCentre) {
-    var v = readInputs();
-    lastRev = v.rev; lastCost = v.cost;
-    model = compute(v.rev, v.cost);
-    if (reduced) renderRowsStatic();
-    else rebuildWindow();
-    renderBars();
-    renderTotals();
-    renderCentre(animateCentre !== false);
-  }
-  function wireCalc() {
-    if (revInput) revInput.addEventListener("input", function () { rescale(true); });
-    if (costInput) costInput.addEventListener("input", function () { rescale(true); });
-    if (resetBtn) resetBtn.addEventListener("click", function () {
-      if (revInput) revInput.value = DEF_REV;
-      if (costInput) costInput.value = DEF_COST;
-      rescale(false);
-      if (revInput) revInput.focus();
-    });
-  }
   function tick() {
     if (shifting || document.hidden) return;
     shifting = true;
@@ -744,36 +690,599 @@ if (tstack) {
     list.appendChild(li);
     var step = list.children[0].offsetHeight;
     countUp(li);
-    requestAnimationFrame(function () {
-      list.style.transition = "transform .55s cubic-bezier(.4, 0, .2, 1)";
-      list.style.transform = "translateY(" + -step + "px)";
-    });
-    shiftTimer = setTimeout(function () {
+    // The slide is driven frame by frame on the main thread (not a CSS
+    // transition) so the transform and the centre/bar flip land in the same
+    // painted frame: at the midpoint of the slide the centre and bar switch
+    // to the month arriving at the bottom, in the same task that sets the
+    // transform. No still frame can ever show them disagreeing with the
+    // visible bottom row. The timeout below is only a watchdog for a stalled
+    // animation frame (e.g. tab hidden mid-slide).
+    var start = null;
+    var flipped = false;
+    function slideFrame(ts) {
+      if (!shifting) return;
+      if (start === null) start = ts;
+      var t = Math.min((ts - start) / 550, 1);
+      var eased = 1 - Math.pow(1 - t, 3);
+      list.style.transition = "none";
+      list.style.transform = "translateY(" + (-step * eased) + "px)";
+      if (t >= 0.5 && !flipped) {
+        flipped = true;
+        markCurrent();
+        renderCentre();
+      }
+      if (t < 1) requestAnimationFrame(slideFrame);
+      else finishShift();
+    }
+    function finishShift() {
+      if (!shifting) return;
+      shifting = false;
+      shiftTimer = null;
       list.style.transition = "none";
       list.style.transform = "translateY(0)";
       if (list.firstElementChild) list.removeChild(list.firstElementChild);
       void list.offsetHeight;
       list.style.transition = "";
-      shifting = false;
-      shiftTimer = null;
       markCurrent();
-      renderCentre(true);
-    }, 600);
+      renderCentre();
+    }
+    requestAnimationFrame(slideFrame);
+    shiftTimer = setTimeout(finishShift, 650);
   }
 
   if (reduced) {
     card.classList.add("lt-flow-static");
     renderBars();
     renderTotals();
-    renderCentre(false);
-    wireCalc();
+    renderCentre();
     return;
   }
   card.classList.add("lt-flow-js");
   while (list.children.length > 6) list.removeChild(list.lastElementChild);
   renderBars();
   renderTotals();
-  renderCentre(false);
-  wireCalc();
+  renderCentre();
   setInterval(function () { if (!document.hidden) tick(); }, 1600);
+})();
+
+// Reports table: P&L / Balance sheet / Cash flow / AR and AP.
+// Tabs are a light glass segmented bar above the panel (no dark pane).
+// The panel is a Dribbble-style masonry of white cards on a pale
+// blue-grey ground, stacked under the text: one merged combo chart
+// (grouped bars + three trend lines sharing one axis set), the
+// packed-bubble spending mix, and the flowing month table. Every
+// chart follows the same bottom-row anchor as the table. Datasets
+// use ONLY figures already on the page. Cash flow has no figures
+// anywhere on the page, so its dataset is null (awaiting Ammar's
+// figures) and the tab shows a deliberate "figures to come" state —
+// never fake numbers.
+(function () {
+  var card = document.getElementById("lt-rep-flow");
+  if (!card) return;
+  var list = document.getElementById("lt-rep-list");
+  if (!list || !list.children.length) return;
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  card.classList.add("lt-rep-js");
+
+  // Cash-flow figures: none exist on the page yet. When Ammar provides
+  // them, fill this object in the same shape as BALANCE and the tab lights
+  // up automatically.
+  var CASH_FLOW = null; /* awaiting Ammar's cash-flow figures */
+
+  // P&L rows are read from the static table in the DOM (same as the hero),
+  // so the no-JS fallback shows the same figures.
+  var pnlRows = Array.prototype.map.call(list.children, function (li, i) {
+    return {
+      label: li.querySelector(".lt-flow-m").textContent,
+      values: [
+        parseFloat(li.getAttribute("data-rev")),
+        parseFloat(li.getAttribute("data-cost")),
+        parseFloat(li.getAttribute("data-profit"))
+      ],
+      alt: i % 2 === 1
+    };
+  });
+  // Spending mix: the monthly spend behind the P&L (same figures as the
+  // hero's donut). Shares are computed from the amounts, never typed in.
+  var PNL = {
+    key: "pnl",
+    title: "Profit and loss",
+    cols: ["Month", "Revenue", "Costs", "Profit"],
+    rows: pnlRows,
+    totals: [
+      { label: "Revenue", value: 480000 },
+      { label: "Expenses", value: 416000 },
+      { label: "Net profit", value: 64000 }
+    ],
+    bubblesTitle: "Spending",
+    bubblesSuffix: " / mo",
+    bubbles: [
+      { label: "Payroll", value: 4136.67, fill: "#f3e5c3", ink: "#8a6d3b" },
+      { label: "Occupancy", value: 2433.33, fill: "#d8e3ef", ink: "#102438" },
+      { label: "People", value: 2190, fill: "#e2edf4", ink: "#0369a1" },
+      { label: "Software", value: 1946.67, fill: "#d5dee8", ink: "#3d5a73" },
+      { label: "Other", value: 1460, fill: "#edf1f5", ink: "#5b7286" }
+    ],
+    segmentsTitle: "Where revenue goes",
+    segments: { total: 480000, items: [
+      { label: "Costs", value: 416000, color: "#9db8cc" },
+      { label: "Profit", value: 64000, color: "#c19b5d" }
+    ]},
+    barLabels: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
+    barValues: pnlRows.map(function (r) { return r.values[2]; })
+  };
+  // Balance sheet: the three balances already shown on the page.
+  var BALANCE = {
+    key: "balance",
+    title: "Balance sheet",
+    cols: ["Item", "Amount"],
+    rows: [
+      { label: "Cash", values: [120000] },
+      { label: "Receivable", values: [86000] },
+      { label: "Payable", values: [41000] }
+    ],
+    totals: [
+      { label: "Cash", value: 120000 },
+      { label: "Receivable", value: 86000 },
+      { label: "Payable", value: 41000 }
+    ],
+    bubblesTitle: "Balances",
+    bubblesSuffix: "",
+    bubbles: [
+      { label: "Cash", value: 120000, fill: "#f3e5c3", ink: "#8a6d3b" },
+      { label: "Receivable", value: 86000, fill: "#d8e3ef", ink: "#102438" },
+      { label: "Payable", value: 41000, fill: "#e2edf4", ink: "#0369a1" }
+    ],
+    segmentsTitle: "Share of balances",
+    segments: { total: 247000, items: [
+      { label: "Cash", value: 120000, color: "#102438" },
+      { label: "Receivable", value: 86000, color: "#c19b5d" },
+      { label: "Payable", value: 41000, color: "#9db8cc" }
+    ]}
+  };
+  // AR and AP: the receivable and payable figures already on the page.
+  var ARAP = {
+    key: "arap",
+    title: "AR and AP",
+    cols: ["Item", "Amount"],
+    rows: [
+      { label: "Receivable", values: [86000] },
+      { label: "Payable", values: [41000] }
+    ],
+    totals: [
+      { label: "Receivable", value: 86000 },
+      { label: "Payable", value: 41000 }
+    ],
+    bubblesTitle: "AR and AP",
+    bubblesSuffix: "",
+    bubbles: [
+      { label: "Receivable", value: 86000, fill: "#d8e3ef", ink: "#102438" },
+      { label: "Payable", value: 41000, fill: "#f3e5c3", ink: "#8a6d3b" }
+    ],
+    segmentsTitle: "Share of AR and AP",
+    segments: { total: 127000, items: [
+      { label: "Receivable", value: 86000, color: "#102438" },
+      { label: "Payable", value: 41000, color: "#c19b5d" }
+    ]}
+  };
+  var TABS = { pnl: PNL, balance: BALANCE, cashflow: CASH_FLOW, arap: ARAP };
+  // Which masonry cards each tab shows. P&L has two chart cards: the
+  // merged combo and the bubbles. The short tabs show the charts that
+  // honestly fit them — no 12-month chart is faked for a 3-point or
+  // 2-point dataset.
+  var VISIBLE = {
+    pnl: ["combo", "flow", "bubbles"],
+    balance: ["flow", "bubbles", "segments"],
+    arap: ["flow", "bubbles", "segments"]
+  };
+
+  var colsEl = document.getElementById("lt-rep-cols");
+  var totalsEl = document.getElementById("lt-rep-totals");
+  var titleEl = document.getElementById("lt-rep-title");
+  var bodyEl = document.getElementById("lt-rep-body");
+  var awaitEl = document.getElementById("lt-rep-await");
+  var panel = document.getElementById("lt-rep-panel");
+  var masonry = document.getElementById("lt-rep-masonry");
+  var tablist = document.querySelector(".lt-rep-tabs");
+  var tabs = Array.prototype.slice.call(tablist.querySelectorAll(".lt-rep-tab"));
+  var slider = tablist.querySelector(".lt-rep-tab-slider");
+  var viewEl = list.parentElement;
+  var cards = {
+    combo: document.getElementById("lt-rep-card-combo"),
+    flow: card.querySelector(".lt-rep-card-flow"),
+    bubbles: document.getElementById("lt-rep-card-bubbles"),
+    segments: document.getElementById("lt-rep-card-segments")
+  };
+  var comboEl = document.getElementById("lt-rep-combo");
+  var bubblesEl = document.getElementById("lt-rep-bubbles");
+  var bubbleLegendEl = document.getElementById("lt-rep-bubble-legend");
+  var bubblesTitleEl = document.getElementById("lt-rep-bubbles-title");
+  var segmentsEl = document.getElementById("lt-rep-segments");
+  var segmentsTitleEl = document.getElementById("lt-rep-segments-title");
+
+  // The flowing table shows a 4-row window — the compression that lets
+  // the whole section fit one viewport. The anchor is the bottom row
+  // of the window, so it still follows the arriving month.
+  var WINDOW = 4;
+  var state = { ds: PNL, anchor: 0, next: WINDOW, timer: null };
+  var shifting = false;
+  var shiftTimer = null;
+  var charts = { combo: null, bubbles: null };
+
+  function fmt(n) {
+    return (n < 0 ? "\u2212$" : "$") + Math.abs(Math.round(n)).toLocaleString("en-US");
+  }
+  function pct(v, total) {
+    var p = v / total * 100;
+    return (Math.round(p * 10) / 10).toFixed(1).replace(/\.0$/, "") + "%";
+  }
+
+  function makeRow(ds, d, idx) {
+    var li = document.createElement("li");
+    li.className = "lt-flow-row lt-flow-enter" + (idx % 2 === 1 ? " lt-flow-alt" : "");
+    var html = '<span class="lt-flow-m">' + d.label + "</span>";
+    d.values.forEach(function (v, j) {
+      html += '<span class="lt-flow-n' +
+        (j === d.values.length - 1 ? " lt-flow-p" : "") +
+        (v < 0 ? " lt-flow-neg" : "") +
+        '" data-v="' + v + '">$0</span>';
+    });
+    li.innerHTML = html;
+    return li;
+  }
+  function countUp(li) {
+    var spans = li.querySelectorAll(".lt-flow-n");
+    var start = null;
+    function frame(ts) {
+      if (start === null) start = ts;
+      var t = Math.min((ts - start) / 650, 1);
+      var eased = 1 - Math.pow(1 - t, 3);
+      Array.prototype.forEach.call(spans, function (s) {
+        var target = parseFloat(s.getAttribute("data-v"));
+        s.textContent = fmt(target * eased);
+      });
+      if (t < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  function renderCols(ds) {
+    colsEl.innerHTML = ds.cols.map(function (c) { return "<span>" + c + "</span>"; }).join("");
+  }
+  function renderTotals(ds) {
+    totalsEl.innerHTML = ds.totals.map(function (t) {
+      return "<div><dt>" + t.label + '</dt><dd class="lt-num">' + fmt(t.value) + "</dd></div>";
+    }).join("");
+    totalsEl.classList.toggle("lt-rep-totals-2", ds.totals.length === 2);
+  }
+
+  // ---- Chart helpers -------------------------------------------------
+  var MONTHS_FULL = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  function smoothPath(pts) {
+    if (pts.length < 2) return "";
+    var d = "M" + pts[0][0].toFixed(1) + "," + pts[0][1].toFixed(1);
+    for (var i = 0; i < pts.length - 1; i++) {
+      var p0 = pts[Math.max(0, i - 1)], p1 = pts[i], p2 = pts[i + 1], p3 = pts[Math.min(pts.length - 1, i + 2)];
+      var c1x = p1[0] + (p2[0] - p0[0]) / 6, c1y = p1[1] + (p2[1] - p0[1]) / 6;
+      var c2x = p2[0] - (p3[0] - p1[0]) / 6, c2y = p2[1] - (p3[1] - p1[1]) / 6;
+      d += "C" + c1x.toFixed(1) + "," + c1y.toFixed(1) + " " + c2x.toFixed(1) + "," + c2y.toFixed(1) + " " + p2[0].toFixed(1) + "," + p2[1].toFixed(1);
+    }
+    return d;
+  }
+  // Merged combo chart: grouped bars (Revenue navy, Costs muted blue)
+  // with the three trend lines drawn over them on the SAME scale and
+  // month slots — the bars show the monthly volumes, the lines connect
+  // the same points, and the gold profit line floats on its own. One
+  // axis set, one legend, one card. P&L only — a 12-month chart makes
+  // no sense for a 3-point or 2-point dataset.
+  // Shorter than the first version (250px) — the section has to fit
+  // one viewport, so the chart is compressed to 140px tall. One axis
+  // set, one legend, one card. P&L only.
+  var COMBO = { w: 640, h: 130, l: 48, r: 16, t: 14, b: 28, min: -5000, max: 60000 };
+  function comboX(i) { return COMBO.l + i * (COMBO.w - COMBO.l - COMBO.r) / 11; }
+  function comboY(v) { return barY(v, COMBO); }
+  function renderCombo(ds) {
+    if (ds.key !== "pnl") { comboEl.innerHTML = ""; charts.combo = null; return; }
+    var rows = ds.rows;
+    var series = [
+      { label: "Revenue", color: "#102438", vals: rows.map(function (r) { return r.values[0]; }) },
+      { label: "Costs", color: "#9db8cc", vals: rows.map(function (r) { return r.values[1]; }) },
+      { label: "Profit", color: "#c19b5d", vals: rows.map(function (r) { return r.values[2]; }) }
+    ];
+    var pts = series.map(function (s) {
+      return s.vals.map(function (v, i) { return [comboX(i), comboY(v)]; });
+    });
+    var grid = gridSvg(COMBO, [0, 20000, 40000, 60000]);
+    var slot = (COMBO.w - COMBO.l - COMBO.r) / 12;
+    var bw = 13, gap = 4, pair = bw * 2 + gap;
+    var y0 = barY(0, COMBO);
+    var bars = rows.map(function (r, i) {
+      var gx = comboX(i) - pair / 2;
+      var rev = r.values[0], cost = r.values[1];
+      var rh = y0 - barY(rev, COMBO), ch = y0 - barY(cost, COMBO);
+      return '<g class="lt-rep-group" data-i="' + i + '">' +
+        '<rect x="' + gx.toFixed(1) + '" y="' + barY(rev, COMBO).toFixed(1) + '" width="' + bw + '" height="' + Math.max(rh, 1).toFixed(1) + '" rx="3" fill="#102438"><title>' + MONTHS_FULL[i] + " revenue " + fmt(rev) + "</title></rect>" +
+        '<rect x="' + (gx + bw + gap).toFixed(1) + '" y="' + barY(cost, COMBO).toFixed(1) + '" width="' + bw + '" height="' + Math.max(ch, 1).toFixed(1) + '" rx="3" fill="#9db8cc"><title>' + MONTHS_FULL[i] + " costs " + fmt(cost) + "</title></rect>" +
+        '<text class="lt-rep-axis lt-rep-month" data-i="' + i + '" x="' + comboX(i).toFixed(1) + '" y="' + (COMBO.h - 8) + '" text-anchor="middle">' + ds.barLabels[i] + "</text>" +
+        "</g>";
+    }).join("");
+    var lines = series.map(function (s, j) {
+      return '<path class="lt-rep-line" d="' + smoothPath(pts[j]) + '" stroke="' + s.color + '"/>';
+    }).join("");
+    var dots = series.map(function (s, j) {
+      return pts[j].map(function (p, i) {
+        return '<circle class="lt-rep-dot" cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="3.2" stroke="' + s.color + '"><title>' + MONTHS_FULL[i] + " " + s.label + " " + fmt(s.vals[i]) + "</title></circle>";
+      }).join("");
+    }).join("");
+    var rings = [0, 1, 2].map(function () { return '<circle class="lt-rep-ring" r="6.5" cx="0" cy="0"/>'; }).join("");
+    comboEl.innerHTML =
+      '<ul class="lt-rep-legend">' +
+      '<li><i class="lt-rep-sw-bar" style="background:#102438"></i>Revenue</li>' +
+      '<li><i class="lt-rep-sw-bar" style="background:#9db8cc"></i>Costs</li>' +
+      '<li><i class="lt-rep-sw-line" style="background:#c19b5d"></i>Profit</li>' +
+      "</ul>" +
+      '<svg viewBox="0 0 ' + COMBO.w + " " + COMBO.h + '" role="img" aria-label="Combined bar and line chart of revenue, costs and profit by month">' +
+      grid + bars + lines + dots +
+      '<g><line class="lt-rep-guide" x1="0" y1="' + COMBO.t + '" x2="0" y2="' + (COMBO.h - COMBO.b) + '"/>' + rings + "</g>" +
+      "</svg>";
+    charts.combo = {
+      guide: comboEl.querySelector(".lt-rep-guide"),
+      rings: Array.prototype.slice.call(comboEl.querySelectorAll(".lt-rep-ring")),
+      months: Array.prototype.slice.call(comboEl.querySelectorAll(".lt-rep-month")),
+      groups: Array.prototype.slice.call(comboEl.querySelectorAll(".lt-rep-group")),
+      xs: rows.map(function (r, i) { return comboX(i); }),
+      ys: pts.map(function (p) { return p.map(function (q) { return q[1]; }); })
+    };
+  }
+  // Shared bar-chart geometry.
+  var BARS = { w: 640, h: 250, l: 48, r: 16, t: 14, b: 28 };
+  function barY(v, g) { return g.t + (g.max - v) / (g.max - g.min) * (g.h - g.t - g.b); }
+  function gridSvg(g, steps) {
+    return steps.map(function (s) {
+      var y = barY(s, g);
+      var cls = s === 0 ? "lt-rep-zeroline" : "lt-rep-gridline";
+      var lab = s === 0 ? "$0" : "$" + (s / 1000) + "k";
+      return '<line class="' + cls + '" x1="' + g.l + '" y1="' + y.toFixed(1) + '" x2="' + (g.w - g.r) + '" y2="' + y.toFixed(1) + '"/>' +
+        '<text class="lt-rep-axis" x="' + (g.l - 8) + '" y="' + (y + 3.5).toFixed(1) + '" text-anchor="end">' + lab + "</text>";
+    }).join("");
+  }
+  // Packed bubbles: the Dribbble centrepiece. Bubble area follows the
+  // share; the % sits inside each bubble and the legend below carries
+  // the name + amount. Positions are fixed per item count so the
+  // layout is deterministic — largest bubble centred, the rest tucked
+  // around it with a gentle overlap and a white stroke between them.
+  var BUBBLE_LAYOUT = {
+    5: [[150, 112], [234, 72], [232, 152], [76, 64], [82, 162]],
+    3: [[140, 108], [252, 78], [252, 168]],
+    2: [[122, 110], [248, 110]]
+  };
+  function renderBubbles(ds) {
+    var items = ds.bubbles.slice().sort(function (a, b) { return b.value - a.value; });
+    var total = items.reduce(function (s, d) { return s + d.value; }, 0);
+    var pos = BUBBLE_LAYOUT[items.length] || BUBBLE_LAYOUT[5];
+    var circles = items.map(function (d, i) {
+      var r = Math.max(26, Math.min(78, 9.2 * Math.sqrt(d.value / total * 100)));
+      var p = pos[i];
+      var fs = r > 44 ? 15 : 12.5;
+      return '<g class="lt-rep-bubble" data-i="' + i + '">' +
+        '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="' + r.toFixed(1) + '" fill="' + d.fill + '" stroke="#ffffff" stroke-width="3"/>' +
+        '<text x="' + p[0] + '" y="' + (p[1] + fs * 0.35).toFixed(1) + '" text-anchor="middle" font-size="' + fs + '" font-weight="700" fill="' + d.ink + '">' + pct(d.value, total) + "</text>" +
+        "<title>" + d.label + " " + pct(d.value, total) + " — " + fmt(d.value) + (ds.bubblesSuffix || "") + "</title>" +
+        "</g>";
+    }).join("");
+    bubblesEl.innerHTML = '<svg viewBox="0 0 360 220" role="img" aria-label="Bubble chart of ' + ds.bubblesTitle.toLowerCase() + '">' + circles + "</svg>";
+    bubbleLegendEl.innerHTML = items.map(function (d, i) {
+      // The share already sits inside the bubble — the legend carries
+      // the name + amount only, so long names never get ellipsised.
+      return '<li data-i="' + i + '"><i style="background:' + d.fill + ';box-shadow:inset 0 0 0 1px rgba(16,36,56,.12)"></i><span>' + d.label + "</span><b>" + fmt(d.value) + (ds.bubblesSuffix || "") + "</b></li>";
+    }).join("");
+    bubblesTitleEl.textContent = ds.bubblesTitle;
+    charts.bubbles = {
+      groups: Array.prototype.slice.call(bubblesEl.querySelectorAll(".lt-rep-bubble")),
+      legend: Array.prototype.slice.call(bubbleLegendEl.querySelectorAll("li"))
+    };
+  }
+  // Segmented bar: one real split per tab — revenue into costs + profit
+  // (P&L), balances into Cash / Receivable / Payable, AR/AP into its two
+  // items. Never a limit or target.
+  function renderSegments(ds) {
+    segmentsTitleEl.textContent = ds.segmentsTitle;
+    var total = ds.segments.total;
+    segmentsEl.innerHTML =
+      '<div class="lt-rep-segments-bar">' + ds.segments.items.map(function (d) {
+        return '<i style="width:' + (d.value / total * 100).toFixed(1) + "%;background:" + d.color + '" title="' + d.label + " " + pct(d.value, total) + '"></i>';
+      }).join("") + "</div>" +
+      '<ul class="lt-rep-legend lt-rep-segments-legend">' + ds.segments.items.map(function (d) {
+        return '<li><i style="background:' + d.color + '"></i><span>' + d.label + "</span><b>" + pct(d.value, total) + " · " + fmt(d.value) + "</b></li>";
+      }).join("") + "</ul>";
+  }
+  // Sliding thumb under the active tab: a pale-gold pill that glides
+  // behind the button (the buttons themselves stay transparent).
+  function placeSlider() {
+    if (!slider) return;
+    var active = tablist.querySelector(".lt-rep-tab.is-active");
+    if (!active) return;
+    var wrap = tablist.getBoundingClientRect();
+    var b = active.getBoundingClientRect();
+    slider.style.left = (b.left - wrap.left) + "px";
+    slider.style.width = b.width + "px";
+  }
+  // Move every chart's active marker to the bottom-row anchor.
+  function markCharts() {
+    var a = state.anchor;
+    if (charts.combo) {
+      var x = charts.combo.xs[a];
+      charts.combo.guide.setAttribute("x1", x.toFixed(1));
+      charts.combo.guide.setAttribute("x2", x.toFixed(1));
+      charts.combo.rings.forEach(function (ring, j) {
+        ring.setAttribute("cx", x.toFixed(1));
+        ring.setAttribute("cy", charts.combo.ys[j][a].toFixed(1));
+      });
+      charts.combo.months.forEach(function (m, i) {
+        m.classList.toggle("is-now", i === a);
+      });
+      charts.combo.groups.forEach(function (g, i) { g.classList.toggle("is-now", i === a); });
+    }
+    // Short datasets: the anchor cycles the items, so the matching
+    // bubble + legend row light up. On P&L the anchor is a month, and
+    // the bubbles are a spending mix — no highlight there.
+    if (charts.bubbles && state.ds.rows.length <= 6) {
+      charts.bubbles.groups.forEach(function (g, i) { g.classList.toggle("is-now", i === a); });
+      charts.bubbles.legend.forEach(function (li, i) { li.classList.toggle("is-now", i === a); });
+    }
+  }
+  // Pill rows carry a 6px gap, so the slide step is row height + gap.
+  function rowPitch() {
+    var first = list.firstElementChild;
+    if (!first) return 0;
+    var cs = window.getComputedStyle(first);
+    return first.offsetHeight + parseFloat(cs.marginBottom || "0");
+  }
+  function sizeFlowView() {
+    if (!viewEl) return;
+    var full = reduced || state.ds.rows.length <= 6;
+    if (full) { viewEl.style.height = ""; return; }
+    var pitch = rowPitch();
+    if (pitch > 0) viewEl.style.height = Math.round(pitch * WINDOW) + "px";
+  }
+  function rebuildWindow() {
+    var ds = state.ds;
+    if (shiftTimer !== null) { clearTimeout(shiftTimer); shiftTimer = null; }
+    list.style.transition = "none";
+    list.style.transform = "translateY(0)";
+    shifting = false;
+    while (list.firstElementChild) list.removeChild(list.firstElementChild);
+    var full = reduced || ds.rows.length <= 6;
+    var count = full ? ds.rows.length : WINDOW;
+    var start = full ? 0 : (((state.next - WINDOW) % ds.rows.length) + ds.rows.length) % ds.rows.length;
+    for (var i = 0; i < count; i++) {
+      var idx = (start + i) % ds.rows.length;
+      var li = makeRow(ds, ds.rows[idx], idx);
+      Array.prototype.forEach.call(li.querySelectorAll(".lt-flow-n"), function (s) {
+        s.textContent = fmt(parseFloat(s.getAttribute("data-v")));
+      });
+      li.classList.remove("lt-flow-enter");
+      list.appendChild(li);
+    }
+    void list.offsetHeight;
+    list.style.transition = "";
+    sizeFlowView();
+  }
+  function tick() {
+    var ds = state.ds;
+    if (!ds || shifting || document.hidden) return;
+    // Short datasets show every row: the pulse cycles the anchor instead
+    // of sliding rows in.
+    if (ds.rows.length <= 6) {
+      state.anchor = (state.anchor + 1) % ds.rows.length;
+      markCharts();
+      return;
+    }
+    shifting = true;
+    var d = ds.rows[state.next % ds.rows.length];
+    state.next += 1;
+    var li = makeRow(ds, d, (state.next - 1) % ds.rows.length);
+    list.appendChild(li);
+    var step = rowPitch();
+    countUp(li);
+    var start = null;
+    var flipped = false;
+    function slideFrame(ts) {
+      if (!shifting) return;
+      if (start === null) start = ts;
+      var t = Math.min((ts - start) / 550, 1);
+      var eased = 1 - Math.pow(1 - t, 3);
+      list.style.transition = "none";
+      list.style.transform = "translateY(" + (-step * eased) + "px)";
+      if (t >= 0.5 && !flipped) {
+        flipped = true;
+        state.anchor = ((state.next - 1) % ds.rows.length + ds.rows.length) % ds.rows.length;
+        markCharts();
+      }
+      if (t < 1) requestAnimationFrame(slideFrame);
+      else finishShift();
+    }
+    function finishShift() {
+      if (!shifting) return;
+      shifting = false;
+      shiftTimer = null;
+      list.style.transition = "none";
+      list.style.transform = "translateY(0)";
+      if (list.firstElementChild) list.removeChild(list.firstElementChild);
+      void list.offsetHeight;
+      list.style.transition = "";
+      markCharts();
+    }
+    requestAnimationFrame(slideFrame);
+    shiftTimer = setTimeout(finishShift, 650);
+  }
+  function stopTimer() {
+    if (state.timer !== null) { clearInterval(state.timer); state.timer = null; }
+  }
+  function startTimer() {
+    stopTimer();
+    if (!reduced) state.timer = setInterval(function () { if (!document.hidden) tick(); }, 1600);
+  }
+  function activateTab(key) {
+    var ds = TABS[key];
+    tabs.forEach(function (btn) {
+      var on = btn.getAttribute("data-tab") === key;
+      btn.classList.toggle("is-active", on);
+      btn.setAttribute("aria-selected", on ? "true" : "false");
+      btn.tabIndex = on ? 0 : -1;
+    });
+    panel.setAttribute("aria-labelledby", "lt-rep-tab-" + key);
+    titleEl.textContent = ds ? ds.title : "Cash flow";
+    stopTimer();
+    if (!ds) {
+      // No cash-flow figures on the page yet: deliberate waiting state.
+      card.classList.add("lt-rep-awaiting");
+      bodyEl.hidden = true;
+      awaitEl.hidden = false;
+      return;
+    }
+    card.classList.remove("lt-rep-awaiting");
+    bodyEl.hidden = false;
+    awaitEl.hidden = true;
+    card.classList.toggle("lt-rep-cols-2", ds.cols.length === 2);
+    card.classList.toggle("lt-rep-compact", reduced || ds.rows.length <= 6);
+    masonry.classList.toggle("lt-rep-short", ds.rows.length <= 6);
+    state.ds = ds;
+    state.anchor = ds.rows.length > 6 ? WINDOW - 1 : 0;
+    state.next = WINDOW;
+    var show = VISIBLE[ds.key];
+    Object.keys(cards).forEach(function (k) {
+      if (cards[k]) cards[k].hidden = show.indexOf(k) === -1;
+    });
+    renderCols(ds);
+    rebuildWindow();
+    renderTotals(ds);
+    renderCombo(ds);
+    renderBubbles(ds);
+    renderSegments(ds);
+    markCharts();
+    if (reduced) {
+      card.classList.add("lt-flow-static");
+    } else {
+      card.classList.add("lt-flow-js");
+      startTimer();
+    }
+    requestAnimationFrame(placeSlider);
+  }
+  tabs.forEach(function (btn) {
+    btn.addEventListener("click", function () { activateTab(btn.getAttribute("data-tab")); });
+  });
+  tablist.addEventListener("keydown", function (e) {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft" &&
+        e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+    var idx = tabs.indexOf(document.activeElement);
+    if (idx === -1) return;
+    e.preventDefault();
+    var dir = (e.key === "ArrowRight" || e.key === "ArrowDown") ? 1 : -1;
+    var nextIdx = (idx + dir + tabs.length) % tabs.length;
+    tabs[nextIdx].focus();
+    activateTab(tabs[nextIdx].getAttribute("data-tab"));
+  });
+  window.addEventListener("resize", function () { placeSlider(); sizeFlowView(); });
+  window.addEventListener("load", placeSlider);
+  activateTab("pnl");
 })();

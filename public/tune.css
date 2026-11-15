@@ -317,8 +317,7 @@ body.tune .lt-report-frame {
   box-shadow: 0 18px 36px rgba(0, 0, 0, 0.14);
 }
 
-body.tune .lt-dash-side,
-body.tune .lt-report-side {
+body.tune .lt-dash-side {
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -341,8 +340,7 @@ body.tune .lt-dash-mark {
   font-weight: 640;
 }
 
-body.tune .lt-dash-side b,
-body.tune .lt-report-side b { color: #ffffff; font-weight: 650; }
+body.tune .lt-dash-side b { color: #ffffff; font-weight: 650; }
 
 body.tune .lt-dash-main,
 body.tune .lt-report-main { padding: 16px 16px 14px; min-width: 0; }
@@ -519,19 +517,15 @@ body.tune .lt-recon {
 
 body.tune .lt-recon span { color: var(--teal-ink); }
 
+/* Caption line inside the white flow card, directly under the head —
+   it belongs to the card now instead of floating over the photo. */
 body.tune .lt-callout {
-  display: block;
-  width: max-content;
-  max-width: 100%;
-  margin: 0 0 10px auto;
-  padding: 8px 12px;
-  background: #ffffff;
-  color: #102438;
-  border-radius: 12px;
-  font-size: 0.82rem;
-  font-weight: 650;
-  line-height: 1.35;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+  margin: 0;
+  padding: 0 20px 12px;
+  color: #536475;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.4;
 }
 
 /* Tools */
@@ -1140,27 +1134,21 @@ body.tune .lt-steps li::after {
   transform-origin: left center;
   transition: transform 0.55s ease;
 }
-/* Simplified line: one solid flat colour per segment, no gradient, no
-   glow — the colour of the step it leaves, so the flow reads calmly. */
-body.tune .lt-steps li:nth-child(1)::after { background: #7c3aed; transition-delay: 0.15s; }
-body.tune .lt-steps li:nth-child(2)::after { background: #0d9488; transition-delay: 0.65s; }
-body.tune .lt-steps li:nth-child(3)::after { background: #e14b3f; transition-delay: 1.15s; }
-body.tune .lt-steps li:nth-child(4)::after { background: #0369a1; transition-delay: 1.65s; }
+/* Simplified line: one solid flat gold per segment, no gradient — the
+   connector reads as a single gold flow from stage 1 to stage 5. */
+body.tune .lt-steps li:nth-child(1)::after { background: #c19b5d; transition-delay: 0.15s; }
+body.tune .lt-steps li:nth-child(2)::after { background: #c19b5d; transition-delay: 0.65s; }
+body.tune .lt-steps li:nth-child(3)::after { background: #c19b5d; transition-delay: 1.15s; }
+body.tune .lt-steps li:nth-child(4)::after { background: #c19b5d; transition-delay: 1.65s; }
 body.tune .lt-steps.is-in li::after { transform: scaleX(1); }
 body.tune .lt-steps li:nth-child(5)::before,
 body.tune .lt-steps li:nth-child(5)::after { display: none; }
 
-/* Flow colours = the 5 service colours, in service order left to right:
-   1 Accounting purple (#7c3aed / #a78bfa), 2 Bookkeeping teal (#0d9488 /
-   #14e0b8), 3 Business Advisory coral (#e14b3f / #ff7065), 4 Tax sky
-   (#0369a1 / #7dd3fc), 5 Family Business gold (#b45309 / #f4c95d).
-   --step is the deeper accent2 used for rings/borders, --step-text the
-   legible number colour, --step-soft the very light glass wash. */
-body.tune .lt-steps li:nth-child(1) { --step: #7c3aed; --step-text: #6025e1; --step-soft: rgba(124, 58, 237, 0.10); }
-body.tune .lt-steps li:nth-child(2) { --step: #0d9488; --step-text: #0c6e5c; --step-soft: rgba(13, 148, 136, 0.10); }
-body.tune .lt-steps li:nth-child(3) { --step: #e14b3f; --step-text: #c73e32; --step-soft: rgba(225, 75, 63, 0.10); }
-body.tune .lt-steps li:nth-child(4) { --step: #0369a1; --step-text: #0369a1; --step-soft: rgba(3, 105, 161, 0.10); }
-body.tune .lt-steps li:nth-child(5) { --step: #b45309; --step-text: #8a6d3b; --step-soft: rgba(180, 83, 9, 0.10); }
+/* Flow colours = primary navy + secondary gold for every stage — the 5
+   service colours are gone from this section. --step is the gold used
+   for rings/borders, --step-text the legible gold number on the navy
+   circle, --step-soft the very light gold glass wash. */
+body.tune .lt-steps li { --step: #c19b5d; --step-text: #c19b5d; --step-soft: rgba(193, 155, 93, 0.10); }
 
 /* The li is now just the column: circle on top, card below it. */
 body.tune .lt-steps li {
@@ -1171,9 +1159,10 @@ body.tune .lt-steps li {
   background: transparent;
 }
 /* Each card below the line is liquid glass, holographic: translucent
-   white with a soft iridescent wash in its step colour, a bright top
+   white with a soft iridescent wash in gold, a bright top
    edge, and a very light glow in parallel with its circle, same delay. */
 body.tune .lt-step-card {
+  position: relative;
   margin-top: 28px;
   padding: 20px 18px;
   border: 1px solid rgba(16, 36, 56, 0.08);
@@ -1183,7 +1172,7 @@ body.tune .lt-step-card {
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 10px 28px rgba(16, 36, 56, 0.07);
-  transition: box-shadow 0.5s ease, border-color 0.5s ease, background-color 0.5s ease;
+  transition: transform 0.25s ease, box-shadow 0.5s ease, border-color 0.5s ease, background-color 0.5s ease;
 }
 body.tune .lt-steps.is-in li .lt-step-card {
   border-color: var(--step);
@@ -1221,14 +1210,13 @@ body.tune .lt-steps span {
   border: 2px solid rgba(16, 36, 56, 0.14);
   transition: background 0.45s ease, color 0.45s ease, border-color 0.45s ease, box-shadow 0.45s ease;
 }
-/* Simplified circle: plain white with a faint tint of its own step colour
-   only — no rainbow, no multi-colour sheen. Ring and number in the step
-   colour, very light glow. Solid white, so nothing behind it shows through. */
+/* Circle: solid primary navy with a gold number — no service colours.
+   White halo keeps the gold line from showing through behind it. */
 body.tune .lt-steps.is-in li span {
-  background: radial-gradient(circle at 50% 35%, #ffffff 0%, var(--step-soft) 130%);
-  color: var(--step-text, var(--step));
-  border-color: var(--step);
-  box-shadow: 0 0 0 4px #ffffff, 0 0 8px var(--step-soft);
+  background: #102438;
+  color: var(--step-text, #c19b5d);
+  border-color: #102438;
+  box-shadow: 0 0 0 4px #ffffff, 0 0 10px rgba(193, 155, 93, 0.45);
 }
 body.tune .lt-steps.is-in li:nth-child(1) span { transition-delay: 0.1s; }
 body.tune .lt-steps.is-in li:nth-child(2) span { transition-delay: 0.6s; }
@@ -1270,6 +1258,72 @@ body.tune .lt-steps.lt-armed.is-in li:nth-child(3) .lt-step-card { transition-de
 body.tune .lt-steps.lt-armed.is-in li:nth-child(4) .lt-step-card { transition-delay: 1.6s; }
 body.tune .lt-steps.lt-armed.is-in li:nth-child(5) .lt-step-card { transition-delay: 2.1s; }
 
+/* Hover glow: warm gold ring + lift, matching the tools section. The
+   per-child entrance delays above would otherwise lag the hover by up
+   to 2.1s, so hover resets the delay to 0. */
+body.tune .lt-steps li:hover .lt-step-card {
+  transform: translateY(-2px);
+  border-color: #c19b5d;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 14px 30px rgba(16, 36, 56, 0.10), 0 10px 24px rgba(193, 155, 93, 0.28), 0 0 0 1px #c19b5d;
+}
+body.tune .lt-steps.lt-armed.is-in li:nth-child(1) .lt-step-card:hover,
+body.tune .lt-steps.lt-armed.is-in li:nth-child(2) .lt-step-card:hover,
+body.tune .lt-steps.lt-armed.is-in li:nth-child(3) .lt-step-card:hover,
+body.tune .lt-steps.lt-armed.is-in li:nth-child(4) .lt-step-card:hover,
+body.tune .lt-steps.lt-armed.is-in li:nth-child(5) .lt-step-card:hover { transition-delay: 0s; }
+/* The circle shares a subtle gold glow while its card is hovered. */
+body.tune .lt-steps li:hover span {
+  box-shadow: 0 0 0 4px #ffffff, 0 0 16px rgba(193, 155, 93, 0.6);
+}
+body.tune .lt-steps.is-in li:nth-child(1):hover span,
+body.tune .lt-steps.is-in li:nth-child(2):hover span,
+body.tune .lt-steps.is-in li:nth-child(3):hover span,
+body.tune .lt-steps.is-in li:nth-child(4):hover span,
+body.tune .lt-steps.is-in li:nth-child(5):hover span { transition-delay: 0s; }
+
+/* Heartbeat glow: the stage carrying the pulse glows brighter than the
+   rest — nothing ever dims. A gold halo swells around the circle and a
+   gold ring + halo around its card, travelling 1 → 2 → 3 → 4 → 5 and
+   looping, one full pass every ~3s. The glow lives on ::after layers so
+   it never fights the hover glow and the card/circle text stays at full
+   opacity. Gated on .is-in so nothing glows before the reveal. */
+body.tune .lt-steps li span::after {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: 0 0 0 2px rgba(193, 155, 93, 0.9), 0 0 22px 6px rgba(193, 155, 93, 0.55);
+}
+body.tune .lt-step-card::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 18px;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: 0 0 0 1px rgba(193, 155, 93, 0.75), 0 10px 30px rgba(193, 155, 93, 0.45);
+}
+@keyframes lt-step-glow {
+  0% { opacity: 0; }
+  15% { opacity: 1; }
+  30% { opacity: 0; }
+  100% { opacity: 0; }
+}
+body.tune .lt-steps.is-in li span::after,
+body.tune .lt-steps.is-in li .lt-step-card::after { animation: lt-step-glow 3s ease-in-out infinite; }
+body.tune .lt-steps.is-in li:nth-child(1) span::after,
+body.tune .lt-steps.is-in li:nth-child(1) .lt-step-card::after { animation-delay: 0s; }
+body.tune .lt-steps.is-in li:nth-child(2) span::after,
+body.tune .lt-steps.is-in li:nth-child(2) .lt-step-card::after { animation-delay: 0.6s; }
+body.tune .lt-steps.is-in li:nth-child(3) span::after,
+body.tune .lt-steps.is-in li:nth-child(3) .lt-step-card::after { animation-delay: 1.2s; }
+body.tune .lt-steps.is-in li:nth-child(4) span::after,
+body.tune .lt-steps.is-in li:nth-child(4) .lt-step-card::after { animation-delay: 1.8s; }
+body.tune .lt-steps.is-in li:nth-child(5) span::after,
+body.tune .lt-steps.is-in li:nth-child(5) .lt-step-card::after { animation-delay: 2.4s; }
+
 /* Below desktop the steps wrap (3 cols, then 1 col), so the horizontal
    segments no longer line up — hide them and keep only the staggered step-in. */
 @media (max-width: 1100px) {
@@ -1281,12 +1335,15 @@ body.tune .lt-steps.lt-armed.is-in li:nth-child(5) .lt-step-card { transition-de
   body.tune .lt-steps li::after { transform: scaleX(1); transition: none; }
   body.tune .lt-steps li,
   body.tune .lt-steps.lt-armed li { opacity: 1; transform: none; transition: none; }
+  body.tune .lt-steps.is-in li { animation: none; }
   body.tune .lt-steps li span,
   body.tune .lt-steps li .lt-step-card { animation: none; }
+  body.tune .lt-steps li span::after,
+  body.tune .lt-steps li .lt-step-card::after { animation: none; }
   body.tune .lt-steps li span {
-    background: #ffffff;
-    border-color: var(--step);
-    color: var(--step-text, var(--step));
+    background: #102438;
+    border-color: #102438;
+    color: #c19b5d;
     box-shadow: 0 0 0 4px #ffffff;
     transition: none;
   }
@@ -1299,19 +1356,21 @@ body.tune .lt-steps h3 {
   color: #102438;
 }
 
-body.tune .lt-steps h3 a { color: #102438; }
-
 body.tune .lt-steps p {
   margin: 0;
   color: #536475;
   font-size: 0.95rem;
 }
 
-/* Reports */
+/* Reports — side by side again: the text column sits on the left and
+   the chart panel on the right, and the whole section is compressed
+   to fit one viewport at 1440x900 / 1400x1000. Section padding is
+   cut for this section only so the panel has room to breathe. */
+body.tune #reports { padding: 20px 16px; }
 body.tune .lt-reports-grid {
   display: grid;
-  grid-template-columns: minmax(260px, 0.78fr) minmax(0, 1.22fr);
-  gap: 40px;
+  grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+  gap: 32px;
   align-items: center;
 }
 
@@ -1453,8 +1512,8 @@ body.tune .lt-ready .hero-cta { flex: 0 0 auto; }
   body.tune .header-cta {
     padding: 8px 12px;
     font-size: 0.78rem;
-    white-space: normal;
-    max-width: 148px;
+    white-space: nowrap;
+    max-width: none;
     line-height: 1.2;
   }
   body.tune .hero { padding: 28px 0 64px; }
@@ -1477,17 +1536,16 @@ body.tune .lt-ready .hero-cta { flex: 0 0 auto; }
   body.tune .site-header.is-open .site-nav { z-index: 60; background: #0b2031; }
   body.tune .lt-dash-frame { grid-template-columns: 1fr; }
   body.tune .lt-dash-side { display: none; }
-  body.tune .lt-callout { position: static; max-width: none; margin-top: 10px; animation: none; }
   body.tune .lt-arrow { transform: rotate(90deg); height: 36px; }
   body.tune .lt-services-panel { padding: 32px 18px 18px; border-radius: 20px; }
   body.tune .lt-steps { grid-template-columns: 1fr; }
   body.tune .lt-band,
   body.tune .reviews { padding: 64px 0; }
+  body.tune #reports { padding: 48px 0; }
   body.tune .reviews { padding-left: 20px; padding-right: 20px; }
   body.tune .lt-wrap { width: min(1240px, calc(100% - 32px)); }
   body.tune .site-footer .brand img { height: 96px; }
   body.tune .lt-report-frame { grid-template-columns: 1fr; }
-  body.tune .lt-report-side { flex-direction: row; flex-wrap: wrap; }
 }
 
 @media (max-width: 640px) {
@@ -1942,6 +2000,32 @@ body.tune #services .lt-card-body .lt-stat { margin-top: auto; padding-top: 14px
 body.tune #services .lt-card-body .lt-stat strong { display: block; margin-bottom: 4px; color: var(--accent2); font-size: 1.25rem; line-height: 1.15; white-space: nowrap; }
 body.tune #services .lt-card-body .lt-stat-source { color: #536475; min-height: 2.4em; font-size: 0.7rem; margin-bottom: 14px; }
 body.tune #services .lt-learn { margin-top: 0; color: var(--accent2); border: 1px solid var(--accent2); background: transparent; }
+/* Aligned card rows: the stat numbers jumped because each stat block is
+   bottom-anchored (margin-top: auto) while its own height varies with its
+   text length, and 3-line titles pushed descriptions down at the narrowest
+   5-column width. Fix: reserve the worst-case height for every block, so
+   every title, description, stat, source and button starts at the same Y.
+   Heights measured live: 5-column worst case at 1021px (title 72px,
+   description 159.6px, stat 201.6px, source 67.2px); 2-column worst case
+   at 561px (description 114px, stat 178.8px, source 50.4px). Buttons are
+   pinned to the card bottom with margin-top: auto. */
+@media (min-width: 1021px) {
+  /* Specificity beat: a later heading-consistency rule sets h3 min-height
+     2.5em, which is only 2 lines — 3-line titles (Business Advisory,
+     Family) then pushed their descriptions down 24px. This selector adds
+     .lt-cards--hersom to win. Only ONE margin-top: auto may live in this
+     flex column (on .lt-stat): a second one on .lt-learn split the slack
+     50/50 and left a 12px stat misalignment. */
+  body.tune #services .lt-cards--hersom .lt-card-body h3 { min-height: 3.9em; }
+  body.tune #services .lt-card-body > p:first-of-type { min-height: 11em; }
+  body.tune #services .lt-card-body .lt-stat { min-height: 13.5em; }
+  body.tune #services .lt-card-body .lt-stat-source { min-height: 6.1em; }
+}
+@media (min-width: 561px) and (max-width: 1020px) {
+  body.tune #services .lt-card-body > p:first-of-type { min-height: 8em; }
+  body.tune #services .lt-card-body .lt-stat { min-height: 12em; }
+  body.tune #services .lt-card-body .lt-stat-source { min-height: 4.6em; }
+}
 body.tune #services .lt-card:hover .lt-learn, body.tune #services .lt-card:focus-within .lt-learn, body.tune #services .lt-card.lt-featured .lt-learn { background: var(--accent2); border-color: var(--accent2); color: #ffffff; }
 /* services-concept-light */
 
@@ -1965,14 +2049,41 @@ body.tune .lt-src-icon { width: 40px; height: 40px; flex: 0 0 auto; display: gri
 body.tune .lt-src-icon svg { width: 22px; height: 22px; stroke-width: 1.8; }
 body.tune .lt-src-text { display: flex; flex-direction: column; min-width: 0; }
 body.tune .lt-src-text span { color: #536475; font-size: 0.75rem; font-weight: 600; }
-body.tune .lt-flow-arrow { display: flex; align-items: center; justify-content: center; flex: 0 0 auto; color: var(--gold-logo-text); font-size: 2rem; font-weight: 700; line-height: 1; }
+/* ---- Tools spider flow: gold connector lines + card glow ----
+   Four curved lines run from the data-source cards into the QuickBooks
+   hub. The SVG sits between the sources grid and the hub as a flex item;
+   negative margins let its ends touch the card edge and the hub edge.
+   Idle lines are soft pale gold with a slow marching dash toward the hub;
+   hovering a source card lights up only its own line (full logo gold)
+   together with a warm gold glow on that card. Navy #102438 + gold
+   #c19b5d only — no blue in this section. */
+body.tune .lt-spider { flex: 0 0 72px; width: 72px; margin: 0 -14px; overflow: visible; }
+body.tune .lt-spider-line { fill: none; stroke: #c19b5d; stroke-width: 2; stroke-linecap: round; opacity: 0.35; vector-effect: non-scaling-stroke; stroke-dasharray: 5 7; animation: lt-spider-flow 1.4s linear infinite; }
+@keyframes lt-spider-flow { to { stroke-dashoffset: -12; } }
+body.tune .lt-sources li { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+body.tune .lt-sources li:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(193, 155, 93, 0.28), 0 0 0 1px rgba(193, 155, 93, 0.5); }
+body.tune .lt-sources li:hover .lt-src-icon { background: #f7f0dd; }
+body.tune .lt-tools-flow:has(.lt-sources li:nth-child(1):hover) .lt-spider-line:nth-child(1),
+body.tune .lt-tools-flow:has(.lt-sources li:nth-child(2):hover) .lt-spider-line:nth-child(2),
+body.tune .lt-tools-flow:has(.lt-sources li:nth-child(3):hover) .lt-spider-line:nth-child(3),
+body.tune .lt-tools-flow:has(.lt-sources li:nth-child(4):hover) .lt-spider-line:nth-child(4) {
+  stroke: #c19b5d;
+  opacity: 1;
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 4px rgba(193, 155, 93, 0.6));
+  animation-duration: 0.6s;
+}
+@media (prefers-reduced-motion: reduce) {
+  body.tune .lt-spider-line { animation: none; }
+  body.tune .lt-sources li { transition: none; }
+}
 body.tune .lt-hub { position: relative; overflow: hidden; flex: 0 0 300px; display: flex; flex-direction: column; justify-content: center; padding: 28px 24px; background: #0b2031; border-radius: 16px; color: #ffffff; }
 body.tune .lt-hub strong { position: relative; z-index: 1; font-family: Fraunces, Georgia, serif; font-size: 1.3rem; font-weight: 560; line-height: 1.2; }
 body.tune .lt-hub span { position: relative; z-index: 1; margin-top: 6px; color: #d5e0e8; font-size: 0.85rem; font-weight: 600; }
 body.tune .lt-hub-mark { position: absolute; right: -14px; bottom: -18px; width: 130px; height: 130px; color: #ffffff; opacity: 0.08; stroke-width: 1.4; }
 @media (max-width: 700px) {
   body.tune .lt-tools-flow { flex-direction: column; }
-  body.tune .lt-flow-arrow { transform: rotate(90deg); }
+  body.tune .lt-spider { display: none; }
   body.tune .lt-hub { flex: none; }
   body.tune .lt-sources li { flex-direction: column; align-items: flex-start; gap: 8px; padding: 12px 14px; }
   body.tune .lt-src-icon { width: 36px; height: 36px; }
@@ -2139,12 +2250,13 @@ body.tune .lt-flow-tag {
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #0369a1;
-  background: #e8f1f8;
-  border: 1px solid #bcd7ea;
+  color: #8a6d3b;
+  background: #f7f0dd;
+  border: 1px solid #c19b5d;
   padding: 4px 10px;
   border-radius: 999px;
   white-space: nowrap;
+  box-shadow: 0 0 12px rgba(193,155,93,0.45);
 }
 body.tune .lt-flow-cols,
 body.tune .lt-flow-list li,
@@ -2242,28 +2354,28 @@ body.tune .lt-flow-static .lt-flow-view { height: auto; overflow: visible; }
   body.tune .lt-flow-list li.lt-flow-enter { animation: none; }
 }
 
-/* Hero flow card, part 2: spending donut, profit bars, mini calculator.
+/* Hero flow card, part 2: spending donut and profit bars.
    White/blue only; no gold inside the card. */
 body.tune .lt-flow-strip {
   display: grid;
-  grid-template-columns: minmax(190px, 1.1fr) minmax(130px, 1fr) minmax(170px, 0.95fr);
-  gap: 16px;
-  padding: 16px 20px;
+  grid-template-columns: minmax(266px, 1.1fr) minmax(220px, 1fr);
+  gap: 20px;
+  padding: 18px 16px;
   border-top: 1px solid #e8eef4;
   background: #fbfdff;
 }
 body.tune .lt-flow-strip-title {
   margin: 0 0 8px;
   font-size: 0.68rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #5b7a94;
+  color: #102438;
 }
 /* Spending donut */
 body.tune .lt-flow-donut-body { display: flex; align-items: center; gap: 12px; }
-body.tune .lt-flow-donut-wrap { position: relative; width: 92px; height: 92px; flex: none; }
-body.tune .lt-flow-donut-svg { display: block; width: 92px; height: 92px; transform: rotate(-90deg); }
+body.tune .lt-flow-donut-wrap { position: relative; width: 132px; height: 132px; flex: none; }
+body.tune .lt-flow-donut-svg { display: block; width: 132px; height: 132px; transform: rotate(-90deg); }
 body.tune .lt-flow-donut-svg circle { fill: none; stroke-width: 15; }
 body.tune .lt-flow-donut-bg { stroke: #e8f1f8; }
 body.tune .lt-flow-seg { transition: stroke-dasharray 0.6s ease, stroke-dashoffset 0.6s ease; }
@@ -2277,20 +2389,20 @@ body.tune .lt-flow-donut-centre {
   text-align: center;
 }
 body.tune .lt-flow-donut-centre b {
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #102438;
   font-variant-numeric: tabular-nums;
   line-height: 1.1;
   white-space: nowrap;
 }
-body.tune .lt-flow-donut-centre span { font-size: 0.58rem; font-weight: 650; color: #5b7a94; white-space: nowrap; }
-body.tune .lt-flow-legend { list-style: none; margin: 0; padding: 0; font-size: 0.72rem; color: #24394e; }
-body.tune .lt-flow-legend li { display: flex; align-items: center; gap: 6px; padding: 1.5px 0; white-space: nowrap; }
-body.tune .lt-flow-legend i { width: 9px; height: 9px; border-radius: 3px; background: var(--c); flex: none; }
+body.tune .lt-flow-donut-centre span { font-size: 0.68rem; font-weight: 650; color: #5b7a94; white-space: nowrap; }
+body.tune .lt-flow-legend { list-style: none; margin: 0; padding: 0; font-size: 0.8rem; color: #24394e; }
+body.tune .lt-flow-legend li { display: flex; align-items: center; gap: 6px; padding: 3px 0; white-space: nowrap; }
+body.tune .lt-flow-legend i { width: 10px; height: 10px; border-radius: 3px; background: var(--c); flex: none; }
 body.tune .lt-flow-legend b { margin-left: auto; padding-left: 8px; color: #102438; font-variant-numeric: tabular-nums; }
-/* Profit bars: 56px above the baseline, 8px below it for negatives. */
-body.tune .lt-flow-bars { position: relative; display: flex; gap: 3px; height: 64px; }
+/* Profit bars: 88px above the baseline, 8px below it for negatives. */
+body.tune .lt-flow-bars { position: relative; display: flex; gap: 3px; height: 96px; }
 body.tune .lt-flow-bars::after {
   content: "";
   position: absolute;
@@ -2314,55 +2426,533 @@ body.tune .lt-flow-barfill {
 body.tune .lt-flow-barfill.neg { bottom: 0; background: #8d2b22; border-radius: 0 0 2px 2px; }
 body.tune .lt-flow-barfill.is-now { background: #0369a1; }
 body.tune .lt-flow-barlabs { display: flex; gap: 3px; margin-top: 4px; }
-body.tune .lt-flow-barlabs span { flex: 1 1 0; text-align: center; font-size: 0.6rem; font-weight: 650; color: #5b7a94; }
+body.tune .lt-flow-barlabs span { flex: 1 1 0; text-align: center; font-size: 0.65rem; font-weight: 650; color: #5b7a94; }
 body.tune .lt-flow-barlabs span.is-now { color: #0369a1; }
-/* Mini calculator */
-body.tune .lt-flow-field { display: block; font-size: 0.75rem; font-weight: 650; color: #24394e; margin: 0 0 8px; }
-body.tune .lt-flow-money {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  margin-top: 3px;
-  background: #ffffff;
-  border: 1px solid #cfdeec;
-  border-radius: 8px;
-  padding: 5px 8px;
-  color: #5b7a94;
-  font-weight: 650;
-}
-body.tune .lt-flow-money input {
-  width: 100%;
-  min-width: 0;
-  border: 0;
-  outline: 0;
-  background: transparent;
-  font: inherit;
-  font-size: 0.85rem;
-  color: #102438;
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-body.tune .lt-flow-money:focus-within { border-color: #0369a1; box-shadow: 0 0 0 3px rgba(3, 105, 161, 0.15); }
-body.tune .lt-flow-reset {
-  background: none;
-  border: 0;
-  padding: 0;
-  font: inherit;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #0369a1;
-  cursor: pointer;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-@media (max-width: 980px) {
-  body.tune .lt-flow-strip { grid-template-columns: 1fr 1fr; }
-  body.tune .lt-flow-calc { grid-column: 1 / -1; }
-}
 @media (max-width: 560px) {
   body.tune .lt-flow-strip { grid-template-columns: 1fr; padding: 14px 12px; }
 }
 @media (prefers-reduced-motion: reduce) {
   body.tune .lt-flow-seg,
   body.tune .lt-flow-barfill { transition: none; }
+}
+
+/* ---- Hero restructure: automators-style dark hero (14 Nov 2026) ----
+   Fixed transparent header over a full-bleed dark hero; optimised
+   numbers photo + 105deg gradient (heaviest left, where the text sits);
+   H1 at the reference scale in Fraunces; holographic logo lives in the
+   nav (the .brand::after sheen above already covers it — the header
+   just has to stay transparent so it sits on top of the photo). The
+   flowing-table card stays in the hero on the right, where the
+   reference puts its big brand mark. No stats row: nothing invented. */
+
+/* Fixed transparent header over the hero (homepage only — the class is
+   only on this page's header). Gains a solid navy background once the
+   page has scrolled a little (JS toggles .is-scrolled). If the team
+   review strip is shown (?review=1) the header drops back to sticky so
+   it sits under the strip instead of covering it. */
+body.tune .site-header--over-hero {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  min-height: 88px;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  backdrop-filter: none;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+body.tune .site-header--over-hero .brand img {
+  height: 64px;
+  filter: drop-shadow(0 0 14px rgba(193, 155, 93, 0.35));
+}
+body.tune .site-header--over-hero.is-scrolled {
+  background: #102438;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(16px);
+}
+body.tune .review-strip:not([hidden]) ~ .site-header--over-hero { position: sticky; }
+
+/* Nav icons: chevron SVG on the Services button (replaces the ::after
+   text chevron on this header only) and the outlined phone pill. */
+body.tune .site-header--over-hero .nav-drop-btn::after { content: none; }
+body.tune .nav-drop-chev {
+  width: 13px;
+  height: 13px;
+  margin-left: 6px;
+  vertical-align: -1px;
+}
+body.tune .nav-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 18px;
+  padding: 10px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 999px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+body.tune .nav-phone:hover {
+  border-color: #c19b5d;
+  background: rgba(193, 155, 93, 0.12);
+}
+body.tune .nav-phone-dot {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 50%;
+  background: #c19b5d;
+  box-shadow: 0 0 8px rgba(193, 155, 93, 0.9);
+}
+
+/* Dark hero: full-bleed optimised numbers photo under the reference's
+   105deg gradient — darkest on the left where the text sits, lighter
+   on the right so the photo stays visible. */
+body.tune .hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+  background: #102438 url("./assets/hero-numbers-bg.jpg") center / cover no-repeat;
+  padding: 128px 0 56px;
+}
+body.tune .hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(105deg, rgba(7, 9, 26, 0.92), rgba(7, 9, 26, 0.7) 40%, rgba(10, 17, 40, 0.42) 72%, rgba(10, 17, 40, 0.3));
+}
+body.tune .hero-grid {
+  position: relative;
+  z-index: 1;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  gap: 48px;
+  align-items: center;
+}
+
+/* Eyebrow pill above the H1: small-caps, letter-spaced, outlined, gold dot. */
+body.tune .lt-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 9px;
+  margin: 0 0 18px;
+  padding: 9px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  background: rgba(7, 9, 26, 0.25);
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+body.tune .lt-eyebrow-dot {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-radius: 50%;
+  background: #c19b5d;
+  box-shadow: 0 0 8px rgba(193, 155, 93, 0.9);
+}
+
+/* H1 at the reference scale, white on the dark hero. The gold highlight
+   uses the lighter logo gold here — the darker text gold is unreadable
+   on navy. */
+body.tune .hero h1 {
+  font-size: clamp(48px, 5.6vw, 80px);
+  font-weight: 560;
+  line-height: 1.1;
+  color: #ffffff;
+}
+body.tune .hero .lt-gold { color: #c19b5d; }
+body.tune .hero-lead {
+  max-width: 520px;
+  color: rgba(255, 255, 255, 0.85);
+}
+body.tune .hero .hero-cta { padding: 16px 26px; }
+body.tune .hero .hero-secondary {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: none;
+}
+body.tune .hero .hero-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.8);
+}
+body.tune .lt-marks li { color: #ffffff; }
+
+/* The flow card stays on the right of the dark hero: same white card,
+   seated on the dark background with a deeper shadow and a gold edge. */
+body.tune .hero .lt-flow {
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(193, 155, 93, 0.35), 0 0 32px rgba(193, 155, 93, 0.12);
+}
+
+@media (max-width: 980px) {
+  body.tune .site-header--over-hero { min-height: 76px; padding: 0 16px; }
+  body.tune .site-header--over-hero .brand img { height: 56px; }
+  body.tune .nav-phone { display: none; }
+  body.tune .hero { padding: 128px 0 72px; min-height: 0; }
+  body.tune .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+  body.tune .hero h1 { font-size: clamp(2.05rem, 9vw, 3rem); }
+}
+
+/* Very small screens: the brand + header CTA + menu toggle must all fit
+   on one line, so shrink the logo, tighten the CTA and drop its arrow. */
+@media (max-width: 560px) {
+  body.tune .site-header--over-hero .brand img { height: 48px; }
+  body.tune .site-header--over-hero .header-cta { font-size: 0.72rem; padding: 8px 10px; }
+  body.tune .site-header--over-hero .header-cta span[aria-hidden="true"] { display: none; }
+}
+
+/* ---- Reports rebuild: interactive flowing table (14 Nov 2026) ----
+   Left column filled like the hero (big Fraunces H2, gold accent, 18px
+   lede); the old static report becomes a flowing table modelled on the
+   hero .lt-flow card, with P&L / Balance sheet / Cash flow / AR and AP
+   tabs and a holographic liquid-glass card. */
+body.tune #reports-title {
+  font-size: clamp(44px, 4.6vw, 68px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+body.tune .lt-reports .lt-lede {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  max-width: 34ch;
+}
+
+/* Frame: transparent wrapper now — the glass card carries the look.
+   Single column since the tabs moved out into their own bar above. */
+body.tune .lt-report-frame.lt-rep-glass {
+  grid-template-columns: minmax(0, 1fr);
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Tab bar: a light liquid-glass segmented control sitting just above the
+   card — no dark pane, no gold fill. The active tab is marked by a pale
+   gold thumb that slides behind it; hover is a faint navy tint only. */
+body.tune .lt-rep-tabs {
+  position: relative;
+  display: flex;
+  gap: 2px;
+  padding: 4px;
+  margin-bottom: 8px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(16, 36, 56, 0.10);
+  border-radius: 999px;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 28px rgba(16, 36, 56, 0.08);
+}
+body.tune .lt-rep-tab-slider {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: 0;
+  border-radius: 999px;
+  background: rgba(193, 155, 93, 0.16);
+  box-shadow: inset 0 0 0 1px rgba(193, 155, 93, 0.6);
+  transition: left 0.3s ease, width 0.3s ease;
+  pointer-events: none;
+}
+body.tune .lt-rep-tab {
+  appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+  z-index: 1;
+  flex: 1 1 0;
+  min-width: 0;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 7px 12px;
+  color: #102438;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+body.tune .lt-rep-tab:hover { color: #102438; background: rgba(16, 36, 56, 0.06); }
+body.tune .lt-rep-tab.is-active { color: #102438; font-weight: 700; }
+body.tune .lt-rep-tab:focus-visible { outline: 2px solid #c19b5d; outline-offset: 2px; }
+
+/* Dribbble-style reports panel: a pale blue-grey ground carrying white
+   floating cards (18px radius, soft diffuse shadow). The liquid-glass
+   wash and holo sheen are dropped here — the Dribbble look is clean
+   matte cards, not glass. */
+body.tune .lt-rep-flow {
+  position: relative;
+  background: #e8edf3;
+  border: 1px solid rgba(16, 36, 56, 0.05);
+  border-radius: 22px;
+  box-shadow: none;
+  padding: 10px 12px;
+}
+body.tune .lt-rep-flow .lt-flow-head { padding: 0 6px 2px; }
+body.tune .lt-rep-flow .lt-flow-foot { padding: 4px 6px 0; color: #5b7a94; }
+
+/* Masonry: two columns; the wide charts span both. Gaps are tight —
+   the section has to fit one viewport. */
+body.tune .lt-rep-masonry {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 8px;
+}
+body.tune .lt-rep-card {
+  background: #ffffff;
+  border: 1px solid rgba(16, 36, 56, 0.05);
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(16, 36, 56, 0.06);
+  padding: 10px 14px;
+  min-width: 0;
+}
+/* Chart cards need JS to fill them; without JS only the flowing table
+   (and its static rows) shows. The [hidden] rule comes last so a tab
+   switch can hide a card again. */
+body.tune .lt-rep-card-combo,
+body.tune .lt-rep-card-bubbles,
+body.tune .lt-rep-card-segments { display: none; }
+body.tune .lt-rep-js .lt-rep-card-combo,
+body.tune .lt-rep-js .lt-rep-card-bubbles,
+body.tune .lt-rep-js .lt-rep-card-segments { display: block; }
+body.tune .lt-rep-card[hidden] { display: none; }
+body.tune .lt-rep-card-title {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #102438;
+}
+/* Combo card header: title left, net-margin stat right. */
+body.tune .lt-rep-combo-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 16px;
+}
+body.tune .lt-rep-combo-stat {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #8a6d3b;
+  white-space: nowrap;
+}
+/* Combo legend swatches: square chips for the bar series, a short
+   line chip for the profit line — so bars vs lines read at a glance. */
+body.tune .lt-rep-legend .lt-rep-sw-bar { border-radius: 2px; }
+body.tune .lt-rep-legend .lt-rep-sw-line { width: 14px; height: 3px; border-radius: 2px; }
+body.tune .lt-rep-card-combo,
+body.tune .lt-rep-card-segments { grid-column: 1 / -1; }
+/* P&L: the flowing table is four columns wide — it spans both, so no
+   figure is ever clipped at the card edge. Short tabs keep the
+   two-column table beside the bubbles. */
+body.tune .lt-rep-masonry:not(.lt-rep-short) .lt-rep-card-flow { grid-column: 1 / -1; }
+/* P&L: the full-width bubbles card lays out chart + legend side by
+   side, so the wide card is not a small centred cluster with empty
+   flanks. Scoped :not([hidden]) so a tab switch can still hide it. */
+body.tune .lt-rep-js .lt-rep-masonry:not(.lt-rep-short) .lt-rep-card-bubbles:not([hidden]) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  column-gap: 24px;
+}
+body.tune .lt-rep-masonry:not(.lt-rep-short) .lt-rep-card-bubbles .lt-rep-card-title { grid-column: 1 / -1; }
+body.tune .lt-rep-masonry:not(.lt-rep-short) .lt-rep-bubble-legend {
+  margin: 0;
+  padding: 0;
+  border-top: none;
+  grid-template-columns: minmax(0, 1fr);
+}
+/* Short tabs: the flow card stretches to the bubbles card's height,
+   so its three rows sit in the middle instead of leaving a void
+   at the bottom. */
+body.tune .lt-rep-masonry.lt-rep-short .lt-rep-card-flow { justify-content: center; }
+/* P&L: bubbles span both too — the masonry is a single-column stack
+   of full-width cards, so no grid hole is left beside them. */
+body.tune .lt-rep-masonry:not(.lt-rep-short) .lt-rep-card-bubbles { grid-column: 1 / -1; }
+
+/* Flowing table card: rows are Dribbble pill rows — white, rounded,
+   soft shadow, small gaps. Scoped here so the hero's rows are untouched. */
+body.tune .lt-rep-card-flow { display: flex; flex-direction: column; }
+body.tune .lt-rep-flow .lt-flow-view { border-top: none; }
+body.tune .lt-rep-flow .lt-flow-cols { padding: 0 12px 4px; }
+body.tune .lt-rep-flow .lt-flow-n,
+body.tune .lt-rep-flow .lt-flow-m { white-space: nowrap; }
+body.tune .lt-rep-flow .lt-flow-list li {
+  height: 28px;
+  margin-bottom: 3px;
+  padding: 0 12px;
+  background: #ffffff;
+  border: 1px solid rgba(16, 36, 56, 0.04);
+  border-bottom: 1px solid rgba(16, 36, 56, 0.04);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(16, 36, 56, 0.05);
+}
+body.tune .lt-rep-flow .lt-flow-list li.lt-flow-alt { background: #ffffff; }
+
+/* Two-column tabs (Balance sheet, AR and AP): label + amount. */
+body.tune .lt-rep-flow.lt-rep-cols-2 .lt-flow-cols,
+body.tune .lt-rep-flow.lt-rep-cols-2 .lt-flow-list li {
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+}
+/* Short datasets show every row: no fixed-height viewport. */
+body.tune .lt-rep-flow.lt-rep-compact .lt-flow-view { height: auto; overflow: visible; }
+/* The row carrying the pulse glows gold (small datasets only). */
+body.tune .lt-rep-flow .lt-flow-list li.is-now {
+  background: rgba(193, 155, 93, 0.14);
+  box-shadow: inset 3px 0 0 #c19b5d;
+}
+
+/* Totals band: an inline strip under the cards, not another card —
+   the section has no vertical room for a third card row. Label and
+   value sit on one line each so the strip stays a single row. */
+body.tune .lt-totals.lt-rep-totals {
+  margin: 10px 0 0;
+  padding: 8px 6px 0;
+  background: transparent;
+  border: none;
+  border-top: 1px solid rgba(16, 36, 56, 0.1);
+  border-radius: 0;
+  box-shadow: none;
+}
+body.tune .lt-totals.lt-rep-totals div { display: flex; align-items: baseline; gap: 8px; }
+body.tune .lt-totals.lt-rep-totals dd { margin: 0; }
+body.tune .lt-totals.lt-rep-totals div { padding-top: 0; border-top: none; }
+body.tune .lt-totals.lt-rep-totals dd { font-size: 1rem; }
+body.tune .lt-totals.lt-rep-totals.lt-rep-totals-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+/* Cash-flow awaiting state: clean, deliberate, no fake numbers. */
+body.tune .lt-rep-await {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 420px;
+  padding: 40px 28px;
+  text-align: center;
+}
+/* display:flex above would beat the UA [hidden] rule — restore it. */
+body.tune .lt-rep-await[hidden] { display: none; }
+body.tune .lt-rep-await-title {
+  margin: 0 0 8px;
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-weight: 560;
+  color: #102438;
+}
+body.tune .lt-rep-await p:last-child { margin: 0; color: #536475; }
+/* Nothing live on the awaiting tab: hide the Live dot with it. */
+body.tune .lt-rep-flow.lt-rep-awaiting .lt-flow-live { visibility: hidden; }
+
+/* Charts inside the white cards: dashed hairline grid, Inter-style
+   labels, navy + gold + muted blue only. */
+body.tune .lt-rep-chart:empty { display: none; }
+body.tune .lt-rep-chart svg { display: block; width: 100%; height: auto; }
+body.tune .lt-rep-gridline { stroke: #e8eef4; stroke-width: 1; stroke-dasharray: 3 4; }
+body.tune .lt-rep-zeroline { stroke: #cfdeec; stroke-width: 1.5; }
+body.tune .lt-rep-axis { font-size: 10px; fill: #8a94a6; font-weight: 600; }
+body.tune .lt-rep-axis.is-now { fill: #102438; font-weight: 700; }
+body.tune .lt-rep-line { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+body.tune .lt-rep-dot { fill: #ffffff; stroke-width: 2; }
+body.tune .lt-rep-guide { stroke: rgba(193, 155, 93, 0.55); stroke-width: 1; stroke-dasharray: 3 4; }
+body.tune .lt-rep-ring { fill: none; stroke: #c19b5d; stroke-width: 2; }
+body.tune .lt-rep-group { opacity: 0.75; transition: opacity 0.3s ease; }
+body.tune .lt-rep-group.is-now { opacity: 1; }
+body.tune .lt-rep-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 0 0 6px;
+  padding: 0;
+  list-style: none;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #24394e;
+}
+body.tune .lt-rep-legend li { display: flex; align-items: center; gap: 6px; }
+body.tune .lt-rep-legend i { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+body.tune .lt-rep-legend li span { font-weight: 600; }
+body.tune .lt-rep-legend li b { margin-left: auto; font-weight: 700; color: #102438; font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* Segmented-bar legend: one row per segment, dashed hairline dividers. */
+body.tune .lt-rep-segments-legend { display: block; margin: 12px 0 0; }
+body.tune .lt-rep-segments-legend li { padding: 6px 0; border-top: 1px dashed #e8eef4; }
+/* Packed-bubble legend: two columns, dot + name + share/amount. */
+body.tune .lt-rep-bubble-legend {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 6px 16px;
+  margin: 12px 0 0;
+  padding: 12px 0 0;
+  border-top: 1px dashed #e8eef4;
+  list-style: none;
+  font-size: 0.8rem;
+  color: #24394e;
+}
+body.tune .lt-rep-bubble-legend li { display: flex; align-items: center; gap: 6px; min-width: 0; }
+body.tune .lt-rep-bubble-legend i { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+body.tune .lt-rep-bubble-legend span { font-weight: 600; }
+body.tune .lt-rep-bubble-legend b { margin-left: auto; font-weight: 700; color: #102438; font-variant-numeric: tabular-nums; white-space: nowrap; }
+body.tune .lt-rep-bubble-legend li.is-now span { color: #8a6d3b; }
+body.tune .lt-rep-bubble.is-now circle { stroke: #c19b5d; }
+/* Segmented bar: short rounded segments with small gaps. */
+body.tune .lt-rep-segments-bar { display: flex; gap: 3px; height: 16px; margin: 6px 0 2px; }
+body.tune .lt-rep-segments-bar i { display: block; height: 100%; border-radius: 999px; min-width: 8px; }
+body.tune .lt-rep-card-bubbles .lt-rep-chart svg { max-width: 200px; margin: 0 auto; }
+
+/* Narrow phones: a single masonry column, and a tighter flow table so
+   the four columns still fit at 375px. */
+@media (max-width: 700px) {
+  body.tune .lt-rep-masonry { grid-template-columns: minmax(0, 1fr); }
+  body.tune .lt-rep-flow { padding: 12px; }
+  body.tune .lt-rep-card { padding: 16px 14px; }
+  body.tune .lt-rep-flow .lt-flow-cols,
+  body.tune .lt-rep-flow .lt-flow-list li {
+    grid-template-columns: 64px 1fr 1fr 1fr;
+    column-gap: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  body.tune .lt-rep-flow .lt-flow-list li { font-size: 0.92rem; }
+  body.tune .lt-rep-bubble-legend { grid-template-columns: minmax(0, 1fr); }
+  /* P&L bubbles card stacks again on narrow phones. */
+  body.tune .lt-rep-js .lt-rep-masonry:not(.lt-rep-short) .lt-rep-card-bubbles:not([hidden]) { display: block; }
+  body.tune .lt-rep-masonry:not(.lt-rep-short) .lt-rep-bubble-legend { margin: 12px 0 0; padding: 12px 0 0; border-top: 1px dashed #e8eef4; }
+}
+
+@media (max-width: 1100px) {
+  body.tune .lt-report-frame.lt-rep-glass { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 980px) {
+  body.tune .lt-report-frame.lt-rep-glass { grid-template-columns: 1fr; }
+  body.tune .lt-rep-tab { padding: 8px 14px; }
+  body.tune #reports-title { font-size: clamp(36px, 8vw, 52px); }
+}
+@media (max-width: 560px) {
+  body.tune .lt-totals.lt-rep-totals { padding-left: 12px; padding-right: 12px; }
+  body.tune .lt-totals.lt-rep-totals dd { font-size: 0.9rem; }
+  /* Tabs wrap to two rows on narrow phones; the sliding thumb only works
+     on a single row, so it hides and the active pill still shows. */
+  body.tune .lt-rep-tabs { flex-wrap: wrap; border-radius: 20px; }
+  body.tune .lt-rep-tab-slider { display: none; }
+  body.tune .lt-rep-tab { flex: 1 1 40%; }
+  body.tune .lt-rep-tab.is-active { background: rgba(193, 155, 93, 0.16); box-shadow: inset 0 0 0 1px rgba(193, 155, 93, 0.6); }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.tune .lt-rep-tab-slider,
+  body.tune .lt-rep-group { transition: none; }
 }
