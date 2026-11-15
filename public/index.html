@@ -16,8 +16,50 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./tune.css">
+
+  <!-- Dark Horse-style nav, Ledgertune brand intact. -->
+  <style>
+  /* Dark Horse layout, Ledgertune colours: navy #102438 header (the logo is
+     white + gold #c19b5d, so a white header would make "LEDGER" disappear),
+     Fraunces + Inter, gold CTA. No orange, no new pages. */
+  body.tune.dh-nav .site-header { position: sticky; top: 0; z-index: 70; background: #102438; min-height: 84px; border-bottom: 1px solid rgba(255,255,255,.08); box-shadow: 0 8px 24px rgba(0,0,0,.18); }
+  body.tune.dh-nav .site-header .brand img { height: 60px; filter: none; }
+  body.tune.dh-nav .site-nav { gap: 28px; margin: 0 auto; }
+  body.tune.dh-nav .site-header .site-nav a:not(.nav-cta),
+  body.tune.dh-nav .site-header .nav-drop-btn { color: #e7eef4; padding-bottom: 4px; border-bottom: 2px solid transparent; }
+  body.tune.dh-nav .site-header .nav-drop-btn::after { content: none; } /* SVG chevron only — tune.css also adds a text chevron */
+  body.tune.dh-nav .site-header .site-nav a:not(.nav-cta):hover,
+  body.tune.dh-nav .site-header .nav-drop-btn:hover { color: #fff; border-bottom-color: #c19b5d; }
+  body.tune.dh-nav .nav-phone { border-color: rgba(255,255,255,.45); }
+  body.tune.dh-nav .hero { padding-top: 64px; }
+  /* SOLUTIONS mega-menu: wide white panel, 3 columns, like Dark Horse's
+     Solutions dropdown (Business / Personal / Wealth) — rebuilt with
+     Ledgertune's own 5 services only. */
+  body.tune.dh-nav .nav-drop-wrap { position: static; }
+  body.tune.dh-nav .nav-drop.nav-mega { left: 50%; transform: translate(-50%, 8px); top: calc(100% + 14px); width: min(920px, 94vw); min-width: 0; background: #fff; color: #102438; border-radius: 16px; border: 1px solid rgba(16,36,56,.08); box-shadow: 0 24px 48px rgba(16,36,56,.22); padding: 20px 22px; display: none; grid-template-columns: minmax(0,1.15fr) minmax(0,1fr) minmax(0,.95fr); gap: 24px; }
+  body.tune.dh-nav .nav-drop-wrap:hover .nav-drop.nav-mega,
+  body.tune.dh-nav .nav-drop-wrap:focus-within .nav-drop.nav-mega,
+  body.tune.dh-nav .nav-drop-wrap.is-open .nav-drop.nav-mega { display: grid; }
+  body.tune.dh-nav .nav-mega-title { font-family: Fraunces, Georgia, serif; font-size: .82rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #8a6d3b; margin: 0 0 10px; }
+  body.tune.dh-nav .nav-mega a { display: block; padding: 9px 10px; border-radius: 10px; color: #102438 !important; font-weight: 650; text-decoration: none; border-bottom: 0 !important; white-space: normal; }
+  body.tune.dh-nav .nav-mega a:hover { background: #f3f7f8; }
+  body.tune.dh-nav .nav-mega a span { display: block; margin-top: 3px; font-size: .85rem; font-weight: 400; line-height: 1.45; color: #536475; }
+  body.tune.dh-nav .nav-mega-all { color: #8a6d3b !important; }
+  body.tune.dh-nav .nav-mega-start { background: #f3f7f8; border-radius: 12px; padding: 14px; }
+  body.tune.dh-nav .nav-mega-start p { margin: 0 0 10px; font-size: .92rem; line-height: 1.5; color: #33465a; }
+  body.tune.dh-nav .nav-mega-cta { background: #c19b5d; color: #102438 !important; text-align: center; font-weight: 700; }
+  body.tune.dh-nav .nav-mega-cta:hover { background: #cfa96f !important; }
+  body.tune.dh-nav .nav-mega-note { font-size: .82rem !important; color: #536475 !important; }
+  @media (max-width: 980px) {
+    body.tune.dh-nav .nav-drop.nav-mega { position: static; transform: none; width: auto; background: transparent; border: 0; box-shadow: none; padding: 4px 0 0 12px; display: block; grid-template-columns: 1fr; }
+    body.tune.dh-nav .nav-mega a { color: #e7eef4 !important; }
+    body.tune.dh-nav .nav-mega a span, body.tune.dh-nav .nav-mega-start p, body.tune.dh-nav .nav-mega-note { color: #b9c8d4 !important; }
+    body.tune.dh-nav .nav-mega-start { background: rgba(255,255,255,.06); }
+    body.tune.dh-nav .nav-mega-title { color: #c19b5d; }
+  }
+  </style>
 </head>
-<body class="tune">
+<body class="tune dh-nav">
   <a id="top" class="page-top" tabindex="-1">Top of page</a>
   <a class="skip-link" href="#diagnostic-form">Skip to the diagnostic form</a>
   <div class="review-strip" id="review-strip" hidden>
@@ -30,7 +72,7 @@
     </div>
   </div>
 
-  <header class="site-header site-header--over-hero" id="site-header">
+  <header class="site-header" id="site-header">
     <a class="brand" id="brand-home" href="#top">
       <img src="./assets/ledger-tune-logo.png" alt="Ledger Tune" width="900" height="488">
     </a>
@@ -38,16 +80,29 @@
       <span class="bars"></span>
     </button>
     <nav class="site-nav" id="site-nav">
-      <a href="#top">Home</a>
+      <!-- Dark Horse pattern: no "Home" link, the logo is home. -->
       <div class="nav-drop-wrap">
-        <button class="nav-drop-btn" type="button" aria-expanded="false" aria-haspopup="true">Services <svg class="nav-drop-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 6.5 8 11l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-        <div class="nav-drop" role="menu">
-          <a href="#services">All services</a>
-          <a href="/accounting/">Accounting</a>
-          <a href="/bookkeeping/">Bookkeeping</a>
-          <a href="/business-advisory/">Business Advisory</a>
-          <a href="/tax/">Tax</a>
-          <a href="/family-business-advisory/">Family Business Advisory</a>
+        <button class="nav-drop-btn" type="button" aria-expanded="false" aria-haspopup="true">Solutions <svg class="nav-drop-chev" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 6.5 8 11l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="nav-drop nav-mega" role="menu">
+          <div class="nav-mega-col">
+            <p class="nav-mega-title">Accounting &amp; books</p>
+            <a href="/accounting/">Accounting <span>Accounting services for successful business owners, with strong value and a clear picture of the business.</span></a>
+            <a href="/bookkeeping/">Bookkeeping <span>Affordable bookkeeping for businesses and nonprofits. Outsource it, and focus on growing your business.</span></a>
+            <a href="/tax/">Tax <span>Tax-ready books and schedules, prepared for the accountant who files.</span></a>
+          </div>
+          <div class="nav-mega-col">
+            <p class="nav-mega-title">Advisory</p>
+            <a href="/business-advisory/">Business Advisory <span>A big-picture plan for your business, built from your actual numbers.</span></a>
+            <a href="/family-business-advisory/">Family Business Advisory <span>Succession, structure, and tax-aware advice for the family behind the business.</span></a>
+            <a class="nav-mega-all" href="#services">All services &rarr;</a>
+          </div>
+          <div class="nav-mega-col nav-mega-start">
+            <p class="nav-mega-title">Start here</p>
+            <p>From raw records to a confident close.</p>
+            <p>Data intake &middot; Clean and reconcile &middot; Close and report &middot; Review the numbers &middot; Ongoing support.</p>
+            <a class="nav-mega-cta" href="#diagnostic-form">Book Free Finance Diagnostic &rarr;</a>
+            <p class="nav-mega-note">We reply from hello@ledgertune.com to set up the call. The next step is a 30-minute look at the file.</p>
+          </div>
         </div>
       </div>
       <a href="/client-reviews/">Client Reviews</a>
