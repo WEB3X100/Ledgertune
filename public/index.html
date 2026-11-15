@@ -106,61 +106,88 @@
           <figure class="lt-dash">
             <figcaption>Sample layout. These figures are not a client result.</figcaption>
             <p class="lt-callout">One view of the month, once the books agree.</p>
-            <div class="lt-dash-frame">
-              <div class="lt-dash-side" aria-hidden="true">
-                <span class="lt-dash-mark">LT</span>
-                <b>Overview</b>
-                <span>Reports</span>
-                <span>Reconciliation</span>
-                <span>Cash</span>
-                <span>Settings</span>
+            <div class="lt-flow" role="region" aria-label="Month by month revenue, costs and profit, live flow">
+              <div class="lt-flow-head">
+                <div class="lt-flow-title">
+                  <span class="lt-flow-live"><i aria-hidden="true"></i>Live</span>
+                  <strong>Month by month</strong>
+                </div>
+                <span class="lt-flow-tag">Sample</span>
               </div>
-              <div class="lt-dash-main">
-                <div class="lt-dash-head">
-                  <strong>Financial overview</strong>
-                  <span>Sample</span>
-                </div>
-                <div class="lt-metrics">
-                  <div><em>Revenue</em><b class="lt-num">$480,000</b><span>Sample</span></div>
-                  <div><em>Gross profit</em><b class="lt-num">$210,000</b><span>Sample</span></div>
-                  <div><em>Net profit</em><b class="lt-num">$64,000</b><span>Sample</span></div>
-                  <div><em>Cash balance</em><b class="lt-num">$120,000</b><span>Sample</span></div>
-                </div>
-                <div class="lt-dash-charts">
-                  <div class="lt-bars-card">
-                    <div class="lt-chart-label"><span>Profit and loss</span><span>Sample year</span></div>
-                    <div class="lt-bars" aria-hidden="true">
-                      <i style="--h:46%"><b style="--h:28%"></b></i>
-                      <i style="--h:52%"><b style="--h:34%"></b></i>
-                      <i style="--h:40%"><b style="--h:30%"></b></i>
-                      <i style="--h:61%"><b style="--h:36%"></b></i>
-                      <i style="--h:48%"><b style="--h:32%"></b></i>
-                      <i style="--h:70%"><b style="--h:40%"></b></i>
-                      <i style="--h:58%"><b style="--h:38%"></b></i>
-                      <i style="--h:74%"><b style="--h:42%"></b></i>
-                      <i style="--h:63%"><b style="--h:36%"></b></i>
-                      <i style="--h:80%"><b style="--h:44%"></b></i>
-                      <i style="--h:68%"><b style="--h:40%"></b></i>
-                      <i style="--h:86%"><b style="--h:48%"></b></i>
+              <div class="lt-flow-cols" aria-hidden="true"><span>Month</span><span>Revenue</span><span>Costs</span><span>Profit</span></div>
+              <div class="lt-flow-view">
+                <ul class="lt-flow-list">
+                  <li class="lt-flow-row" data-rev="29598" data-cost="28815" data-profit="782"><span class="lt-flow-m">Jan</span><span class="lt-flow-n">$29,598</span><span class="lt-flow-n">$28,815</span><span class="lt-flow-n lt-flow-p">$782</span></li>
+                  <li class="lt-flow-row lt-flow-alt" data-rev="33458" data-cost="30987" data-profit="2471"><span class="lt-flow-m">Feb</span><span class="lt-flow-n">$33,458</span><span class="lt-flow-n">$30,987</span><span class="lt-flow-n lt-flow-p">$2,471</span></li>
+                  <li class="lt-flow-row" data-rev="25737" data-cost="26644" data-profit="-907"><span class="lt-flow-m">Mar</span><span class="lt-flow-n">$25,737</span><span class="lt-flow-n">$26,644</span><span class="lt-flow-n lt-flow-p lt-flow-neg">−$907</span></li>
+                  <li class="lt-flow-row lt-flow-alt" data-rev="39249" data-cost="34244" data-profit="5005"><span class="lt-flow-m">Apr</span><span class="lt-flow-n">$39,249</span><span class="lt-flow-n">$34,244</span><span class="lt-flow-n lt-flow-p">$5,005</span></li>
+                  <li class="lt-flow-row" data-rev="30885" data-cost="29539" data-profit="1345"><span class="lt-flow-m">May</span><span class="lt-flow-n">$30,885</span><span class="lt-flow-n">$29,539</span><span class="lt-flow-n lt-flow-p">$1,345</span></li>
+                  <li class="lt-flow-row lt-flow-alt" data-rev="45040" data-cost="37502" data-profit="7538"><span class="lt-flow-m">Jun</span><span class="lt-flow-n">$45,040</span><span class="lt-flow-n">$37,502</span><span class="lt-flow-n lt-flow-p">$7,538</span></li>
+                  <li class="lt-flow-row" data-rev="37319" data-cost="33159" data-profit="4160"><span class="lt-flow-m">Jul</span><span class="lt-flow-n">$37,319</span><span class="lt-flow-n">$33,159</span><span class="lt-flow-n lt-flow-p">$4,160</span></li>
+                  <li class="lt-flow-row lt-flow-alt" data-rev="47614" data-cost="38950" data-profit="8664"><span class="lt-flow-m">Aug</span><span class="lt-flow-n">$47,614</span><span class="lt-flow-n">$38,950</span><span class="lt-flow-n lt-flow-p">$8,664</span></li>
+                  <li class="lt-flow-row" data-rev="40536" data-cost="34968" data-profit="5568"><span class="lt-flow-m">Sep</span><span class="lt-flow-n">$40,536</span><span class="lt-flow-n">$34,968</span><span class="lt-flow-n lt-flow-p">$5,568</span></li>
+                  <li class="lt-flow-row lt-flow-alt" data-rev="51475" data-cost="41121" data-profit="10353"><span class="lt-flow-m">Oct</span><span class="lt-flow-n">$51,475</span><span class="lt-flow-n">$41,121</span><span class="lt-flow-n lt-flow-p">$10,353</span></li>
+                  <li class="lt-flow-row" data-rev="43753" data-cost="36778" data-profit="6975"><span class="lt-flow-m">Nov</span><span class="lt-flow-n">$43,753</span><span class="lt-flow-n">$36,778</span><span class="lt-flow-n lt-flow-p">$6,975</span></li>
+                  <li class="lt-flow-row lt-flow-alt" data-rev="55335" data-cost="43293" data-profit="12042"><span class="lt-flow-m">Dec</span><span class="lt-flow-n">$55,335</span><span class="lt-flow-n">$43,293</span><span class="lt-flow-n lt-flow-p">$12,042</span></li>
+                </ul>
+              </div>
+              <div class="lt-flow-total"><span>Year total</span><span id="lt-flow-tot-rev">$480,000</span><span id="lt-flow-tot-cost">$416,000</span><span id="lt-flow-tot-profit">$64,000</span></div>
+              <div class="lt-flow-strip">
+                <div class="lt-flow-donut">
+                  <p class="lt-flow-strip-title">Spending</p>
+                  <div class="lt-flow-donut-body">
+                    <div class="lt-flow-donut-wrap">
+                      <svg class="lt-flow-donut-svg" viewBox="0 0 100 100" role="img" aria-label="Spending mix: Payroll 34 percent, People 18 percent, Software 16 percent, Occupancy 20 percent, Other 12 percent">
+                        <circle class="lt-flow-donut-bg" cx="50" cy="50" r="40"></circle>
+                        <circle class="lt-flow-seg" cx="50" cy="50" r="40" stroke="#102438" stroke-dasharray="83.95 251.33" stroke-dashoffset="-0.00"></circle>
+                        <circle class="lt-flow-seg" cx="50" cy="50" r="40" stroke="#0369a1" stroke-dasharray="43.74 251.33" stroke-dashoffset="-85.45"></circle>
+                        <circle class="lt-flow-seg" cx="50" cy="50" r="40" stroke="#5b8fb8" stroke-dasharray="38.71 251.33" stroke-dashoffset="-130.69"></circle>
+                        <circle class="lt-flow-seg" cx="50" cy="50" r="40" stroke="#8fb8d4" stroke-dasharray="48.77 251.33" stroke-dashoffset="-170.90"></circle>
+                        <circle class="lt-flow-seg" cx="50" cy="50" r="40" stroke="#c9deee" stroke-dasharray="28.66 251.33" stroke-dashoffset="-221.17"></circle>
+                      </svg>
+                      <div class="lt-flow-donut-centre"><b id="lt-flow-centre-val">$782</b><span id="lt-flow-centre-month">Jan · profit</span></div>
                     </div>
-                    <div class="lt-months" aria-hidden="true"><span>J</span><span>F</span><span>M</span><span>A</span><span>M</span><span>J</span><span>J</span><span>A</span><span>S</span><span>O</span><span>N</span><span>D</span></div>
-                  </div>
-                  <div class="lt-mix">
-                    <div class="lt-chart-label"><span>Spending</span><span>Sample</span></div>
-                    <div class="lt-donut" aria-hidden="true"></div>
-                    <ul>
-                      <li><i class="c1"></i>Payroll 34%</li>
-                      <li><i class="c2"></i>People 18%</li>
-                      <li><i class="c3"></i>Software 16%</li>
-                      <li><i class="c4"></i>Occupancy 20%</li>
-                      <li><i class="c5"></i>Other 12%</li>
+                    <ul class="lt-flow-legend">
+                      <li><i style="--c:#102438"></i>Payroll <b>34%</b></li>
+                      <li><i style="--c:#0369a1"></i>People <b>18%</b></li>
+                      <li><i style="--c:#5b8fb8"></i>Software <b>16%</b></li>
+                      <li><i style="--c:#8fb8d4"></i>Occupancy <b>20%</b></li>
+                      <li><i style="--c:#c9deee"></i>Other <b>12%</b></li>
                     </ul>
                   </div>
                 </div>
-                <p class="lt-recon"><span>Sample bank match</span> Reconciled in this layout</p>
+                <div class="lt-flow-bars-block">
+                  <p class="lt-flow-strip-title">Profit by month</p>
+                  <div class="lt-flow-bars" aria-hidden="true">
+                    <div class="lt-flow-barcol"><span class="lt-flow-barfill is-now" data-m="Jan" data-profit="782" style="height:4px"></span></div>
+                    <div class="lt-flow-barcol"><span class="lt-flow-barfill" data-m="Feb" data-profit="2471" style="height:11px"></span></div>
+                    <div class="lt-flow-barcol"><span class="lt-flow-barfill neg" data-m="Mar" data-profit="-907" style="height:4px"></span></div>
+                    <div class="lt-flow-barcol"><span class="lt-flow-barfill" data-m="Apr" data-profit="5005" style="height:23px"></span></div>
+                    <div class="lt-flow-barcol"><span class="lt-flow-barfill" data-m="May" data-profit="1345" style="height:6px"></span></div>
+                    <div class="lt-flow-barcol"><span class="lt-flow-barfill" data-m="Jun" data-profit="7538" style="height:35px"></span></div>
+                    <div class="lt-flow-barcol"><span class="lt-flow-barfill" data-m="Jul" data-profit="4160" style="height:19px"></span></div>
+                    <div class="lt-flow-barcol"><span class="lt-flow-barfill" data-m="Aug" data-profit="8664" style="height:40px"></span></div>
+                    <div class="lt-flow-barcol"><span class="lt-flow-barfill" data-m="Sep" data-profit="5568" style="height:26px"></span></div>
+                    <div class="lt-flow-barcol"><span class="lt-flow-barfill" data-m="Oct" data-profit="10353" style="height:48px"></span></div>
+                    <div class="lt-flow-barcol"><span class="lt-flow-barfill" data-m="Nov" data-profit="6975" style="height:32px"></span></div>
+                    <div class="lt-flow-barcol"><span class="lt-flow-barfill" data-m="Dec" data-profit="12042" style="height:56px"></span></div>
+                  </div>
+                  <div class="lt-flow-barlabs" aria-hidden="true"><span class="is-now">J</span><span>F</span><span>M</span><span>A</span><span>M</span><span>J</span><span>J</span><span>A</span><span>S</span><span>O</span><span>N</span><span>D</span></div>
+                </div>
+                <div class="lt-flow-calc" role="group" aria-label="Try your numbers">
+                  <p class="lt-flow-strip-title">Try your numbers</p>
+                  <label class="lt-flow-field" for="lt-flow-rev">Monthly revenue
+                    <span class="lt-flow-money">$<input id="lt-flow-rev" type="number" inputmode="numeric" min="0" step="500" value="40000"></span>
+                  </label>
+                  <label class="lt-flow-field" for="lt-flow-cost">Monthly cost of sales
+                    <span class="lt-flow-money">$<input id="lt-flow-cost" type="number" inputmode="numeric" min="0" step="500" value="22500"></span>
+                  </label>
+                  <button class="lt-flow-reset" type="button">Reset</button>
+                </div>
               </div>
+              <p class="lt-flow-foot"><span class="lt-flow-check" aria-hidden="true">&#10003;</span> Reconciled in this layout</p>
             </div>
-            <p class="lt-sr">Sample dashboard with a financial overview, a twelve-month profit and loss chart, an expense mix, cash, and a reconciled bank status. Amounts are layout samples, not a client result.</p>
+            <p class="lt-sr">Live month by month table of revenue, costs and profit, flowing through the twelve months, with a spending donut, a profit bar chart and a mini calculator. Amounts are layout samples, not a client result.</p>
           </figure>
         </div>
       </div>

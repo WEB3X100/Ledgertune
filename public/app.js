@@ -533,3 +533,247 @@ if (tstack) {
     card.addEventListener("click", function () { activate(card); });
   });
 })();
+
+// Hero flowing table + spending donut + profit bars + mini calculator.
+// One data model drives all four: the 12 months cycle through the feed,
+// the donut centre shows the top month's net profit, the bars show each
+// month's profit, and the calculator rescales everything. Reduced motion
+// or no JS shows the full static 12-row table instead.
+(function () {
+  var card = document.querySelector(".lt-flow");
+  if (!card) return;
+  var list = card.querySelector(".lt-flow-list");
+  if (!list || !list.children.length) return;
+  var SHAPE = [46, 52, 40, 61, 48, 70, 58, 74, 63, 80, 68, 86];
+  var SHAPE_SUM = 746;
+  var SPEND = 4136.67 + 2190 + 1946.67 + 2433.33 + 1460; // $12,166.67 / month
+  var DEF_REV = 40000, DEF_COST = 22500;
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var months = Array.prototype.map.call(list.children, function (li, i) {
+    return { m: li.querySelector(".lt-flow-m").textContent, alt: i % 2 === 1 };
+  });
+  var totRev = card.querySelector("#lt-flow-tot-rev");
+  var totCost = card.querySelector("#lt-flow-tot-cost");
+  var totProfit = card.querySelector("#lt-flow-tot-profit");
+  var centreVal = card.querySelector("#lt-flow-centre-val");
+  var centreMonth = card.querySelector("#lt-flow-centre-month");
+  var bars = Array.prototype.slice.call(card.querySelectorAll(".lt-flow-barfill"));
+  var barlabs = Array.prototype.slice.call(card.querySelectorAll(".lt-flow-barlabs span"));
+  var revInput = card.querySelector("#lt-flow-rev");
+  var costInput = card.querySelector("#lt-flow-cost");
+  var resetBtn = card.querySelector(".lt-flow-reset");
+
+  var next = 6;
+  var shifting = false;
+  var shiftTimer = null;
+  var lastRev = DEF_REV, lastCost = DEF_COST;
+  var model = compute(DEF_REV, DEF_COST);
+
+  function fmt(n) {
+    return (n < 0 ? "\u2212$" : "$") + Math.abs(Math.round(n)).toLocaleString("en-US");
+  }
+  // Monthly revenue[m] = revenue * shape[m] / 746 * 12; monthly cost of
+  // sales the same shape; table Costs[m] = cost[m] + fixed spending.
+  // Evaluated left to right so the defaults reproduce the static table.
+  function compute(revMonthly, costMonthly) {
+    var rows = months.map(function (mo, i) {
+      var rev = revMonthly * SHAPE[i] / SHAPE_SUM * 12;
+      var cos = costMonthly * SHAPE[i] / SHAPE_SUM * 12;
+      var cost = cos + SPEND;
+      return { m: mo.m, alt: mo.alt, rev: rev, cost: cost, profit: rev - cost };
+    });
+    return {
+      rows: rows,
+      totals: {
+        rev: revMonthly * 12,
+        cost: costMonthly * 12 + SPEND * 12,
+        profit: revMonthly * 12 - (costMonthly * 12 + SPEND * 12)
+      }
+    };
+  }
+  function topIndex() { return (((next - 6) % 12) + 12) % 12; }
+
+  function makeRow(d) {
+    var li = document.createElement("li");
+    li.className = "lt-flow-row lt-flow-enter" + (d.alt ? " lt-flow-alt" : "");
+    li.setAttribute("data-rev", d.rev);
+    li.setAttribute("data-cost", d.cost);
+    li.setAttribute("data-profit", d.profit);
+    li.innerHTML =
+      '<span class="lt-flow-m">' + d.m + "</span>" +
+      '<span class="lt-flow-n" data-v="' + d.rev + '">$0</span>' +
+      '<span class="lt-flow-n" data-v="' + d.cost + '">$0</span>' +
+      '<span class="lt-flow-n lt-flow-p' + (d.profit < 0 ? " lt-flow-neg" : "") +
+      '" data-v="' + d.profit + '">$0</span>';
+    return li;
+  }
+  function countUp(li) {
+    var spans = li.querySelectorAll(".lt-flow-n");
+    var start = null;
+    function frame(ts) {
+      if (start === null) start = ts;
+      var t = Math.min((ts - start) / 650, 1);
+      var eased = 1 - Math.pow(1 - t, 3);
+      Array.prototype.forEach.call(spans, function (s) {
+        var target = parseFloat(s.getAttribute("data-v"));
+        s.textContent = fmt(target * eased);
+      });
+      if (t < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  function countTo(el, target) {
+    if (!el) return;
+    if (reduced) { el.textContent = fmt(target); return; }
+    var cur = parseFloat(el.textContent.replace(/\u2212/g, "-").replace(/[^0-9.\-]/g, "")) || 0;
+    var start = null;
+    function frame(ts) {
+      if (start === null) start = ts;
+      var t = Math.min((ts - start) / 500, 1);
+      var eased = 1 - Math.pow(1 - t, 3);
+      el.textContent = fmt(cur + (target - cur) * eased);
+      if (t < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  function markCurrent() {
+    var top = topIndex();
+    bars.forEach(function (fill, i) { fill.classList.toggle("is-now", i === top); });
+    barlabs.forEach(function (lab, i) { lab.classList.toggle("is-now", i === top); });
+  }
+  function renderBars() {
+    var max = 0;
+    model.rows.forEach(function (d) { max = Math.max(max, Math.abs(d.profit)); });
+    if (max <= 0) max = 1;
+    bars.forEach(function (fill, i) {
+      var p = model.rows[i].profit;
+      var h;
+      if (p >= 0) {
+        h = Math.max(3, Math.round(p / max * 56));
+        fill.classList.remove("neg");
+      } else {
+        h = Math.min(8, Math.max(3, Math.round(Math.abs(p) / max * 56)));
+        fill.classList.add("neg");
+      }
+      fill.style.height = h + "px";
+      fill.setAttribute("data-profit", Math.round(p));
+    });
+    markCurrent();
+  }
+  function renderTotals() {
+    if (totRev) totRev.textContent = fmt(model.totals.rev);
+    if (totCost) totCost.textContent = fmt(model.totals.cost);
+    if (totProfit) totProfit.textContent = fmt(model.totals.profit);
+  }
+  function renderCentre(animate) {
+    var d = model.rows[topIndex()];
+    if (centreMonth) centreMonth.textContent = d.m + " \u00b7 profit";
+    if (centreVal) {
+      if (animate) countTo(centreVal, d.profit);
+      else centreVal.textContent = fmt(d.profit);
+    }
+  }
+  function rebuildWindow() {
+    if (shiftTimer !== null) { clearTimeout(shiftTimer); shiftTimer = null; }
+    list.style.transition = "none";
+    list.style.transform = "translateY(0)";
+    shifting = false;
+    while (list.firstElementChild) list.removeChild(list.firstElementChild);
+    for (var i = 0; i < 6; i++) {
+      var d = model.rows[((next - 6 + i) % 12 + 12) % 12];
+      var li = makeRow(d);
+      Array.prototype.forEach.call(li.querySelectorAll(".lt-flow-n"), function (s) {
+        s.textContent = fmt(parseFloat(s.getAttribute("data-v")));
+      });
+      li.classList.remove("lt-flow-enter");
+      list.appendChild(li);
+    }
+    void list.offsetHeight;
+    list.style.transition = "";
+  }
+  function renderRowsStatic() {
+    Array.prototype.forEach.call(list.children, function (li, i) {
+      var d = model.rows[i];
+      if (!d) return;
+      li.setAttribute("data-rev", d.rev);
+      li.setAttribute("data-cost", d.cost);
+      li.setAttribute("data-profit", d.profit);
+      var spans = li.querySelectorAll(".lt-flow-n");
+      if (spans[0]) spans[0].textContent = fmt(d.rev);
+      if (spans[1]) spans[1].textContent = fmt(d.cost);
+      if (spans[2]) {
+        spans[2].textContent = fmt(d.profit);
+        spans[2].classList.toggle("lt-flow-neg", d.profit < 0);
+      }
+    });
+  }
+  function readInputs() {
+    var r = revInput ? parseFloat(revInput.value) : NaN;
+    var c = costInput ? parseFloat(costInput.value) : NaN;
+    if (isNaN(r) || r < 0) r = lastRev;
+    if (isNaN(c) || c < 0) c = lastCost;
+    return { rev: r, cost: c };
+  }
+  function rescale(animateCentre) {
+    var v = readInputs();
+    lastRev = v.rev; lastCost = v.cost;
+    model = compute(v.rev, v.cost);
+    if (reduced) renderRowsStatic();
+    else rebuildWindow();
+    renderBars();
+    renderTotals();
+    renderCentre(animateCentre !== false);
+  }
+  function wireCalc() {
+    if (revInput) revInput.addEventListener("input", function () { rescale(true); });
+    if (costInput) costInput.addEventListener("input", function () { rescale(true); });
+    if (resetBtn) resetBtn.addEventListener("click", function () {
+      if (revInput) revInput.value = DEF_REV;
+      if (costInput) costInput.value = DEF_COST;
+      rescale(false);
+      if (revInput) revInput.focus();
+    });
+  }
+  function tick() {
+    if (shifting || document.hidden) return;
+    shifting = true;
+    var d = model.rows[next % model.rows.length];
+    next += 1;
+    var li = makeRow(d);
+    list.appendChild(li);
+    var step = list.children[0].offsetHeight;
+    countUp(li);
+    requestAnimationFrame(function () {
+      list.style.transition = "transform .55s cubic-bezier(.4, 0, .2, 1)";
+      list.style.transform = "translateY(" + -step + "px)";
+    });
+    shiftTimer = setTimeout(function () {
+      list.style.transition = "none";
+      list.style.transform = "translateY(0)";
+      if (list.firstElementChild) list.removeChild(list.firstElementChild);
+      void list.offsetHeight;
+      list.style.transition = "";
+      shifting = false;
+      shiftTimer = null;
+      markCurrent();
+      renderCentre(true);
+    }, 600);
+  }
+
+  if (reduced) {
+    card.classList.add("lt-flow-static");
+    renderBars();
+    renderTotals();
+    renderCentre(false);
+    wireCalc();
+    return;
+  }
+  card.classList.add("lt-flow-js");
+  while (list.children.length > 6) list.removeChild(list.lastElementChild);
+  renderBars();
+  renderTotals();
+  renderCentre(false);
+  wireCalc();
+  setInterval(function () { if (!document.hidden) tick(); }, 1600);
+})();
