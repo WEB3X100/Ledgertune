@@ -2617,11 +2617,15 @@ body.tune .hero .lt-flow {
   body.tune .site-header--over-hero .header-cta span[aria-hidden="true"] { display: none; }
 }
 
-/* ---- Reports rebuild: interactive flowing table (14 Nov 2026) ----
-   Left column filled like the hero (big Fraunces H2, gold accent, 18px
-   lede); the old static report becomes a flowing table modelled on the
-   hero .lt-flow card, with P&L / Balance sheet / Cash flow / AR and AP
-   tabs and a holographic liquid-glass card. */
+/* ---- Unified Reports page (15 Nov 2026) ----
+   One page, no tabs: the panel header is "Reports" and the sections
+   stack inside it — General ledger (T-account), Income statement
+   (PNL) + waterfall, the merged combo chart, Balance sheet with AR
+   and AP inside it, the balances bubbles, a cash-flow strip that is
+   still awaiting figures, and the flowing month table. Left column
+   filled like the hero (big Fraunces H2, gold accent, 18px lede).
+   Dribbble look kept: white rounded cards on a pale blue-grey ground,
+   navy + gold + muted blue only. */
 body.tune #reports-title {
   font-size: clamp(44px, 4.6vw, 68px);
   line-height: 1.1;
@@ -2633,70 +2637,33 @@ body.tune .lt-reports .lt-lede {
   max-width: 34ch;
 }
 
-/* Frame: transparent wrapper now — the glass card carries the look.
-   Single column since the tabs moved out into their own bar above. */
+/* Reports left column — QBO explainer copy. Short paragraphs in body
+   grey, navy Fraunces sub-headings (never gold), gold key words only. */
+body.tune .lt-reports-side { min-width: 0; }
+body.tune .lt-reports-side h3 {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 560;
+  line-height: 1.25;
+  color: #102438;
+  margin: 22px 0 8px;
+}
+body.tune .lt-reports-side > p {
+  margin: 0 0 10px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #536475;
+}
+
+/* Frame: transparent wrapper — the pale panel carries the look. */
 body.tune .lt-report-frame.lt-rep-glass {
   grid-template-columns: minmax(0, 1fr);
   background: transparent;
   box-shadow: none;
 }
 
-/* Tab bar: a light liquid-glass segmented control sitting just above the
-   card — no dark pane, no gold fill. The active tab is marked by a pale
-   gold thumb that slides behind it; hover is a faint navy tint only. */
-body.tune .lt-rep-tabs {
-  position: relative;
-  display: flex;
-  gap: 2px;
-  padding: 4px;
-  margin-bottom: 8px;
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(16, 36, 56, 0.10);
-  border-radius: 999px;
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 10px 28px rgba(16, 36, 56, 0.08);
-}
-body.tune .lt-rep-tab-slider {
-  position: absolute;
-  top: 4px;
-  bottom: 4px;
-  left: 4px;
-  width: 0;
-  border-radius: 999px;
-  background: rgba(193, 155, 93, 0.16);
-  box-shadow: inset 0 0 0 1px rgba(193, 155, 93, 0.6);
-  transition: left 0.3s ease, width 0.3s ease;
-  pointer-events: none;
-}
-body.tune .lt-rep-tab {
-  appearance: none;
-  -webkit-appearance: none;
-  position: relative;
-  z-index: 1;
-  flex: 1 1 0;
-  min-width: 0;
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: 999px;
-  padding: 7px 12px;
-  color: #102438;
-  font: inherit;
-  font-size: 0.82rem;
-  font-weight: 600;
-  text-align: center;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-body.tune .lt-rep-tab:hover { color: #102438; background: rgba(16, 36, 56, 0.06); }
-body.tune .lt-rep-tab.is-active { color: #102438; font-weight: 700; }
-body.tune .lt-rep-tab:focus-visible { outline: 2px solid #c19b5d; outline-offset: 2px; }
-
 /* Dribbble-style reports panel: a pale blue-grey ground carrying white
-   floating cards (18px radius, soft diffuse shadow). The liquid-glass
-   wash and holo sheen are dropped here — the Dribbble look is clean
-   matte cards, not glass. */
+   floating cards (18px radius, soft diffuse shadow). */
 body.tune .lt-rep-flow {
   position: relative;
   background: #e8edf3;
@@ -2708,8 +2675,7 @@ body.tune .lt-rep-flow {
 body.tune .lt-rep-flow .lt-flow-head { padding: 0 6px 2px; }
 body.tune .lt-rep-flow .lt-flow-foot { padding: 4px 6px 0; color: #5b7a94; }
 
-/* Masonry: two columns; the wide charts span both. Gaps are tight —
-   the section has to fit one viewport. */
+/* Masonry: two columns; the wide sections span both. */
 body.tune .lt-rep-masonry {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -2723,23 +2689,154 @@ body.tune .lt-rep-card {
   padding: 10px 14px;
   min-width: 0;
 }
-/* Chart cards need JS to fill them; without JS only the flowing table
-   (and its static rows) shows. The [hidden] rule comes last so a tab
-   switch can hide a card again. */
-body.tune .lt-rep-card-combo,
-body.tune .lt-rep-card-bubbles,
-body.tune .lt-rep-card-segments { display: none; }
-body.tune .lt-rep-js .lt-rep-card-combo,
-body.tune .lt-rep-js .lt-rep-card-bubbles,
-body.tune .lt-rep-js .lt-rep-card-segments { display: block; }
-body.tune .lt-rep-card[hidden] { display: none; }
+/* The combo chart needs JS to fill it; without JS only the static
+   sections show. The bubbles and waterfall are static SVG/HTML, so
+   they render with or without JS. */
+body.tune .lt-rep-card-combo { display: none; }
+body.tune .lt-rep-js .lt-rep-card-combo { display: block; }
 body.tune .lt-rep-card-title {
   margin: 0 0 8px;
   font-size: 0.95rem;
   font-weight: 700;
   color: #102438;
 }
-/* Combo card header: title left, net-margin stat right. */
+/* Wide sections span both masonry columns. */
+body.tune .lt-rep-card-taccount,
+body.tune .lt-rep-card-combo,
+body.tune .lt-rep-card-flow,
+body.tune .lt-rep-cf { grid-column: 1 / -1; }
+
+/* ---- Shared figure rows: label left, amount right, tabular nums.
+   Used by the T-account, the income statement and the balance sheet. */
+body.tune .lt-rep-lines {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.86rem;
+  color: #24394e;
+}
+body.tune .lt-rep-lines li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 0;
+}
+body.tune .lt-rep-lines li span { font-weight: 600; }
+body.tune .lt-rep-lines li b {
+  font-weight: 700;
+  color: #102438;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+body.tune .lt-rep-lines li.is-sub { padding-left: 14px; }
+body.tune .lt-rep-lines li.is-sub span { font-weight: 500; color: #536475; }
+body.tune .lt-rep-lines li.is-subhead { padding: 6px 0 0; }
+body.tune .lt-rep-lines li.is-subhead span {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8a94a6;
+}
+body.tune .lt-rep-lines li.is-total { border-top: 1px solid rgba(16, 36, 56, 0.14); margin-top: 2px; padding-top: 6px; }
+body.tune .lt-rep-lines li.is-grand { border-top: 3px double rgba(16, 36, 56, 0.35); margin-top: 2px; padding-top: 6px; }
+body.tune .lt-rep-lines li.is-grand b { color: #8a6d3b; }
+body.tune .lt-rep-neg { color: #8d2b22; }
+body.tune .lt-rep-note {
+  margin: 8px 0 0;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: #8a94a6;
+}
+
+/* ---- T-account: the card's top bar is the T's crossbar, the centre
+   border is its stem. Debit left, Credit right, totals ruled off. */
+body.tune .lt-rep-card-taccount { border-top: 2px solid #102438; }
+body.tune .lt-rep-taccount {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+body.tune .lt-rep-taccount .lt-rep-tcol { min-width: 0; padding: 0 16px; }
+body.tune .lt-rep-taccount .lt-rep-tcol:first-child { padding-left: 0; border-right: 2px solid #102438; }
+body.tune .lt-rep-taccount .lt-rep-tcol:last-child { padding-right: 0; }
+body.tune .lt-rep-tnote {
+  margin: 10px 0 0;
+  padding-top: 8px;
+  border-top: 1px dashed #e8eef4;
+  font-size: 0.78rem;
+  color: #536475;
+  text-align: center;
+}
+body.tune .lt-rep-tside {
+  margin: 0 0 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #102438;
+  text-align: center;
+}
+body.tune .lt-rep-taccount .lt-rep-ttotal {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 6px 0 0;
+  padding-top: 6px;
+  border-top: 1px solid rgba(16, 36, 56, 0.35);
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #102438;
+}
+body.tune .lt-rep-taccount .lt-rep-ttotal b { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* ---- PNL tag on the income-statement title. */
+body.tune .lt-rep-pnl-tag {
+  display: inline-block;
+  vertical-align: 1px;
+  margin-left: 6px;
+  padding: 1px 7px;
+  border: 1px solid #c19b5d;
+  border-radius: 999px;
+  background: #f7f0dd;
+  color: #8a6d3b;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+/* ---- Waterfall: bars float at the running total, so each step reads
+   as the bridge from revenue to profit. Label above each bar. */
+body.tune .lt-rep-card-waterfall { display: flex; flex-direction: column; justify-content: center; }
+body.tune .lt-rep-waterfall { display: flex; flex-direction: column; gap: 12px; }
+body.tune .lt-rep-wf-row p {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #24394e;
+}
+body.tune .lt-rep-wf-row p b { font-weight: 700; color: #102438; font-variant-numeric: tabular-nums; white-space: nowrap; }
+body.tune .lt-rep-wf-track {
+  position: relative;
+  height: 12px;
+  background: #eef2f6;
+  border-radius: 999px;
+}
+body.tune .lt-rep-wf-track i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: block;
+  border-radius: 999px;
+  min-width: 6px;
+}
+
+/* ---- Combo card header: title left, net-margin stat right. */
 body.tune .lt-rep-combo-head {
   display: flex;
   flex-wrap: wrap;
@@ -2757,35 +2854,34 @@ body.tune .lt-rep-combo-stat {
    line chip for the profit line — so bars vs lines read at a glance. */
 body.tune .lt-rep-legend .lt-rep-sw-bar { border-radius: 2px; }
 body.tune .lt-rep-legend .lt-rep-sw-line { width: 14px; height: 3px; border-radius: 2px; }
-body.tune .lt-rep-card-combo,
-body.tune .lt-rep-card-segments { grid-column: 1 / -1; }
-/* P&L: the flowing table is four columns wide — it spans both, so no
-   figure is ever clipped at the card edge. Short tabs keep the
-   two-column table beside the bubbles. */
-body.tune .lt-rep-masonry:not(.lt-rep-short) .lt-rep-card-flow { grid-column: 1 / -1; }
-/* P&L: the full-width bubbles card lays out chart + legend side by
-   side, so the wide card is not a small centred cluster with empty
-   flanks. Scoped :not([hidden]) so a tab switch can still hide it. */
-body.tune .lt-rep-js .lt-rep-masonry:not(.lt-rep-short) .lt-rep-card-bubbles:not([hidden]) {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: center;
-  column-gap: 24px;
+
+/* ---- Balance sheet: the balancing line is a pale-gold proof strip. */
+body.tune .lt-rep-balance-strip {
+  margin: 10px 0 0;
+  padding: 8px 10px;
+  background: #f7f0dd;
+  border: 1px solid rgba(193, 155, 93, 0.45);
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #24394e;
+  text-align: center;
 }
-body.tune .lt-rep-masonry:not(.lt-rep-short) .lt-rep-card-bubbles .lt-rep-card-title { grid-column: 1 / -1; }
-body.tune .lt-rep-masonry:not(.lt-rep-short) .lt-rep-bubble-legend {
-  margin: 0;
-  padding: 0;
-  border-top: none;
-  grid-template-columns: minmax(0, 1fr);
+body.tune .lt-rep-balance-strip b { color: #102438; font-variant-numeric: tabular-nums; }
+/* AR and AP lives inside the balance sheet, under a dashed divider. */
+body.tune .lt-rep-arap { margin-top: 12px; padding-top: 10px; border-top: 1px dashed #e8eef4; }
+body.tune .lt-rep-subhead {
+  margin: 0 0 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #102438;
 }
-/* Short tabs: the flow card stretches to the bubbles card's height,
-   so its three rows sit in the middle instead of leaving a void
-   at the bottom. */
-body.tune .lt-rep-masonry.lt-rep-short .lt-rep-card-flow { justify-content: center; }
-/* P&L: bubbles span both too — the masonry is a single-column stack
-   of full-width cards, so no grid hole is left beside them. */
-body.tune .lt-rep-masonry:not(.lt-rep-short) .lt-rep-card-bubbles { grid-column: 1 / -1; }
+
+/* ---- Cash-flow strip: small and deliberate — no figures invented. */
+body.tune .lt-rep-cf-text { margin: 0; font-size: 0.86rem; line-height: 1.55; color: #536475; }
+body.tune .lt-rep-cf-text strong { color: #102438; }
 
 /* Flowing table card: rows are Dribbble pill rows — white, rounded,
    soft shadow, small gaps. Scoped here so the hero's rows are untouched. */
@@ -2805,59 +2901,6 @@ body.tune .lt-rep-flow .lt-flow-list li {
   box-shadow: 0 2px 8px rgba(16, 36, 56, 0.05);
 }
 body.tune .lt-rep-flow .lt-flow-list li.lt-flow-alt { background: #ffffff; }
-
-/* Two-column tabs (Balance sheet, AR and AP): label + amount. */
-body.tune .lt-rep-flow.lt-rep-cols-2 .lt-flow-cols,
-body.tune .lt-rep-flow.lt-rep-cols-2 .lt-flow-list li {
-  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
-}
-/* Short datasets show every row: no fixed-height viewport. */
-body.tune .lt-rep-flow.lt-rep-compact .lt-flow-view { height: auto; overflow: visible; }
-/* The row carrying the pulse glows gold (small datasets only). */
-body.tune .lt-rep-flow .lt-flow-list li.is-now {
-  background: rgba(193, 155, 93, 0.14);
-  box-shadow: inset 3px 0 0 #c19b5d;
-}
-
-/* Totals band: an inline strip under the cards, not another card —
-   the section has no vertical room for a third card row. Label and
-   value sit on one line each so the strip stays a single row. */
-body.tune .lt-totals.lt-rep-totals {
-  margin: 10px 0 0;
-  padding: 8px 6px 0;
-  background: transparent;
-  border: none;
-  border-top: 1px solid rgba(16, 36, 56, 0.1);
-  border-radius: 0;
-  box-shadow: none;
-}
-body.tune .lt-totals.lt-rep-totals div { display: flex; align-items: baseline; gap: 8px; }
-body.tune .lt-totals.lt-rep-totals dd { margin: 0; }
-body.tune .lt-totals.lt-rep-totals div { padding-top: 0; border-top: none; }
-body.tune .lt-totals.lt-rep-totals dd { font-size: 1rem; }
-body.tune .lt-totals.lt-rep-totals.lt-rep-totals-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-
-/* Cash-flow awaiting state: clean, deliberate, no fake numbers. */
-body.tune .lt-rep-await {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 420px;
-  padding: 40px 28px;
-  text-align: center;
-}
-/* display:flex above would beat the UA [hidden] rule — restore it. */
-body.tune .lt-rep-await[hidden] { display: none; }
-body.tune .lt-rep-await-title {
-  margin: 0 0 8px;
-  font-family: var(--serif);
-  font-size: 1.25rem;
-  font-weight: 560;
-  color: #102438;
-}
-body.tune .lt-rep-await p:last-child { margin: 0; color: #536475; }
-/* Nothing live on the awaiting tab: hide the Live dot with it. */
-body.tune .lt-rep-flow.lt-rep-awaiting .lt-flow-live { visibility: hidden; }
 
 /* Charts inside the white cards: dashed hairline grid, Inter-style
    labels, navy + gold + muted blue only. */
@@ -2891,7 +2934,7 @@ body.tune .lt-rep-legend li b { margin-left: auto; font-weight: 700; color: #102
 /* Segmented-bar legend: one row per segment, dashed hairline dividers. */
 body.tune .lt-rep-segments-legend { display: block; margin: 12px 0 0; }
 body.tune .lt-rep-segments-legend li { padding: 6px 0; border-top: 1px dashed #e8eef4; }
-/* Packed-bubble legend: two columns, dot + name + share/amount. */
+/* Packed-bubble legend: two columns, dot + name + amount. */
 body.tune .lt-rep-bubble-legend {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -2907,12 +2950,13 @@ body.tune .lt-rep-bubble-legend li { display: flex; align-items: center; gap: 6p
 body.tune .lt-rep-bubble-legend i { width: 10px; height: 10px; border-radius: 50%; flex: none; }
 body.tune .lt-rep-bubble-legend span { font-weight: 600; }
 body.tune .lt-rep-bubble-legend b { margin-left: auto; font-weight: 700; color: #102438; font-variant-numeric: tabular-nums; white-space: nowrap; }
-body.tune .lt-rep-bubble-legend li.is-now span { color: #8a6d3b; }
-body.tune .lt-rep-bubble.is-now circle { stroke: #c19b5d; }
 /* Segmented bar: short rounded segments with small gaps. */
 body.tune .lt-rep-segments-bar { display: flex; gap: 3px; height: 16px; margin: 6px 0 2px; }
 body.tune .lt-rep-segments-bar i { display: block; height: 100%; border-radius: 999px; min-width: 8px; }
 body.tune .lt-rep-card-bubbles .lt-rep-chart svg { max-width: 200px; margin: 0 auto; }
+/* The bubbles card stretches to the balance-sheet card's height, so
+   its content sits in the middle instead of leaving a void below. */
+body.tune .lt-rep-card-bubbles { display: flex; flex-direction: column; justify-content: center; }
 
 /* Narrow phones: a single masonry column, and a tighter flow table so
    the four columns still fit at 375px. */
@@ -2929,9 +2973,12 @@ body.tune .lt-rep-card-bubbles .lt-rep-chart svg { max-width: 200px; margin: 0 a
   }
   body.tune .lt-rep-flow .lt-flow-list li { font-size: 0.92rem; }
   body.tune .lt-rep-bubble-legend { grid-template-columns: minmax(0, 1fr); }
-  /* P&L bubbles card stacks again on narrow phones. */
-  body.tune .lt-rep-js .lt-rep-masonry:not(.lt-rep-short) .lt-rep-card-bubbles:not([hidden]) { display: block; }
-  body.tune .lt-rep-masonry:not(.lt-rep-short) .lt-rep-bubble-legend { margin: 12px 0 0; padding: 12px 0 0; border-top: 1px dashed #e8eef4; }
+  /* The T-account's two sides are too narrow side by side on a phone,
+     so they stack: Debit above, Credit below, split by a rule. */
+  body.tune .lt-rep-taccount { grid-template-columns: minmax(0, 1fr); }
+  body.tune .lt-rep-taccount .lt-rep-tcol { padding: 0; }
+  body.tune .lt-rep-taccount .lt-rep-tcol:first-child { border-right: none; border-bottom: 2px solid #102438; padding-bottom: 10px; }
+  body.tune .lt-rep-taccount .lt-rep-tcol:last-child { padding-top: 10px; }
 }
 
 @media (max-width: 1100px) {
@@ -2939,20 +2986,8 @@ body.tune .lt-rep-card-bubbles .lt-rep-chart svg { max-width: 200px; margin: 0 a
 }
 @media (max-width: 980px) {
   body.tune .lt-report-frame.lt-rep-glass { grid-template-columns: 1fr; }
-  body.tune .lt-rep-tab { padding: 8px 14px; }
   body.tune #reports-title { font-size: clamp(36px, 8vw, 52px); }
 }
-@media (max-width: 560px) {
-  body.tune .lt-totals.lt-rep-totals { padding-left: 12px; padding-right: 12px; }
-  body.tune .lt-totals.lt-rep-totals dd { font-size: 0.9rem; }
-  /* Tabs wrap to two rows on narrow phones; the sliding thumb only works
-     on a single row, so it hides and the active pill still shows. */
-  body.tune .lt-rep-tabs { flex-wrap: wrap; border-radius: 20px; }
-  body.tune .lt-rep-tab-slider { display: none; }
-  body.tune .lt-rep-tab { flex: 1 1 40%; }
-  body.tune .lt-rep-tab.is-active { background: rgba(193, 155, 93, 0.16); box-shadow: inset 0 0 0 1px rgba(193, 155, 93, 0.6); }
-}
 @media (prefers-reduced-motion: reduce) {
-  body.tune .lt-rep-tab-slider,
   body.tune .lt-rep-group { transition: none; }
 }

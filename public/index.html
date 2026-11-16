@@ -449,37 +449,137 @@
 
     <section class="lt-band lt-reports" id="reports" aria-labelledby="reports-title">
       <div class="lt-wrap lt-reports-grid">
-        <div>
+        <div class="lt-reports-side">
           <h2 id="reports-title">Reports that help you <span class="lt-gold">run your business.</span></h2>
           <p class="lt-lede">Clear views of profit, cash, and what is owed. Updated with the close.</p>
+          <h3>How we use QuickBooks Online</h3>
+          <p>Every report on this page comes from one place: your books in <span class="lt-gold">QuickBooks Online</span>. Bank feeds, invoices, bills and receipts all flow into one <span class="lt-gold">chart of accounts</span>.</p>
+          <p>Our work is the <span class="lt-gold">month-end close</span>. Each month we clear the bank feed, match every payment, reconcile every account, and post the adjusting entries — then a <span class="lt-gold">named reviewer</span> reads the reports before you do.</p>
+          <h3>General ledger</h3>
+          <p>The general ledger is the <span class="lt-gold">source record</span> behind every number here: every transaction, account by account and in date order, with the debit, the credit and the <span class="lt-gold">running balance</span> — so any figure can be traced to its source.</p>
+          <p>Each account gets the right <span class="lt-gold">account type</span> — asset, liability, equity, income or expense — because the type decides where a transaction lands.</p>
+          <p>Where invoices, bills and bank feeds do not cover something, we post a <span class="lt-gold">journal entry</span>. Every entry must balance: <span class="lt-gold">debits equal credits</span>, or QuickBooks will not save it.</p>
+          <h3>Profit and loss</h3>
+          <p>The profit and loss shows revenue minus expenses over a period, and the result is the <span class="lt-gold">net income</span>. It is <span class="lt-gold">not a cash report</span>: a payment from a customer never appears here.</p>
+          <p>The numbers arrive through the <span class="lt-gold">bank feed</span>. We <span class="lt-gold">match</span> each transaction to its invoice or bill — or categorise it if it is new — because a payment recorded as fresh income would count the sale twice.</p>
+          <p>Invoices and bills post themselves, and <span class="lt-gold">bank rules</span> handle the recurring items — but every suggestion is reviewed, never blindly accepted.</p>
+          <p>We read it on the right basis: on a <span class="lt-gold">cash basis</span>, income counts when money arrives; on an <span class="lt-gold">accrual basis</span>, when it is earned.</p>
+          <h3>Balance sheet</h3>
+          <p>The balance sheet is a <span class="lt-gold">snapshot</span> at a single date: what the business owns, owes, and has left over. <span class="lt-gold">Assets = Liabilities + Equity</span> — if the two sides do not agree, there is an error in the books.</p>
+          <p>It is the <span class="lt-gold">first report</span> a bank, a lender or an accountant asks for. Before we run it, every balance is tied to an <span class="lt-gold">outside source</span>: bank balances to statements, loans to the lender, receivables and payables to their ageing reports.</p>
+          <h3>Cash flow</h3>
+          <p><span class="lt-gold">Profit is not cash.</span> A profitable month can still be short of cash when invoices sit unpaid, bills fall due, a loan is repaid or an asset is bought.</p>
+          <p>The statement of cash flows shows where the cash went. QuickBooks builds it from <span class="lt-gold">net income</span>, adjusts for everything that is not cash, and splits it into operating, investing and financing activities.</p>
+          <p>We check it two ways: the opening net income must equal the profit and loss, and the change in cash must equal the <span class="lt-gold">movement in the bank</span>.</p>
+          <h3>Accounts receivable and payable</h3>
+          <p>Receivables are the money customers owe for work done but not yet paid; payables are the money the business owes its vendors. The <span class="lt-gold">ageing reports</span> show who owes what, in bands from current to <span class="lt-gold">91 days</span> and beyond.</p>
+          <p>We run the ageing <span class="lt-gold">weekly</span>, not monthly, because invoices do not get easier to collect as they age — so the oldest get followed up first. Every payment is <span class="lt-gold">matched</span> to the invoice or bill it settles, and the ageing totals must agree to the balance sheet.</p>
           <a class="hero-cta" href="#diagnostic-form" data-cta="reports">Book Free Finance Diagnostic</a>
         </div>
                 <figure class="lt-report">
-          <div class="lt-rep-tabs" role="tablist" aria-label="Report type">
-            <span class="lt-rep-tab-slider" aria-hidden="true"></span>
-            <button type="button" class="lt-rep-tab is-active" role="tab" id="lt-rep-tab-pnl" aria-selected="true" aria-controls="lt-rep-panel" data-tab="pnl">P&amp;L</button>
-            <button type="button" class="lt-rep-tab" role="tab" id="lt-rep-tab-balance" aria-selected="false" aria-controls="lt-rep-panel" data-tab="balance" tabindex="-1">Balance sheet</button>
-            <button type="button" class="lt-rep-tab" role="tab" id="lt-rep-tab-cashflow" aria-selected="false" aria-controls="lt-rep-panel" data-tab="cashflow" tabindex="-1">Cash flow</button>
-            <button type="button" class="lt-rep-tab" role="tab" id="lt-rep-tab-arap" aria-selected="false" aria-controls="lt-rep-panel" data-tab="arap" tabindex="-1">AR and AP</button>
-          </div>
           <div class="lt-report-frame lt-rep-glass">
-            <div class="lt-report-main" id="lt-rep-panel" role="tabpanel" aria-labelledby="lt-rep-tab-pnl">
+            <div class="lt-report-main">
               <div class="lt-flow lt-rep-flow" id="lt-rep-flow">
                 <div class="lt-flow-head">
                   <div class="lt-flow-title">
                     <span class="lt-flow-live"><i aria-hidden="true"></i>Live</span>
-                    <strong id="lt-rep-title">Profit and loss</strong>
+                    <strong>Reports</strong>
                   </div>
                 </div>
-                <div class="lt-rep-body" id="lt-rep-body">
-                  <div class="lt-rep-masonry" id="lt-rep-masonry">
+                <div class="lt-rep-body">
+                  <div class="lt-rep-masonry">
+                    <article class="lt-rep-card lt-rep-card-taccount">
+                      <p class="lt-rep-card-title">General ledger</p>
+                      <div class="lt-rep-taccount">
+                        <div class="lt-rep-tcol">
+                          <p class="lt-rep-tside">Debit</p>
+                          <ul class="lt-rep-lines">
+                            <li><span>Cash</span><b>$120,000</b></li>
+                            <li><span>Accounts receivable</span><b>$86,000</b></li>
+                          </ul>
+                          <p class="lt-rep-ttotal"><span>Total debits</span><b>$206,000</b></p>
+                        </div>
+                        <div class="lt-rep-tcol">
+                          <p class="lt-rep-tside">Credit</p>
+                          <ul class="lt-rep-lines">
+                            <li><span>Accounts payable</span><b>$41,000</b></li>
+                            <li><span>Net assets (Assets − Liabilities)</span><b>$165,000</b></li>
+                          </ul>
+                          <p class="lt-rep-ttotal"><span>Total credits</span><b>$206,000</b></p>
+                        </div>
+                      </div>
+                      <p class="lt-rep-tnote">Total debits equal total credits — the books balance.</p>
+                    </article>
+                    <article class="lt-rep-card lt-rep-card-pnl">
+                      <p class="lt-rep-card-title">Income statement <span class="lt-rep-pnl-tag">PNL</span></p>
+                      <ul class="lt-rep-lines">
+                        <li><span>Revenue</span><b>$480,000</b></li>
+                        <li><span>Less: Cost of sales</span><b class="lt-rep-neg">−$270,000</b></li>
+                        <li class="is-total"><span>Gross profit</span><b>$210,000</b></li>
+                        <li class="is-subhead"><span>Operating expenses</span></li>
+                        <li class="is-sub"><span>Payroll</span><b>$49,640</b></li>
+                        <li class="is-sub"><span>People</span><b>$26,280</b></li>
+                        <li class="is-sub"><span>Software</span><b>$23,360</b></li>
+                        <li class="is-sub"><span>Occupancy</span><b>$29,200</b></li>
+                        <li class="is-sub"><span>Other</span><b>$17,520</b></li>
+                        <li class="is-total"><span>Less: Operating expenses</span><b class="lt-rep-neg">−$146,000</b></li>
+                        <li class="is-grand"><span>Net profit</span><b>$64,000</b></li>
+                      </ul>
+                      <p class="lt-rep-note">Annualised: cost of sales $22,500/mo · expenses $12,167/mo</p>
+                    </article>
+                    <article class="lt-rep-card lt-rep-card-waterfall">
+                      <p class="lt-rep-card-title">From revenue to profit</p>
+                      <div class="lt-rep-waterfall">
+                        <div class="lt-rep-wf-row"><p><span>Revenue</span><b>$480,000</b></p><div class="lt-rep-wf-track"><i style="left:0;width:100%;background:#102438"></i></div></div>
+                        <div class="lt-rep-wf-row"><p><span>Cost of sales</span><b>−$270,000</b></p><div class="lt-rep-wf-track"><i style="left:43.8%;width:56.2%;background:#9db8cc"></i></div></div>
+                        <div class="lt-rep-wf-row"><p><span>Gross profit</span><b>$210,000</b></p><div class="lt-rep-wf-track"><i style="left:0;width:43.8%;background:#102438"></i></div></div>
+                        <div class="lt-rep-wf-row"><p><span>Operating expenses</span><b>−$146,000</b></p><div class="lt-rep-wf-track"><i style="left:13.3%;width:30.4%;background:#9db8cc"></i></div></div>
+                        <div class="lt-rep-wf-row"><p><span>Net profit</span><b>$64,000</b></p><div class="lt-rep-wf-track"><i style="left:0;width:13.3%;background:#c19b5d"></i></div></div>
+                      </div>
+                    </article>
                     <article class="lt-rep-card lt-rep-card-combo" id="lt-rep-card-combo">
                       <p class="lt-rep-card-title lt-rep-combo-head"><span>Revenue, costs and profit by month</span><span class="lt-rep-combo-stat">Net margin 13.3% · $64,000</span></p>
                       <div class="lt-rep-chart" id="lt-rep-combo"></div>
                     </article>
+                    <article class="lt-rep-card lt-rep-card-balance">
+                      <p class="lt-rep-card-title">Balance sheet</p>
+                      <ul class="lt-rep-lines">
+                        <li class="is-subhead"><span>Assets</span></li>
+                        <li><span>Cash</span><b>$120,000</b></li>
+                        <li><span>Accounts receivable</span><b>$86,000</b></li>
+                        <li class="is-total"><span>Total assets</span><b>$206,000</b></li>
+                        <li class="is-subhead"><span>Liabilities</span></li>
+                        <li><span>Accounts payable</span><b>$41,000</b></li>
+                        <li class="is-total"><span>Total liabilities</span><b>$41,000</b></li>
+                        <li class="is-grand"><span>Net assets (Assets − Liabilities)</span><b>$165,000</b></li>
+                      </ul>
+                      <p class="lt-rep-balance-strip">Assets <b>$206,000</b> = Liabilities <b>$41,000</b> + Net assets <b>$165,000</b></p>
+                      <div class="lt-rep-arap">
+                        <p class="lt-rep-subhead">AR and AP</p>
+                        <div class="lt-rep-segments-bar"><i style="width:67.7%;background:#102438"></i><i style="width:32.3%;background:#c19b5d"></i></div>
+                        <ul class="lt-rep-legend lt-rep-segments-legend">
+                          <li><i style="background:#102438"></i><span>Receivable</span><b>67.7% · $86,000</b></li>
+                          <li><i style="background:#c19b5d"></i><span>Payable</span><b>32.3% · $41,000</b></li>
+                        </ul>
+                        <p class="lt-rep-note">Of $127,000 combined.</p>
+                      </div>
+                    </article>
+                    <article class="lt-rep-card lt-rep-card-bubbles">
+                      <p class="lt-rep-card-title">Balances</p>
+                      <div class="lt-rep-chart"><svg viewBox="0 0 360 220" role="img" aria-label="Bubble chart of balances"><g><circle cx="140" cy="108" r="64.1" fill="#f3e5c3" stroke="#ffffff" stroke-width="3"/><text x="140" y="113.3" text-anchor="middle" font-size="15" font-weight="700" fill="#8a6d3b">48.6%</text><title>Cash 48.6% — $120,000</title></g><g><circle cx="252" cy="78" r="54.3" fill="#d8e3ef" stroke="#ffffff" stroke-width="3"/><text x="252" y="83.3" text-anchor="middle" font-size="15" font-weight="700" fill="#102438">34.8%</text><title>Receivable 34.8% — $86,000</title></g><g><circle cx="252" cy="168" r="37.5" fill="#e2edf4" stroke="#ffffff" stroke-width="3"/><text x="252" y="172.4" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0369a1">16.6%</text><title>Payable 16.6% — $41,000</title></g></svg></div>
+                      <ul class="lt-rep-bubble-legend">
+                        <li><i style="background:#f3e5c3;box-shadow:inset 0 0 0 1px rgba(16,36,56,.12)"></i><span>Cash</span><b>$120,000</b></li>
+                        <li><i style="background:#d8e3ef;box-shadow:inset 0 0 0 1px rgba(16,36,56,.12)"></i><span>Receivable</span><b>$86,000</b></li>
+                        <li><i style="background:#e2edf4;box-shadow:inset 0 0 0 1px rgba(16,36,56,.12)"></i><span>Payable</span><b>$41,000</b></li>
+                      </ul>
+                    </article>
+                    <article class="lt-rep-card lt-rep-cf">
+                      <p class="lt-rep-card-title">Cash flow</p>
+                      <p class="lt-rep-cf-text"><strong>Cash-flow figures to come</strong> — the cash-flow figures will appear here once they are added.</p>
+                    </article>
                     <article class="lt-rep-card lt-rep-card-flow">
                       <p class="lt-rep-card-title">Month by month</p>
-                      <div class="lt-flow-cols" id="lt-rep-cols"><span>Month</span><span>Revenue</span><span>Costs</span><span>Profit</span></div>
+                      <div class="lt-flow-cols"><span>Month</span><span>Revenue</span><span>Costs</span><span>Profit</span></div>
                       <div class="lt-flow-view">
                         <ul class="lt-flow-list" id="lt-rep-list">
                           <li class="lt-flow-row" data-rev="29598" data-cost="28815" data-profit="782"><span class="lt-flow-m">Jan</span><span class="lt-flow-n">$29,598</span><span class="lt-flow-n">$28,815</span><span class="lt-flow-n lt-flow-p">$782</span></li>
@@ -497,31 +597,14 @@
                         </ul>
                       </div>
                     </article>
-                    <article class="lt-rep-card lt-rep-card-bubbles" id="lt-rep-card-bubbles">
-                      <p class="lt-rep-card-title" id="lt-rep-bubbles-title">Spending</p>
-                      <div class="lt-rep-chart" id="lt-rep-bubbles"></div>
-                      <ul class="lt-rep-bubble-legend" id="lt-rep-bubble-legend"></ul>
-                    </article>
-                    <article class="lt-rep-card lt-rep-card-segments" id="lt-rep-card-segments">
-                      <p class="lt-rep-card-title" id="lt-rep-segments-title">Balances</p>
-                      <div class="lt-rep-chart" id="lt-rep-segments"></div>
-                    </article>
                   </div>
-                  <dl class="lt-totals lt-rep-totals" id="lt-rep-totals">
-                    <div><dt>Revenue</dt><dd class="lt-num">$480,000</dd></div>
-                    <div><dt>Expenses</dt><dd class="lt-num">$416,000</dd></div>
-                    <div><dt>Net profit</dt><dd class="lt-num">$64,000</dd></div>
-                  </dl>
                   <p class="lt-flow-foot"><span class="lt-flow-check" aria-hidden="true">&#10003;</span> Updated with the close</p>
-                </div>
-                <div class="lt-rep-await" id="lt-rep-await" hidden>
-                  <p class="lt-rep-await-title">Cash-flow figures to come</p>
-                  <p>This view is ready — the cash-flow figures will appear here once they are added.</p>
                 </div>
               </div>
             </div>
           </div>
         </figure>
+
       </div>
     </section>
 

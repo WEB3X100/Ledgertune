@@ -745,17 +745,18 @@ if (tstack) {
   setInterval(function () { if (!document.hidden) tick(); }, 1600);
 })();
 
-// Reports table: P&L / Balance sheet / Cash flow / AR and AP.
-// Tabs are a light glass segmented bar above the panel (no dark pane).
-// The panel is a Dribbble-style masonry of white cards on a pale
-// blue-grey ground, stacked under the text: one merged combo chart
-// (grouped bars + three trend lines sharing one axis set), the
-// packed-bubble spending mix, and the flowing month table. Every
-// chart follows the same bottom-row anchor as the table. Datasets
-// use ONLY figures already on the page. Cash flow has no figures
-// anywhere on the page, so its dataset is null (awaiting Ammar's
-// figures) and the tab shows a deliberate "figures to come" state —
-// never fake numbers.
+// Unified Reports page: one document, no tabs. The panel header is
+// "Reports" and the sections stack inside it — General ledger
+// (T-account), Income statement (PNL) + waterfall, the merged combo
+// chart, Balance sheet with AR and AP inside it, the balances
+// bubbles, a cash-flow strip that is still awaiting figures, and the
+// flowing month table. The T-account, income statement, waterfall,
+// balance sheet, bubbles and cash-flow strip are static HTML, so they
+// render with or without JS. Only the combo chart and the flowing
+// table need this script: the chart follows the same bottom-row
+// anchor as the table. Every figure in the static sections is a
+// figure already on the page — nothing is invented. Cash flow has no
+// figures anywhere on the page, so its strip stays an awaiting state.
 (function () {
   var card = document.getElementById("lt-rep-flow");
   if (!card) return;
@@ -763,11 +764,6 @@ if (tstack) {
   if (!list || !list.children.length) return;
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   card.classList.add("lt-rep-js");
-
-  // Cash-flow figures: none exist on the page yet. When Ammar provides
-  // them, fill this object in the same shape as BALANCE and the tab lights
-  // up automatically.
-  var CASH_FLOW = null; /* awaiting Ammar's cash-flow figures */
 
   // P&L rows are read from the static table in the DOM (same as the hero),
   // so the no-JS fallback shows the same figures.
@@ -782,142 +778,25 @@ if (tstack) {
       alt: i % 2 === 1
     };
   });
-  // Spending mix: the monthly spend behind the P&L (same figures as the
-  // hero's donut). Shares are computed from the amounts, never typed in.
-  var PNL = {
-    key: "pnl",
-    title: "Profit and loss",
-    cols: ["Month", "Revenue", "Costs", "Profit"],
-    rows: pnlRows,
-    totals: [
-      { label: "Revenue", value: 480000 },
-      { label: "Expenses", value: 416000 },
-      { label: "Net profit", value: 64000 }
-    ],
-    bubblesTitle: "Spending",
-    bubblesSuffix: " / mo",
-    bubbles: [
-      { label: "Payroll", value: 4136.67, fill: "#f3e5c3", ink: "#8a6d3b" },
-      { label: "Occupancy", value: 2433.33, fill: "#d8e3ef", ink: "#102438" },
-      { label: "People", value: 2190, fill: "#e2edf4", ink: "#0369a1" },
-      { label: "Software", value: 1946.67, fill: "#d5dee8", ink: "#3d5a73" },
-      { label: "Other", value: 1460, fill: "#edf1f5", ink: "#5b7286" }
-    ],
-    segmentsTitle: "Where revenue goes",
-    segments: { total: 480000, items: [
-      { label: "Costs", value: 416000, color: "#9db8cc" },
-      { label: "Profit", value: 64000, color: "#c19b5d" }
-    ]},
-    barLabels: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
-    barValues: pnlRows.map(function (r) { return r.values[2]; })
-  };
-  // Balance sheet: the three balances already shown on the page.
-  var BALANCE = {
-    key: "balance",
-    title: "Balance sheet",
-    cols: ["Item", "Amount"],
-    rows: [
-      { label: "Cash", values: [120000] },
-      { label: "Receivable", values: [86000] },
-      { label: "Payable", values: [41000] }
-    ],
-    totals: [
-      { label: "Cash", value: 120000 },
-      { label: "Receivable", value: 86000 },
-      { label: "Payable", value: 41000 }
-    ],
-    bubblesTitle: "Balances",
-    bubblesSuffix: "",
-    bubbles: [
-      { label: "Cash", value: 120000, fill: "#f3e5c3", ink: "#8a6d3b" },
-      { label: "Receivable", value: 86000, fill: "#d8e3ef", ink: "#102438" },
-      { label: "Payable", value: 41000, fill: "#e2edf4", ink: "#0369a1" }
-    ],
-    segmentsTitle: "Share of balances",
-    segments: { total: 247000, items: [
-      { label: "Cash", value: 120000, color: "#102438" },
-      { label: "Receivable", value: 86000, color: "#c19b5d" },
-      { label: "Payable", value: 41000, color: "#9db8cc" }
-    ]}
-  };
-  // AR and AP: the receivable and payable figures already on the page.
-  var ARAP = {
-    key: "arap",
-    title: "AR and AP",
-    cols: ["Item", "Amount"],
-    rows: [
-      { label: "Receivable", values: [86000] },
-      { label: "Payable", values: [41000] }
-    ],
-    totals: [
-      { label: "Receivable", value: 86000 },
-      { label: "Payable", value: 41000 }
-    ],
-    bubblesTitle: "AR and AP",
-    bubblesSuffix: "",
-    bubbles: [
-      { label: "Receivable", value: 86000, fill: "#d8e3ef", ink: "#102438" },
-      { label: "Payable", value: 41000, fill: "#f3e5c3", ink: "#8a6d3b" }
-    ],
-    segmentsTitle: "Share of AR and AP",
-    segments: { total: 127000, items: [
-      { label: "Receivable", value: 86000, color: "#102438" },
-      { label: "Payable", value: 41000, color: "#c19b5d" }
-    ]}
-  };
-  var TABS = { pnl: PNL, balance: BALANCE, cashflow: CASH_FLOW, arap: ARAP };
-  // Which masonry cards each tab shows. P&L has two chart cards: the
-  // merged combo and the bubbles. The short tabs show the charts that
-  // honestly fit them — no 12-month chart is faked for a 3-point or
-  // 2-point dataset.
-  var VISIBLE = {
-    pnl: ["combo", "flow", "bubbles"],
-    balance: ["flow", "bubbles", "segments"],
-    arap: ["flow", "bubbles", "segments"]
-  };
+  var BAR_LABELS = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
 
-  var colsEl = document.getElementById("lt-rep-cols");
-  var totalsEl = document.getElementById("lt-rep-totals");
-  var titleEl = document.getElementById("lt-rep-title");
-  var bodyEl = document.getElementById("lt-rep-body");
-  var awaitEl = document.getElementById("lt-rep-await");
-  var panel = document.getElementById("lt-rep-panel");
-  var masonry = document.getElementById("lt-rep-masonry");
-  var tablist = document.querySelector(".lt-rep-tabs");
-  var tabs = Array.prototype.slice.call(tablist.querySelectorAll(".lt-rep-tab"));
-  var slider = tablist.querySelector(".lt-rep-tab-slider");
-  var viewEl = list.parentElement;
-  var cards = {
-    combo: document.getElementById("lt-rep-card-combo"),
-    flow: card.querySelector(".lt-rep-card-flow"),
-    bubbles: document.getElementById("lt-rep-card-bubbles"),
-    segments: document.getElementById("lt-rep-card-segments")
-  };
   var comboEl = document.getElementById("lt-rep-combo");
-  var bubblesEl = document.getElementById("lt-rep-bubbles");
-  var bubbleLegendEl = document.getElementById("lt-rep-bubble-legend");
-  var bubblesTitleEl = document.getElementById("lt-rep-bubbles-title");
-  var segmentsEl = document.getElementById("lt-rep-segments");
-  var segmentsTitleEl = document.getElementById("lt-rep-segments-title");
+  var viewEl = list.parentElement;
 
-  // The flowing table shows a 4-row window — the compression that lets
-  // the whole section fit one viewport. The anchor is the bottom row
-  // of the window, so it still follows the arriving month.
+  // The flowing table shows a 4-row window — the compression that
+  // keeps the page compact. The anchor is the bottom row of the
+  // window, so it still follows the arriving month.
   var WINDOW = 4;
-  var state = { ds: PNL, anchor: 0, next: WINDOW, timer: null };
+  var state = { anchor: WINDOW - 1, next: WINDOW, timer: null };
   var shifting = false;
   var shiftTimer = null;
-  var charts = { combo: null, bubbles: null };
+  var charts = { combo: null };
 
   function fmt(n) {
     return (n < 0 ? "\u2212$" : "$") + Math.abs(Math.round(n)).toLocaleString("en-US");
   }
-  function pct(v, total) {
-    var p = v / total * 100;
-    return (Math.round(p * 10) / 10).toFixed(1).replace(/\.0$/, "") + "%";
-  }
 
-  function makeRow(ds, d, idx) {
+  function makeRow(d, idx) {
     var li = document.createElement("li");
     li.className = "lt-flow-row lt-flow-enter" + (idx % 2 === 1 ? " lt-flow-alt" : "");
     var html = '<span class="lt-flow-m">' + d.label + "</span>";
@@ -945,15 +824,6 @@ if (tstack) {
     }
     requestAnimationFrame(frame);
   }
-  function renderCols(ds) {
-    colsEl.innerHTML = ds.cols.map(function (c) { return "<span>" + c + "</span>"; }).join("");
-  }
-  function renderTotals(ds) {
-    totalsEl.innerHTML = ds.totals.map(function (t) {
-      return "<div><dt>" + t.label + '</dt><dd class="lt-num">' + fmt(t.value) + "</dd></div>";
-    }).join("");
-    totalsEl.classList.toggle("lt-rep-totals-2", ds.totals.length === 2);
-  }
 
   // ---- Chart helpers -------------------------------------------------
   var MONTHS_FULL = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -972,17 +842,12 @@ if (tstack) {
   // with the three trend lines drawn over them on the SAME scale and
   // month slots — the bars show the monthly volumes, the lines connect
   // the same points, and the gold profit line floats on its own. One
-  // axis set, one legend, one card. P&L only — a 12-month chart makes
-  // no sense for a 3-point or 2-point dataset.
-  // Shorter than the first version (250px) — the section has to fit
-  // one viewport, so the chart is compressed to 140px tall. One axis
-  // set, one legend, one card. P&L only.
+  // axis set, one legend, one card. Compressed to 130px tall.
   var COMBO = { w: 640, h: 130, l: 48, r: 16, t: 14, b: 28, min: -5000, max: 60000 };
   function comboX(i) { return COMBO.l + i * (COMBO.w - COMBO.l - COMBO.r) / 11; }
   function comboY(v) { return barY(v, COMBO); }
-  function renderCombo(ds) {
-    if (ds.key !== "pnl") { comboEl.innerHTML = ""; charts.combo = null; return; }
-    var rows = ds.rows;
+  function renderCombo() {
+    var rows = pnlRows;
     var series = [
       { label: "Revenue", color: "#102438", vals: rows.map(function (r) { return r.values[0]; }) },
       { label: "Costs", color: "#9db8cc", vals: rows.map(function (r) { return r.values[1]; }) },
@@ -1002,7 +867,7 @@ if (tstack) {
       return '<g class="lt-rep-group" data-i="' + i + '">' +
         '<rect x="' + gx.toFixed(1) + '" y="' + barY(rev, COMBO).toFixed(1) + '" width="' + bw + '" height="' + Math.max(rh, 1).toFixed(1) + '" rx="3" fill="#102438"><title>' + MONTHS_FULL[i] + " revenue " + fmt(rev) + "</title></rect>" +
         '<rect x="' + (gx + bw + gap).toFixed(1) + '" y="' + barY(cost, COMBO).toFixed(1) + '" width="' + bw + '" height="' + Math.max(ch, 1).toFixed(1) + '" rx="3" fill="#9db8cc"><title>' + MONTHS_FULL[i] + " costs " + fmt(cost) + "</title></rect>" +
-        '<text class="lt-rep-axis lt-rep-month" data-i="' + i + '" x="' + comboX(i).toFixed(1) + '" y="' + (COMBO.h - 8) + '" text-anchor="middle">' + ds.barLabels[i] + "</text>" +
+        '<text class="lt-rep-axis lt-rep-month" data-i="' + i + '" x="' + comboX(i).toFixed(1) + '" y="' + (COMBO.h - 8) + '" text-anchor="middle">' + BAR_LABELS[i] + "</text>" +
         "</g>";
     }).join("");
     var lines = series.map(function (s, j) {
@@ -1034,7 +899,6 @@ if (tstack) {
     };
   }
   // Shared bar-chart geometry.
-  var BARS = { w: 640, h: 250, l: 48, r: 16, t: 14, b: 28 };
   function barY(v, g) { return g.t + (g.max - v) / (g.max - g.min) * (g.h - g.t - g.b); }
   function gridSvg(g, steps) {
     return steps.map(function (s) {
@@ -1045,92 +909,23 @@ if (tstack) {
         '<text class="lt-rep-axis" x="' + (g.l - 8) + '" y="' + (y + 3.5).toFixed(1) + '" text-anchor="end">' + lab + "</text>";
     }).join("");
   }
-  // Packed bubbles: the Dribbble centrepiece. Bubble area follows the
-  // share; the % sits inside each bubble and the legend below carries
-  // the name + amount. Positions are fixed per item count so the
-  // layout is deterministic — largest bubble centred, the rest tucked
-  // around it with a gentle overlap and a white stroke between them.
-  var BUBBLE_LAYOUT = {
-    5: [[150, 112], [234, 72], [232, 152], [76, 64], [82, 162]],
-    3: [[140, 108], [252, 78], [252, 168]],
-    2: [[122, 110], [248, 110]]
-  };
-  function renderBubbles(ds) {
-    var items = ds.bubbles.slice().sort(function (a, b) { return b.value - a.value; });
-    var total = items.reduce(function (s, d) { return s + d.value; }, 0);
-    var pos = BUBBLE_LAYOUT[items.length] || BUBBLE_LAYOUT[5];
-    var circles = items.map(function (d, i) {
-      var r = Math.max(26, Math.min(78, 9.2 * Math.sqrt(d.value / total * 100)));
-      var p = pos[i];
-      var fs = r > 44 ? 15 : 12.5;
-      return '<g class="lt-rep-bubble" data-i="' + i + '">' +
-        '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="' + r.toFixed(1) + '" fill="' + d.fill + '" stroke="#ffffff" stroke-width="3"/>' +
-        '<text x="' + p[0] + '" y="' + (p[1] + fs * 0.35).toFixed(1) + '" text-anchor="middle" font-size="' + fs + '" font-weight="700" fill="' + d.ink + '">' + pct(d.value, total) + "</text>" +
-        "<title>" + d.label + " " + pct(d.value, total) + " — " + fmt(d.value) + (ds.bubblesSuffix || "") + "</title>" +
-        "</g>";
-    }).join("");
-    bubblesEl.innerHTML = '<svg viewBox="0 0 360 220" role="img" aria-label="Bubble chart of ' + ds.bubblesTitle.toLowerCase() + '">' + circles + "</svg>";
-    bubbleLegendEl.innerHTML = items.map(function (d, i) {
-      // The share already sits inside the bubble — the legend carries
-      // the name + amount only, so long names never get ellipsised.
-      return '<li data-i="' + i + '"><i style="background:' + d.fill + ';box-shadow:inset 0 0 0 1px rgba(16,36,56,.12)"></i><span>' + d.label + "</span><b>" + fmt(d.value) + (ds.bubblesSuffix || "") + "</b></li>";
-    }).join("");
-    bubblesTitleEl.textContent = ds.bubblesTitle;
-    charts.bubbles = {
-      groups: Array.prototype.slice.call(bubblesEl.querySelectorAll(".lt-rep-bubble")),
-      legend: Array.prototype.slice.call(bubbleLegendEl.querySelectorAll("li"))
-    };
-  }
-  // Segmented bar: one real split per tab — revenue into costs + profit
-  // (P&L), balances into Cash / Receivable / Payable, AR/AP into its two
-  // items. Never a limit or target.
-  function renderSegments(ds) {
-    segmentsTitleEl.textContent = ds.segmentsTitle;
-    var total = ds.segments.total;
-    segmentsEl.innerHTML =
-      '<div class="lt-rep-segments-bar">' + ds.segments.items.map(function (d) {
-        return '<i style="width:' + (d.value / total * 100).toFixed(1) + "%;background:" + d.color + '" title="' + d.label + " " + pct(d.value, total) + '"></i>';
-      }).join("") + "</div>" +
-      '<ul class="lt-rep-legend lt-rep-segments-legend">' + ds.segments.items.map(function (d) {
-        return '<li><i style="background:' + d.color + '"></i><span>' + d.label + "</span><b>" + pct(d.value, total) + " · " + fmt(d.value) + "</b></li>";
-      }).join("") + "</ul>";
-  }
-  // Sliding thumb under the active tab: a pale-gold pill that glides
-  // behind the button (the buttons themselves stay transparent).
-  function placeSlider() {
-    if (!slider) return;
-    var active = tablist.querySelector(".lt-rep-tab.is-active");
-    if (!active) return;
-    var wrap = tablist.getBoundingClientRect();
-    var b = active.getBoundingClientRect();
-    slider.style.left = (b.left - wrap.left) + "px";
-    slider.style.width = b.width + "px";
-  }
-  // Move every chart's active marker to the bottom-row anchor.
+  // Move the combo chart's active marker to the bottom-row anchor.
   function markCharts() {
     var a = state.anchor;
-    if (charts.combo) {
-      var x = charts.combo.xs[a];
-      charts.combo.guide.setAttribute("x1", x.toFixed(1));
-      charts.combo.guide.setAttribute("x2", x.toFixed(1));
-      charts.combo.rings.forEach(function (ring, j) {
-        ring.setAttribute("cx", x.toFixed(1));
-        ring.setAttribute("cy", charts.combo.ys[j][a].toFixed(1));
-      });
-      charts.combo.months.forEach(function (m, i) {
-        m.classList.toggle("is-now", i === a);
-      });
-      charts.combo.groups.forEach(function (g, i) { g.classList.toggle("is-now", i === a); });
-    }
-    // Short datasets: the anchor cycles the items, so the matching
-    // bubble + legend row light up. On P&L the anchor is a month, and
-    // the bubbles are a spending mix — no highlight there.
-    if (charts.bubbles && state.ds.rows.length <= 6) {
-      charts.bubbles.groups.forEach(function (g, i) { g.classList.toggle("is-now", i === a); });
-      charts.bubbles.legend.forEach(function (li, i) { li.classList.toggle("is-now", i === a); });
-    }
+    if (!charts.combo) return;
+    var x = charts.combo.xs[a];
+    charts.combo.guide.setAttribute("x1", x.toFixed(1));
+    charts.combo.guide.setAttribute("x2", x.toFixed(1));
+    charts.combo.rings.forEach(function (ring, j) {
+      ring.setAttribute("cx", x.toFixed(1));
+      ring.setAttribute("cy", charts.combo.ys[j][a].toFixed(1));
+    });
+    charts.combo.months.forEach(function (m, i) {
+      m.classList.toggle("is-now", i === a);
+    });
+    charts.combo.groups.forEach(function (g, i) { g.classList.toggle("is-now", i === a); });
   }
-  // Pill rows carry a 6px gap, so the slide step is row height + gap.
+  // Pill rows carry a 3px gap, so the slide step is row height + gap.
   function rowPitch() {
     var first = list.firstElementChild;
     if (!first) return 0;
@@ -1139,24 +934,21 @@ if (tstack) {
   }
   function sizeFlowView() {
     if (!viewEl) return;
-    var full = reduced || state.ds.rows.length <= 6;
-    if (full) { viewEl.style.height = ""; return; }
+    if (reduced) { viewEl.style.height = ""; return; }
     var pitch = rowPitch();
     if (pitch > 0) viewEl.style.height = Math.round(pitch * WINDOW) + "px";
   }
   function rebuildWindow() {
-    var ds = state.ds;
     if (shiftTimer !== null) { clearTimeout(shiftTimer); shiftTimer = null; }
     list.style.transition = "none";
     list.style.transform = "translateY(0)";
     shifting = false;
     while (list.firstElementChild) list.removeChild(list.firstElementChild);
-    var full = reduced || ds.rows.length <= 6;
-    var count = full ? ds.rows.length : WINDOW;
-    var start = full ? 0 : (((state.next - WINDOW) % ds.rows.length) + ds.rows.length) % ds.rows.length;
+    var count = reduced ? pnlRows.length : WINDOW;
+    var start = reduced ? 0 : (((state.next - WINDOW) % pnlRows.length) + pnlRows.length) % pnlRows.length;
     for (var i = 0; i < count; i++) {
-      var idx = (start + i) % ds.rows.length;
-      var li = makeRow(ds, ds.rows[idx], idx);
+      var idx = (start + i) % pnlRows.length;
+      var li = makeRow(pnlRows[idx], idx);
       Array.prototype.forEach.call(li.querySelectorAll(".lt-flow-n"), function (s) {
         s.textContent = fmt(parseFloat(s.getAttribute("data-v")));
       });
@@ -1168,19 +960,11 @@ if (tstack) {
     sizeFlowView();
   }
   function tick() {
-    var ds = state.ds;
-    if (!ds || shifting || document.hidden) return;
-    // Short datasets show every row: the pulse cycles the anchor instead
-    // of sliding rows in.
-    if (ds.rows.length <= 6) {
-      state.anchor = (state.anchor + 1) % ds.rows.length;
-      markCharts();
-      return;
-    }
+    if (shifting || document.hidden) return;
     shifting = true;
-    var d = ds.rows[state.next % ds.rows.length];
+    var d = pnlRows[state.next % pnlRows.length];
     state.next += 1;
-    var li = makeRow(ds, d, (state.next - 1) % ds.rows.length);
+    var li = makeRow(d, (state.next - 1) % pnlRows.length);
     list.appendChild(li);
     var step = rowPitch();
     countUp(li);
@@ -1195,7 +979,7 @@ if (tstack) {
       list.style.transform = "translateY(" + (-step * eased) + "px)";
       if (t >= 0.5 && !flipped) {
         flipped = true;
-        state.anchor = ((state.next - 1) % ds.rows.length + ds.rows.length) % ds.rows.length;
+        state.anchor = ((state.next - 1) % pnlRows.length + pnlRows.length) % pnlRows.length;
         markCharts();
       }
       if (t < 1) requestAnimationFrame(slideFrame);
@@ -1222,67 +1006,14 @@ if (tstack) {
     stopTimer();
     if (!reduced) state.timer = setInterval(function () { if (!document.hidden) tick(); }, 1600);
   }
-  function activateTab(key) {
-    var ds = TABS[key];
-    tabs.forEach(function (btn) {
-      var on = btn.getAttribute("data-tab") === key;
-      btn.classList.toggle("is-active", on);
-      btn.setAttribute("aria-selected", on ? "true" : "false");
-      btn.tabIndex = on ? 0 : -1;
-    });
-    panel.setAttribute("aria-labelledby", "lt-rep-tab-" + key);
-    titleEl.textContent = ds ? ds.title : "Cash flow";
-    stopTimer();
-    if (!ds) {
-      // No cash-flow figures on the page yet: deliberate waiting state.
-      card.classList.add("lt-rep-awaiting");
-      bodyEl.hidden = true;
-      awaitEl.hidden = false;
-      return;
-    }
-    card.classList.remove("lt-rep-awaiting");
-    bodyEl.hidden = false;
-    awaitEl.hidden = true;
-    card.classList.toggle("lt-rep-cols-2", ds.cols.length === 2);
-    card.classList.toggle("lt-rep-compact", reduced || ds.rows.length <= 6);
-    masonry.classList.toggle("lt-rep-short", ds.rows.length <= 6);
-    state.ds = ds;
-    state.anchor = ds.rows.length > 6 ? WINDOW - 1 : 0;
-    state.next = WINDOW;
-    var show = VISIBLE[ds.key];
-    Object.keys(cards).forEach(function (k) {
-      if (cards[k]) cards[k].hidden = show.indexOf(k) === -1;
-    });
-    renderCols(ds);
-    rebuildWindow();
-    renderTotals(ds);
-    renderCombo(ds);
-    renderBubbles(ds);
-    renderSegments(ds);
-    markCharts();
-    if (reduced) {
-      card.classList.add("lt-flow-static");
-    } else {
-      card.classList.add("lt-flow-js");
-      startTimer();
-    }
-    requestAnimationFrame(placeSlider);
+  window.addEventListener("resize", sizeFlowView);
+  renderCombo();
+  rebuildWindow();
+  markCharts();
+  if (reduced) {
+    card.classList.add("lt-flow-static");
+  } else {
+    card.classList.add("lt-flow-js");
+    startTimer();
   }
-  tabs.forEach(function (btn) {
-    btn.addEventListener("click", function () { activateTab(btn.getAttribute("data-tab")); });
-  });
-  tablist.addEventListener("keydown", function (e) {
-    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft" &&
-        e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
-    var idx = tabs.indexOf(document.activeElement);
-    if (idx === -1) return;
-    e.preventDefault();
-    var dir = (e.key === "ArrowRight" || e.key === "ArrowDown") ? 1 : -1;
-    var nextIdx = (idx + dir + tabs.length) % tabs.length;
-    tabs[nextIdx].focus();
-    activateTab(tabs[nextIdx].getAttribute("data-tab"));
-  });
-  window.addEventListener("resize", function () { placeSlider(); sizeFlowView(); });
-  window.addEventListener("load", placeSlider);
-  activateTab("pnl");
 })();
